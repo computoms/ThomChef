@@ -1,0 +1,2 @@
+ - doublons : marchent pas
+ - dans configuration : nombre repas long / rapide par défaut (5/4)
