@@ -1,13 +1,13 @@
-#ifndef RECETTECOLLECTION_H
-#define RECETTECOLLECTION_H
+#ifndef RECIPESTORE_H
+#define RECIPESTORE_H
 
 #include "recipe.h"
 #include <vector>
 
-class RecipeCollection
+class RecipeStore
 {
 public:
-    RecipeCollection();
+    RecipeStore();
 
     int getNumberOfRecipes() const;
     Recipe getRecipe(int recipeIndex) const;
@@ -18,4 +18,4 @@ private:
     std::vector<Recipe> recipes;
 };
 
-#endif // RECETTECOLLECTION_H
+#endif // RECIPESTORE_H

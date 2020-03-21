@@ -23,9 +23,7 @@ SOURCES += main.cpp\
     ajouterrecette.cpp \
     gererconfiguration.cpp \
     listeingredients.cpp \
-    libs/pugixml-1.9/src/pugixml.cpp \
-    recipecollection.cpp \
-    recipecollectionserializer.cpp
+    libs/pugixml-1.9/src/pugixml.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -37,9 +35,7 @@ HEADERS  += mainwindow.h \
     gererconfiguration.h \
     listeingredients.h \
     libs/pugixml-1.9/src/pugiconfig.hpp \
-    libs/pugixml-1.9/src/pugixml.hpp \
-    recipecollection.h \
-    recipecollectionserializer.h
+    libs/pugixml-1.9/src/pugixml.hpp
 
 FORMS    += mainwindow.ui \
     ajouterrecette.ui \

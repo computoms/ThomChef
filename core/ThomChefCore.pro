@@ -18,19 +18,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     conversions.cpp \
+    ingredient.cpp \
     recipe.cpp \
-    recipecollection.cpp \
-    recipecollectionserializer.cpp \
-    ../libs/pugixml-1.9/src/pugixml.cpp
+    ../libs/pugixml-1.9/src/pugixml.cpp \
+    recipestore.cpp \
+    recipestoreserializer.cpp
 
 HEADERS += \
     ThomChefCore_global.h \
     conversions.h \
+    definitions.h \
+    ingredient.h \
     recipe.h \
-    recipecollection.h \
-    recipecollectionserializer.h \
     ../libs/pugixml-1.9/src/pugixml.hpp \
-    ../libs/pugixml-1.9/src/pugiconfig.hpp
+    ../libs/pugixml-1.9/src/pugiconfig.hpp \
+    recipestore.h \
+    recipestoreserializer.h
 
 INCLUDEPATH += ../
 
