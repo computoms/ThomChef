@@ -19,8 +19,8 @@ HEADERS += ../libs/catch/catch.hpp \
     ../libs/pugixml-1.9/src/pugiconfig.hpp
 
 SOURCES += \
+        filerecipestoretests.cpp \
         main.cpp \
-        recipecollectionserializertests.cpp \
         ../libs/pugixml-1.9/src/pugixml.cpp
 
 INCLUDEPATH += ../

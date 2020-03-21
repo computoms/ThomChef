@@ -1,21 +1,24 @@
 #ifndef RECETTECOLLECTIONSERIALIZER_H
 #define RECETTECOLLECTIONSERIALIZER_H
 #include <string>
-#include "recipestore.h"
 #include "recipe.h"
 
 #include "libs/pugixml-1.9/src/pugixml.hpp"
 
-class RecipeStoreSerializer
+class FileRecipeStorage
 {
 public:
-    RecipeStoreSerializer();
+    FileRecipeStorage(std::string filename);
 
-    RecipeStore read(std::string filename);
     Recipe readRecipe(std::string recipeSerialization);
-
-    bool serializeTo(std::string filename, RecipeStore recipeCollection);
     std::string serializeRecipe(Recipe recipe);
+
+    std::vector<Recipe> read();
+    bool save(std::vector<Recipe> recipes);
+
+private:
+    std::string m_filename;
+
 };
 
 #endif // RECETTECOLLECTIONSERIALIZER_H

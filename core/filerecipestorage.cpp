@@ -1,15 +1,16 @@
-#include "recipestoreserializer.h"
+#include "filerecipestorage.h"
 #include "conversions.h"
 #include <sstream>
 
 using namespace pugi;
 
-RecipeStoreSerializer::RecipeStoreSerializer()
+FileRecipeStorage::FileRecipeStorage(std::string filename):
+    m_filename  (filename)
 {
 
 }
 
-Recipe RecipeStoreSerializer::readRecipe(std::string recipeSerialization)
+Recipe FileRecipeStorage::readRecipe(std::string recipeSerialization)
 {
     xml_document doc;
     xml_parse_result result = doc.load_string(recipeSerialization.c_str());
@@ -37,7 +38,7 @@ Recipe RecipeStoreSerializer::readRecipe(std::string recipeSerialization)
     return recipe;
 }
 
-std::string RecipeStoreSerializer::serializeRecipe(Recipe recipe)
+std::string FileRecipeStorage::serializeRecipe(Recipe recipe)
 {
     pugi::xml_document doc;
     pugi::xml_node recipeNode = doc.root();
@@ -64,37 +65,37 @@ std::string RecipeStoreSerializer::serializeRecipe(Recipe recipe)
     return ss.str();
 }
 
-RecipeStore RecipeStoreSerializer::read(std::string filename)
+std::vector<Recipe> FileRecipeStorage::read()
 {
     pugi::xml_document doc;
-    xml_parse_result result = doc.load_file(filename.c_str());
+    xml_parse_result result = doc.load_file(m_filename.c_str());
     if (!result)
         throw std::ios_base::failure("Could not read the RecipeStore file");
 
-    RecipeStore recipeStore;
+    std::vector<Recipe> recipes;
     for (xml_node recipeNode = doc.child("RecipeStore").child("Recipe");
          recipeNode; recipeNode = recipeNode.next_sibling("Recipe"))
     {
         std::stringstream ss;
         recipeNode.print(ss);
         Recipe recipe = readRecipe(ss.str());
-        recipeStore.addRecipe(recipe);
+        recipes.push_back(recipe);
     }
-    return recipeStore;
+    return recipes;
 }
 
-bool RecipeStoreSerializer::serializeTo(std::string filename, RecipeStore recipeStore)
+bool FileRecipeStorage::save(std::vector<Recipe> recipes)
 {
     xml_document doc;
     xml_node recipeStoreNode = doc.append_child("RecipeStore");
-    for (int i(0); i < recipeStore.getNumberOfRecipes(); ++i)
+    for (int i(0); i < recipes.size(); ++i)
     {
-        Recipe recipe = recipeStore.getRecipe(i);
+        Recipe recipe = recipes[i];
         pugi::xml_document doc;
         pugi::xml_parse_result result = doc.load(serializeRecipe(recipe).c_str());  // TODO Deprecated
         if (!result)
             throw std::ios_base::failure("Could not read the RecipeStore file");
         recipeStoreNode.append_copy(doc.root());
     }
-    return doc.save_file(filename.c_str());
+    return doc.save_file(m_filename.c_str());
 }

@@ -1,18 +1,18 @@
 #include "libs/catch/catch.hpp"
 
-#include "core/recipestoreserializer.h"
+#include "core/filerecipestorage.h"
 #include <sstream>
 
 TEST_CASE("SerializeRecipe_ValidXmlNode_ReturnsValidRecipe")
 {
-    RecipeStoreSerializer serializer;
+    FileRecipeStorage storage("test.xml");
     Recipe probingRecipe("My Testing Recipe", Category_Quick, "This is my description", 45);
     probingRecipe.addIngredient(Ingredient("Eggs", 2, UnitType_Number));
     probingRecipe.addIngredient(Ingredient("Cream", 20, UnitType_Mililiters));
     probingRecipe.addIngredient(Ingredient("Cheese", 2, UnitType_Cup));
 
 
-    std::string serialization = serializer.serializeRecipe(probingRecipe);
+    std::string serialization = storage.serializeRecipe(probingRecipe);
 
 
 
@@ -32,7 +32,7 @@ TEST_CASE("SerializeRecipe_ValidXmlNode_ReturnsValidRecipe")
 
 TEST_CASE("ReadRecipeSerialization_ValidXml_ReturnsValidRecipe")
 {
-    RecipeStoreSerializer serializer;
+    FileRecipeStorage storage("test.xml");
     pugi::xml_document doc;
     pugi::xml_node recipeNode = doc.root();
     recipeNode.set_name("Recipe");
@@ -50,7 +50,7 @@ TEST_CASE("ReadRecipeSerialization_ValidXml_ReturnsValidRecipe")
     std::stringstream ss;
     doc.save(ss);
 
-    Recipe recipe = serializer.readRecipe(ss.str());
+    Recipe recipe = storage.readRecipe(ss.str());
     REQUIRE(recipe.getName() == "My Testing Recipe");
     REQUIRE(recipe.getCategory() == Category_Quick);
     REQUIRE(recipe.getDescription() == "This is my description");
