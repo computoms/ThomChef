@@ -1,0 +1,12 @@
+#ifndef THOMCHEFCORE_GLOBAL_H
+#define THOMCHEFCORE_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(THOMCHEFCORE_LIBRARY)
+#  define THOMCHEFCORE_EXPORT Q_DECL_EXPORT
+#else
+#  define THOMCHEFCORE_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // THOMCHEFCORE_GLOBAL_H
