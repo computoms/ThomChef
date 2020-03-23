@@ -1,4 +1,5 @@
 #include "ingredient.h"
+#include "conversions.h"
 
 Ingredient::Ingredient(std::string name, double quantity, UnitType unit):
     m_name          (name),
@@ -21,4 +22,13 @@ double Ingredient::getQuantity() const
 UnitType Ingredient::getUnit() const
 {
     return m_quantityType;
+}
+
+std::string Ingredient::getFriendlyName() const
+{
+    std::string friendlyName;
+    friendlyName += Conversions::to_string(m_quantity);
+    friendlyName += " " + Conversions::to_friendlyUnit(m_quantityType);
+    friendlyName += " " + m_name;
+    return friendlyName;
 }

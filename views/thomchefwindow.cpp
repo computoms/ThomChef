@@ -4,7 +4,6 @@
 #include "viewutils.h"
 
 #include "core/filerecipestorage.h"
-#include "core/conversions.h"
 #include <ios>
 
 ThomChefWindow::ThomChefWindow(QWidget *parent) :

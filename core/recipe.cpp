@@ -1,5 +1,4 @@
 #include "recipe.h"
-#include "conversions.h"
 
 Recipe::Recipe(std::string name, Category category,
                std::string description, double preparationTimeInMinutes):
@@ -58,9 +57,7 @@ std::string Recipe::getFriendlyIngredients()
     std::string ingredientsDescription;
     for (auto &ingredient : m_ingredients)
     {
-        ingredientsDescription += Conversions::to_string(ingredient.getQuantity());
-        ingredientsDescription += " " + Conversions::to_friendlyUnit(ingredient.getUnit());
-        ingredientsDescription += " " + ingredient.getName() + "\n";
+        ingredientsDescription += ingredient.getFriendlyName() + "\n";
     }
 
     return ingredientsDescription;

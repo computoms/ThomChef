@@ -14,6 +14,7 @@ public:
     double getQuantity() const;
     UnitType getUnit() const;
 
+    std::string getFriendlyName() const;
 
 private:
     std::string m_name;

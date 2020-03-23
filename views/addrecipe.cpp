@@ -78,13 +78,10 @@ void AddRecipe::addCurrentIngredientAndClearIngredient()
     std::string name = ui->ingredient_edit_name->text().toStdString();
     double quantity = Conversions::to_double(ui->ingredient_edit_quantity->text().toStdString());
     UnitType unit = Conversions::to_unitType(ui->ingredient_choose_unit->currentText().toStdString());
-    QString ingredientDescription;
-    ingredientDescription += ui->ingredient_edit_quantity->text()
-            + " " + Conversions::to_friendlyUnit(unit).c_str()
-            + " " + name.c_str();
-    ui->ingredientlist->addItem(ingredientDescription);
+    Ingredient ingredient(name, quantity, unit);
 
-    m_currentIngredients.push_back(Ingredient(name, quantity, unit));
+    ui->ingredientlist->addItem(ingredient.getFriendlyName().c_str());
+    m_currentIngredients.push_back(ingredient);
 
     ui->ingredient_edit_name->setText("");
     ui->ingredient_edit_quantity->setText("");
