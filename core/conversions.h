@@ -18,6 +18,8 @@ public:
 
     static std::string to_string(UnitType unit);
     static std::string to_string(Category cat);
+
+    static std::string to_friendlyUnit(UnitType unit);
 };
 
 #endif // CONVERSIONS_H

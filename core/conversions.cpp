@@ -97,3 +97,24 @@ std::string Conversions::to_string(Category cat)
     }
     throw std::invalid_argument("Unknown Category");
 }
+
+std::string Conversions::to_friendlyUnit(UnitType unit)
+{
+    switch (unit) {
+    case UnitType_Number:
+        return "";
+    case UnitType_Grammes:
+        return "g";
+    case UnitType_Liters:
+        return "L";
+    case UnitType_Mililiters:
+        return "mL";
+    case UnitType_Cup:
+        return "cup";
+    case UnitType_BigSpoon:
+        return "b.s.";
+    case UnitType_TeaSpoon:
+        return "t.s.";
+    }
+    throw std::invalid_argument("Unknown UnitType");
+}

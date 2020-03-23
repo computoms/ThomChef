@@ -31,6 +31,7 @@ private:
 private:
     Ui::AddRecipe *ui;
     std::shared_ptr<RecipeStore> m_store;
+    std::vector<Ingredient> m_currentIngredients;
 };
 
 #endif // ADDRECIPE_H

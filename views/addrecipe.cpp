@@ -34,12 +34,6 @@ void AddRecipe::init()
     ui->ingredient_choose_unit->addItem(QString(Conversions::to_string(UnitType_Cup).c_str()));
     ui->ingredient_choose_unit->addItem(QString(Conversions::to_string(UnitType_TeaSpoon).c_str()));
     ui->ingredient_choose_unit->addItem(QString(Conversions::to_string(UnitType_BigSpoon).c_str()));
-
-    ui->ingredientlist->setRowCount(1);
-    ui->ingredientlist->setColumnCount(3);
-    ui->ingredientlist->setItem(0, 0, new QTableWidgetItem("Name"));
-    ui->ingredientlist->setItem(0, 1, new QTableWidgetItem("Quantity"));
-    ui->ingredientlist->setItem(0, 2, new QTableWidgetItem("Unit"));
 }
 
 void AddRecipe::clearAll()
@@ -50,6 +44,7 @@ void AddRecipe::clearAll()
     ui->ingredient_edit_name->setText("");
     ui->ingredient_edit_quantity->setText("");
     ui->ingredientlist->clear();
+    m_currentIngredients.clear();
 }
 
 void AddRecipe::on_buttonBox_accepted()
@@ -72,21 +67,28 @@ void AddRecipe::addCurrentRecipeAndClear()
     Category cat = Conversions::to_category(ui->choose_category->currentText().toStdString());
 
     Recipe recipe(name, cat, description, time);
+    for (auto &ing : m_currentIngredients)
+        recipe.addIngredient(ing);
 
-    // TODO fill ingredients
     m_store->addRecipe(recipe);
-    // TODO save store (from main window?)
 }
 
 void AddRecipe::addCurrentIngredientAndClearIngredient()
 {
-    ui->ingredientlist->insertRow(2);
-    ui->ingredientlist->setItem(2, 0, new QTableWidgetItem(ui->ingredient_edit_name->text()));
-    ui->ingredientlist->setItem(2, 1, new QTableWidgetItem(ui->ingredient_edit_quantity->text()));
-    ui->ingredientlist->setItem(2, 2, new QTableWidgetItem(ui->ingredient_choose_unit->currentText()));
+    std::string name = ui->ingredient_edit_name->text().toStdString();
+    double quantity = Conversions::to_double(ui->ingredient_edit_quantity->text().toStdString());
+    UnitType unit = Conversions::to_unitType(ui->ingredient_choose_unit->currentText().toStdString());
+    QString ingredientDescription;
+    ingredientDescription += ui->ingredient_edit_quantity->text()
+            + " " + Conversions::to_friendlyUnit(unit).c_str()
+            + " " + name.c_str();
+    ui->ingredientlist->addItem(ingredientDescription);
+
+    m_currentIngredients.push_back(Ingredient(name, quantity, unit));
 
     ui->ingredient_edit_name->setText("");
     ui->ingredient_edit_quantity->setText("");
+    ui->ingredient_choose_unit->setCurrentIndex(0);
 }
 
 void AddRecipe::on_ingredient_buttonadd_clicked()
@@ -97,3 +99,4 @@ void AddRecipe::on_ingredient_buttonadd_clicked()
         ViewUtils::showError(e.what());
     }
 }
+
