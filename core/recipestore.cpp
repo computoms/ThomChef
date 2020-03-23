@@ -23,6 +23,14 @@ Recipe RecipeStore::getRecipe(int recipeIndex) const
     return m_recipes[recipeIndex];
 }
 
+Recipe RecipeStore::findRecipeByName(std::string name) const
+{
+    for (auto &recipe : m_recipes)
+        if (recipe.getName() == name)
+            return recipe;
+    throw std::invalid_argument("Could not find recipe with name " + name);
+}
+
 void RecipeStore::addRecipe(Recipe recette)
 {
     m_recipes.push_back(recette);

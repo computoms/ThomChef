@@ -1,4 +1,5 @@
 #include "recipe.h"
+#include "conversions.h"
 
 Recipe::Recipe(std::string name, Category category,
                std::string description, double preparationTimeInMinutes):
@@ -30,6 +31,11 @@ int Recipe::getPreparationTimeInMinutes() const
     return m_prepTimeInMinutes;
 }
 
+std::string Recipe::getPreparationTime() const
+{
+    return std::to_string(m_prepTimeInMinutes) + " min";
+}
+
 int Recipe::getNumberOfIngredients() const
 {
     return m_ingredients.size();
@@ -45,4 +51,17 @@ Ingredient Recipe::getIngredient(int index) const
 void Recipe::addIngredient(Ingredient ingredient)
 {
     m_ingredients.push_back(ingredient);
+}
+
+std::string Recipe::getFriendlyIngredients()
+{
+    std::string ingredientsDescription;
+    for (auto &ingredient : m_ingredients)
+    {
+        ingredientsDescription += Conversions::to_string(ingredient.getQuantity());
+        ingredientsDescription += " " + Conversions::to_friendlyUnit(ingredient.getUnit());
+        ingredientsDescription += " " + ingredient.getName() + "\n";
+    }
+
+    return ingredientsDescription;
 }

@@ -14,6 +14,7 @@ public:
 
     int getNumberOfRecipes() const;
     Recipe getRecipe(int recipeIndex) const;
+    Recipe findRecipeByName(std::string name) const;
 
     void addRecipe(Recipe recette);
 

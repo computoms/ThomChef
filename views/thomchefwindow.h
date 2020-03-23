@@ -22,6 +22,12 @@ public:
 private slots:
     void on_button_addrecipe_clicked();
 
+    void on_listrecipes_itemSelectionChanged();
+
+private:
+    void updateRecipeList();
+    void updateSelectedRecipe();
+
 private:
     Ui::ThomChefWindow *ui;
     std::shared_ptr<FileRecipeStorage> m_storage;

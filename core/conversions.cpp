@@ -98,6 +98,16 @@ std::string Conversions::to_string(Category cat)
     throw std::invalid_argument("Unknown Category");
 }
 
+std::string Conversions::to_string(double quantity)
+{
+    std::string result = std::to_string(quantity);
+    // Remove trailing zeros
+    result.erase(result.find_last_not_of('0') + 1, std::string::npos);
+    if (result[result.length() - 1] == '.')
+        result = result.substr(0, result.length() - 1);
+    return result;
+}
+
 std::string Conversions::to_friendlyUnit(UnitType unit)
 {
     switch (unit) {

@@ -15,10 +15,12 @@ public:
     Category getCategory() const;
     std::string getDescription() const;
     int getPreparationTimeInMinutes() const;
+    std::string getPreparationTime() const;
     int getNumberOfIngredients() const;
     Ingredient getIngredient(int index) const;
 
     void addIngredient(Ingredient ingredient);
+    std::string getFriendlyIngredients();
 
 
 private:
