@@ -20,6 +20,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     conversions.cpp \
     filerecipestorage.cpp \
+    filter.cpp \
     ingredient.cpp \
     recipe.cpp \
     recipestore.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
     conversions.h \
     definitions.h \
     filerecipestorage.h \
+    filter.h \
     ingredient.h \
     recipe.h \
     recipestore.h \
