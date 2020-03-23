@@ -18,27 +18,14 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
+      <y>0</y>
       <width>701</width>
-      <height>451</height>
+      <height>481</height>
      </rect>
     </property>
     <property name="title">
      <string>Recipes</string>
     </property>
-    <widget class="QPushButton" name="button_addrecipe">
-     <property name="geometry">
-      <rect>
-       <x>560</x>
-       <y>410</y>
-       <width>112</width>
-       <height>32</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Add Recipe</string>
-     </property>
-    </widget>
     <widget class="QWidget" name="gridLayoutWidget">
      <property name="geometry">
       <rect>
@@ -49,9 +36,6 @@
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="1" column="0">
-       <widget class="QListWidget" name="listrecipes"/>
-      </item>
       <item row="0" column="0">
        <widget class="QLabel" name="label_recipeList">
         <property name="text">
@@ -61,6 +45,20 @@
          <set>Qt::AlignCenter</set>
         </property>
        </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QListWidget" name="listrecipes"/>
+      </item>
+      <item row="2" column="0">
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <widget class="QPushButton" name="button_addrecipe">
+          <property name="text">
+           <string>Add Recipe</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
@@ -138,6 +136,32 @@
          </size>
         </property>
        </spacer>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="gridLayoutWidget_4">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>410</y>
+       <width>371</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="0" column="0">
+       <widget class="QPushButton" name="button_updateRecipe">
+        <property name="text">
+         <string>Update Recipe</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="button_deleteRecipe">
+        <property name="text">
+         <string>Delete Recipe</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

@@ -31,8 +31,23 @@ Recipe RecipeStore::findRecipeByName(std::string name) const
     throw std::invalid_argument("Could not find recipe with name " + name);
 }
 
-void RecipeStore::addRecipe(Recipe recette)
+void RecipeStore::addRecipe(Recipe recipe)
 {
-    m_recipes.push_back(recette);
+    m_recipes.push_back(recipe);
     m_storage->save(m_recipes);
+    emit changed();
+}
+
+void RecipeStore::deleteRecipe(Recipe recipe)
+{
+    for (auto it = m_recipes.begin(); it != m_recipes.end(); ++it)
+    {
+        if (it->getName() == recipe.getName())
+        {
+            m_recipes.erase(it);
+            break;
+        }
+    }
+    m_storage->save(m_recipes);
+    emit changed();
 }

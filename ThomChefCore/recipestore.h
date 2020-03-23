@@ -1,12 +1,16 @@
 #ifndef RECIPESTORE_H
 #define RECIPESTORE_H
 
+#include <QObject>
+
 #include "recipe.h"
 #include <vector>
 #include "filerecipestorage.h"
 
-class RecipeStore
+class RecipeStore : public QObject
 {
+    Q_OBJECT
+
 public:
     RecipeStore(std::shared_ptr<FileRecipeStorage> storage);
 
@@ -16,7 +20,11 @@ public:
     Recipe getRecipe(int recipeIndex) const;
     Recipe findRecipeByName(std::string name) const;
 
-    void addRecipe(Recipe recette);
+    void addRecipe(Recipe recipe);
+    void deleteRecipe(Recipe recipe);
+
+signals:
+    void changed();
 
 private:
     std::vector<Recipe> m_recipes;

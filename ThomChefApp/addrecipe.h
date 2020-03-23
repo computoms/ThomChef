@@ -14,6 +14,7 @@ class AddRecipe : public QDialog
 
 public:
     explicit AddRecipe(QWidget *parent = nullptr, std::shared_ptr<RecipeStore> recipeStore = nullptr);
+    AddRecipe(QWidget *parent, std::shared_ptr<RecipeStore> recipeStore, Recipe selectedRecipe);
     ~AddRecipe();
 
     void init();
@@ -24,13 +25,18 @@ private slots:
 
     void on_ingredient_buttonadd_clicked();
 
+    void on_button_ingredient_delete_clicked();
+
 private:
-    void addCurrentRecipeAndClear();
+    void addCurrentRecipe();
     void addCurrentIngredientAndClearIngredient();
+    void deleteIngredient(std::string ingredientDescription);
 
 private:
     Ui::AddRecipe *ui;
     std::shared_ptr<RecipeStore> m_store;
+    Recipe m_selectedRecipe;
+    bool m_isModifyingRecipe;
     std::vector<Ingredient> m_currentIngredients;
 };
 

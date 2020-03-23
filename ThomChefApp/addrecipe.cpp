@@ -8,9 +8,22 @@
 #include <iostream>
 
 AddRecipe::AddRecipe(QWidget *parent, std::shared_ptr<RecipeStore> recipeStore) :
-    QDialog(parent),
-    ui(new Ui::AddRecipe),
-    m_store (recipeStore)
+    QDialog             (parent),
+    ui                  (new Ui::AddRecipe),
+    m_store             (recipeStore),
+    m_selectedRecipe    ("", Category_Quick, "", 0),
+    m_isModifyingRecipe (false)
+{
+    ui->setupUi(this);
+    init();
+}
+
+AddRecipe::AddRecipe(QWidget *parent, std::shared_ptr<RecipeStore> recipeStore, Recipe selectedRecipe):
+    QDialog             (parent),
+    ui                  (new Ui::AddRecipe),
+    m_store             (recipeStore),
+    m_selectedRecipe    (selectedRecipe),
+    m_isModifyingRecipe (true)
 {
     ui->setupUi(this);
     init();
@@ -34,6 +47,20 @@ void AddRecipe::init()
     ui->ingredient_choose_unit->addItem(QString(Conversions::to_string(UnitType_Cup).c_str()));
     ui->ingredient_choose_unit->addItem(QString(Conversions::to_string(UnitType_TeaSpoon).c_str()));
     ui->ingredient_choose_unit->addItem(QString(Conversions::to_string(UnitType_BigSpoon).c_str()));
+
+    if (m_isModifyingRecipe)
+    {
+        ui->edit_name->setText(m_selectedRecipe.getName().c_str());
+        ui->edit_time->setText(std::to_string(m_selectedRecipe.getPreparationTimeInMinutes()).c_str());
+        ui->edit_description->setPlainText(m_selectedRecipe.getDescription().c_str());
+
+        int nbIngredients = m_selectedRecipe.getNumberOfIngredients();
+        for (int i = 0; i < nbIngredients; ++i)
+        {
+            ui->ingredientlist->addItem(m_selectedRecipe.getIngredient(i).getFriendlyName().c_str());
+            m_currentIngredients.push_back(m_selectedRecipe.getIngredient(i));
+        }
+    }
 }
 
 void AddRecipe::clearAll()
@@ -49,17 +76,25 @@ void AddRecipe::clearAll()
 
 void AddRecipe::on_buttonBox_accepted()
 {
-    try {
-        addCurrentRecipeAndClear();
-    } catch (std::invalid_argument e) {
+    try
+    {
+        if (m_isModifyingRecipe)
+            m_store->deleteRecipe(m_selectedRecipe);
+
+        addCurrentRecipe();
+        clearAll();
+    }
+    catch (std::invalid_argument e)
+    {
         ViewUtils::showError(e.what());
     }
-    catch (std::ios_base::failure f) {
+    catch (std::ios_base::failure f)
+    {
         ViewUtils::showError(f.what());
     }
 }
 
-void AddRecipe::addCurrentRecipeAndClear()
+void AddRecipe::addCurrentRecipe()
 {
     std::string name = ui->edit_name->text().toStdString();
     std::string description = ui->edit_description->toPlainText().toStdString();
@@ -88,12 +123,40 @@ void AddRecipe::addCurrentIngredientAndClearIngredient()
     ui->ingredient_choose_unit->setCurrentIndex(0);
 }
 
+void AddRecipe::deleteIngredient(std::string ingredientDescription)
+{
+    for (auto it = m_currentIngredients.begin(); it != m_currentIngredients.end(); ++it)
+    {
+        if (it->getFriendlyName() == ingredientDescription)
+        {
+            m_currentIngredients.erase(it);
+            break;
+        }
+    }
+}
+
 void AddRecipe::on_ingredient_buttonadd_clicked()
 {
-    try {
+    try
+    {
         addCurrentIngredientAndClearIngredient();
-    } catch (std::invalid_argument e) {
+    }
+    catch (std::invalid_argument e)
+    {
         ViewUtils::showError(e.what());
     }
 }
 
+
+void AddRecipe::on_button_ingredient_delete_clicked()
+{
+    try
+    {
+        deleteIngredient(ui->ingredientlist->currentItem()->text().toStdString());
+        ui->ingredientlist->takeItem(ui->ingredientlist->currentRow());
+    }
+    catch (std::invalid_argument e)
+    {
+        ViewUtils::showError(e.what());
+    }
+}

@@ -6,7 +6,13 @@ CONFIG -= app_bundle
 
 TEMPLATE = app
 
-SOURCES +=  tst_recipestoragetests.cpp
+SOURCES +=  main.cpp \
+    recipestoragetests.cpp \
+    recipestoretests.cpp
+
+HEADERS += \
+    recipestoragetests.h \
+    recipestoretests.h
 
 INCLUDEPATH += ../
 
