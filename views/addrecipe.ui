@@ -113,6 +113,13 @@
         <item row="2" column="1">
          <widget class="QComboBox" name="ingredient_choose_unit"/>
         </item>
+        <item row="3" column="1">
+         <widget class="QPushButton" name="ingredient_buttonadd">
+          <property name="text">
+           <string>Add</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item row="1" column="0">

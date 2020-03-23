@@ -23,7 +23,8 @@ SOURCES +=  main.cpp \
             old-views/gererconfiguration.cpp \
             old-views/listeingredients.cpp \
             views/addrecipe.cpp \
-            views/thomchefwindow.cpp
+            views/thomchefwindow.cpp \
+            views/viewutils.cpp
 
 
 HEADERS  += old-core/data.h \
@@ -34,7 +35,8 @@ HEADERS  += old-core/data.h \
             old-views/gererconfiguration.h \
             old-views/listeingredients.h \
             views/addrecipe.h \
-            views/thomchefwindow.h
+            views/thomchefwindow.h \
+            views/viewutils.h
 
 FORMS    += old-views/mainwindow.ui \
             old-views/ajouterrecette.ui \

@@ -17,7 +17,7 @@ Recipe FileRecipeStorage::readRecipe(std::string recipeSerialization)
     if (!result)
         throw std::ios_base::failure("Could not read the RecipeStore file");
 
-    xml_node recipeNode = doc.root();
+    xml_node recipeNode = doc.first_child();
     std::string name = recipeNode.child("Name").child_value();
     std::string category = recipeNode.child("Category").child_value();
     std::string description = recipeNode.child("Description").child_value();
@@ -41,8 +41,7 @@ Recipe FileRecipeStorage::readRecipe(std::string recipeSerialization)
 std::string FileRecipeStorage::serializeRecipe(Recipe recipe)
 {
     pugi::xml_document doc;
-    pugi::xml_node recipeNode = doc.root();
-    recipeNode.set_name("Recipe");
+    pugi::xml_node recipeNode = doc.append_child("Recipe");
     recipeNode.append_child("Name").append_child(pugi::node_pcdata).set_value(recipe.getName().c_str());
     recipeNode.append_child("Category").append_child(pugi::node_pcdata).set_value(Conversions::to_string(recipe.getCategory()).c_str());
     recipeNode.append_child("Description").append_child(pugi::node_pcdata).set_value(recipe.getDescription().c_str());
@@ -92,10 +91,10 @@ bool FileRecipeStorage::save(std::vector<Recipe> recipes)
     {
         Recipe recipe = recipes[i];
         pugi::xml_document doc;
-        pugi::xml_parse_result result = doc.load(serializeRecipe(recipe).c_str());  // TODO Deprecated
+        pugi::xml_parse_result result = doc.load_string(serializeRecipe(recipe).c_str());
         if (!result)
             throw std::ios_base::failure("Could not read the RecipeStore file");
-        recipeStoreNode.append_copy(doc.root());
+        recipeStoreNode.append_copy(doc.first_child());
     }
     return doc.save_file(m_filename.c_str());
 }

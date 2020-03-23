@@ -19,8 +19,12 @@ public:
 
     void initialize();
 
+private slots:
+    void on_button_addrecipe_clicked();
+
 private:
     Ui::ThomChefWindow *ui;
+    std::shared_ptr<FileRecipeStorage> m_storage;
     std::shared_ptr<RecipeStore> m_store;
 };
 

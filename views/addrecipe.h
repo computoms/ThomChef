@@ -13,13 +13,20 @@ class AddRecipe : public QDialog
     Q_OBJECT
 
 public:
-    explicit AddRecipe(QWidget *parent = nullptr);
+    explicit AddRecipe(QWidget *parent = nullptr, std::shared_ptr<RecipeStore> recipeStore = nullptr);
     ~AddRecipe();
 
+    void init();
     void clearAll();
 
 private slots:
     void on_buttonBox_accepted();
+
+    void on_ingredient_buttonadd_clicked();
+
+private:
+    void addCurrentRecipeAndClear();
+    void addCurrentIngredientAndClearIngredient();
 
 private:
     Ui::AddRecipe *ui;
