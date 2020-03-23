@@ -2,7 +2,7 @@
 #define ADDRECIPE_H
 
 #include <QDialog>
-#include "core/recipestore.h"
+#include "ThomChefCore/recipestore.h"
 
 namespace Ui {
 class AddRecipe;

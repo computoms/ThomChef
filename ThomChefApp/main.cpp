@@ -1,12 +1,9 @@
-#include "old-views/mainwindow.h"
-#include "views/thomchefwindow.h"
+#include "thomchefwindow.h"
 #include <QApplication>
 #include <QTextCodec>
 #include <QMessageBox>
 
 #include "viewutils.h"
-
-//#define OLD_VIEW
 
 int main(int argc, char *argv[])
 {
@@ -17,22 +14,17 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     qApp->setWindowIcon(QIcon("Resources/icone.icns"));
 
-    try {
-
-#ifdef OLD_VIEW
-    MainWindow w;
-    w.setWindowIcon(QIcon("Resources/icone.icns"));
-    w.showMaximized();
-#else
-    ThomChefWindow w;
-    w.setWindowIcon(QIcon("Resources/icon.icns"));
-    w.initialize();
-    w.showMaximized();
-#endif
-
+    try
+    {
+        ThomChefWindow w;
+        w.setWindowIcon(QIcon("Resources/icon.icns"));
+        w.initialize();
+        w.showMaximized();
 
         return a.exec();
-    } catch (std::exception e) {
+    }
+    catch (std::exception e)
+    {
         ViewUtils::showError(e.what());
         return EXIT_FAILURE;
     }

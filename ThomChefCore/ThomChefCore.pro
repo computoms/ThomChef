@@ -21,8 +21,8 @@ SOURCES += \
     filerecipestorage.cpp \
     ingredient.cpp \
     recipe.cpp \
-    ../libs/pugixml-1.9/src/pugixml.cpp \
-    recipestore.cpp
+    recipestore.cpp \
+    ../libs/pugixml-1.9/src/pugixml.cpp
 
 HEADERS += \
     ThomChefCore_global.h \
@@ -31,9 +31,10 @@ HEADERS += \
     filerecipestorage.h \
     ingredient.h \
     recipe.h \
+    recipestore.h \
+    thomchefcore.h \
     ../libs/pugixml-1.9/src/pugixml.hpp \
-    ../libs/pugixml-1.9/src/pugiconfig.hpp \
-    recipestore.h
+    ../libs/pugixml-1.9/src/pugiconfig.hpp
 
 INCLUDEPATH += ../
 

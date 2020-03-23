@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 
-#include "core/recipestore.h"
+#include "ThomChefCore/recipestore.h"
 
 namespace Ui {
 class ThomChefWindow;

@@ -1,8 +1,8 @@
 #include "addrecipe.h"
 #include "ui_addrecipe.h"
 
-#include "core/conversions.h"
-#include "core/recipe.h"
+#include "ThomChefCore/conversions.h"
+#include "ThomChefCore/recipe.h"
 #include "viewutils.h"
 #include <QString>
 #include <iostream>

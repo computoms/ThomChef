@@ -3,7 +3,7 @@
 #include "addrecipe.h"
 #include "viewutils.h"
 
-#include "core/filerecipestorage.h"
+#include "ThomChefCore/filerecipestorage.h"
 #include <ios>
 
 ThomChefWindow::ThomChefWindow(QWidget *parent) :
