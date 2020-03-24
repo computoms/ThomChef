@@ -19,6 +19,8 @@ private slots:
     void isInFilter_recipeWithDifferentIngredient_ReturnsFalse();
     void isInFilter_recipeWithPartialFilter_ReturnsTrue();
 
+    void removeIngredientFilter_recipeWithDifferentIngredient_isNowInFilter();
+
 private:
     Recipe m_recipe;
 };

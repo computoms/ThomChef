@@ -13,14 +13,14 @@ void RecipeStore::initialize()
 
 int RecipeStore::getNumberOfRecipes() const
 {
-    if (!m_filter)
+    if (!hasFilter())
         return m_recipes.size();
     return m_filteredRecipeIndexes.size();
 }
 
 Recipe RecipeStore::getRecipe(int recipeIndex) const
 {
-    if (!m_filter)
+    if (!hasFilter())
     {
         if (recipeIndex < 0 || recipeIndex >= (int)m_recipes.size())
             throw std::invalid_argument("Recipe of index " + std::to_string(recipeIndex) + " not found");
@@ -86,21 +86,42 @@ void RecipeStore::deleteRecipe(Recipe recipe)
     emit changed();
 }
 
+bool RecipeStore::hasFilter() const
+{
+    return m_filter != nullptr;
+}
+
 void RecipeStore::setFilter(std::shared_ptr<Filter> filter)
 {
     m_filter = filter;
+    if (m_filter)
+        connect(m_filter.get(), SIGNAL(updated()), this, SLOT(on_filter_updated()));
 
-    // Update filtered recipes
-    m_filteredRecipeIndexes.clear();
-    for (int i = 0; i < (int)m_recipes.size(); ++i)
-    {
-        if (m_filter->isInFilter(m_recipes[i]))
-            m_filteredRecipeIndexes.push_back(i);
-    }
+    updateFilter();
+    emit changed();
 }
 
 void RecipeStore::removeFilter()
 {
     m_filter.reset();
     m_filteredRecipeIndexes.clear();
+}
+
+void RecipeStore::on_filter_updated()
+{
+    updateFilter();
+    emit changed();
+}
+
+void RecipeStore::updateFilter()
+{
+    if (!hasFilter())
+        return;
+
+    m_filteredRecipeIndexes.clear();
+    for (int i = 0; i < (int)m_recipes.size(); ++i)
+    {
+        if (m_filter->isInFilter(m_recipes[i]))
+            m_filteredRecipeIndexes.push_back(i);
+    }
 }

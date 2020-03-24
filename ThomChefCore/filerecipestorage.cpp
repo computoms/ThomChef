@@ -71,7 +71,7 @@ std::vector<Recipe> FileRecipeStorage::read() const
     pugi::xml_document doc;
     xml_parse_result result = doc.load_file(m_filename.c_str());
     if (!result)
-        throw std::ios_base::failure("Could not read the RecipeStore file");
+        return std::vector<Recipe>();
 
     std::vector<Recipe> recipes;
     for (xml_node recipeNode = doc.child("RecipeStore").child("Recipe");

@@ -42,3 +42,14 @@ void FilterTests::isInFilter_recipeWithPartialFilter_ReturnsTrue()
 
     QCOMPARE(result, true);
 }
+
+void FilterTests::removeIngredientFilter_recipeWithDifferentIngredient_isNowInFilter()
+{
+    Filter filter;
+    filter.addIngredientFilter("Carottes");
+    QCOMPARE(filter.isInFilter(m_recipe), false);
+
+    filter.removeIngredientFilter("Carottes");
+
+    QCOMPARE(filter.isInFilter(m_recipe), true);
+}

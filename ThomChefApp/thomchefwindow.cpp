@@ -15,6 +15,7 @@ ThomChefWindow::ThomChefWindow(QWidget *parent) :
     ui->setupUi(this);
     m_storage = std::make_shared<FileRecipeStorage>("recipes.xml");
     m_store = std::make_shared<RecipeStore>(m_storage);
+    m_filter = std::make_shared<Filter>();
     connect(m_store.get(), SIGNAL(changed()), this, SLOT(on_store_changed()));
 }
 
@@ -52,7 +53,7 @@ void ThomChefWindow::updateRecipeList()
     for (int i = 0; i < nbRecipes; ++i)
     {
         Recipe recipe = m_store->getRecipe(i);
-        ui->listrecipes->addItem(recipe.getName().c_str());
+        ui->listrecipes->addItem(new RecipeListWidgetItem(recipe.getId(), recipe.getName().c_str()));
     }
     m_updating = false;
     if (nbRecipes > 0)
@@ -101,6 +102,20 @@ time_t ThomChefWindow::getCurrentRecipeId() const
 {
     RecipeListWidgetItem *currentItem = dynamic_cast<RecipeListWidgetItem*>(ui->listrecipes->currentItem());
     return currentItem->getId();
+}
+
+void ThomChefWindow::addIngredientFilter(std::string filter)
+{
+    m_filter->addIngredientFilter(filter);
+    if (!m_store->hasFilter())
+        m_store->setFilter(m_filter);
+}
+
+void ThomChefWindow::removeIngredientFilter(std::string filter)
+{
+    m_filter->removeIngredientFilter(filter);
+    if (m_filter->isEmpty() && m_store->hasFilter())
+        m_store->removeFilter();
 }
 
 
@@ -153,3 +168,34 @@ void ThomChefWindow::on_store_changed()
     }
 }
 
+void ThomChefWindow::on_button_findRecipe_add_clicked()
+{
+    try {
+        addIngredientFilter(ui->edit_ingredientFilter->text().toStdString());
+        ui->listIngredientFilters->addItem(ui->edit_ingredientFilter->text());
+        ui->edit_ingredientFilter->setText("");
+        if (!ui->button_ingredientfilter_remove->isEnabled())
+            ui->button_ingredientfilter_remove->setEnabled(true);
+    }
+    catch (std::invalid_argument e)
+    {
+        ViewUtils::showError(e.what());
+    }
+}
+
+void ThomChefWindow::on_button_ingredientfilter_remove_clicked()
+{
+    try
+    {
+        removeIngredientFilter(ui->listIngredientFilters->currentItem()->text().toStdString());
+        ui->listIngredientFilters->takeItem(ui->listIngredientFilters->currentRow());
+        if (m_filter->isEmpty())
+            ui->button_ingredientfilter_remove->setEnabled(false);
+        else if (!ui->button_ingredientfilter_remove->isEnabled())
+            ui->button_ingredientfilter_remove->setEnabled(true);
+    }
+    catch (std::invalid_argument e)
+    {
+        ViewUtils::showError(e.what());
+    }
+}

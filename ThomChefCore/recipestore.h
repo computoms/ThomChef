@@ -29,11 +29,18 @@ public:
     bool updateRecipe(Recipe recipe);
     void deleteRecipe(Recipe recipe);
 
+    bool hasFilter() const;
     void setFilter(std::shared_ptr<Filter> filter);
     void removeFilter();
 
 signals:
     void changed();
+
+private slots:
+    void on_filter_updated();
+
+private:
+    void updateFilter();
 
 private:
     std::vector<Recipe> m_recipes;

@@ -3,14 +3,22 @@
 
 #include <vector>
 #include "recipe.h"
+#include <QObject>
 
-class Filter
+class Filter : public QObject
 {
+    Q_OBJECT
+
 public:
     Filter();
 
     bool isInFilter(Recipe &recipe) const;
     void addIngredientFilter(std::string ingredientFilter);
+    void removeIngredientFilter(std::string ingredientFilter);
+    bool isEmpty() const;
+
+signals:
+    void updated();
 
 private:
     bool hasFilter(std::string ingredientFilter, Recipe &recipe) const;
