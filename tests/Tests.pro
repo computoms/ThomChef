@@ -7,10 +7,12 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 SOURCES +=  main.cpp \
+    filtertests.cpp \
     recipestoragetests.cpp \
     recipestoretests.cpp
 
 HEADERS += \
+    filtertests.h \
     recipestoragetests.h \
     recipestoretests.h
 

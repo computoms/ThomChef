@@ -1,6 +1,7 @@
 #include <QtTest>
 #include "recipestoragetests.h"
 #include "recipestoretests.h"
+#include "filtertests.h"
 
 int main(int argc, char *argv[])
 {
@@ -11,6 +12,9 @@ int main(int argc, char *argv[])
 
     RecipeStoreTests recipeStoreTests;
     status |= QTest::qExec(&recipeStoreTests, argc, argv);
+
+    FilterTests filterTests;
+    status |= QTest::qExec(&filterTests, argc, argv);
 
     return status;
 }

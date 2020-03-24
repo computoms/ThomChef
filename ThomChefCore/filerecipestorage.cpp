@@ -10,7 +10,7 @@ FileRecipeStorage::FileRecipeStorage(std::string filename):
 
 }
 
-Recipe FileRecipeStorage::readRecipe(std::string recipeSerialization)
+Recipe FileRecipeStorage::readRecipe(std::string recipeSerialization) const
 {
     xml_document doc;
     xml_parse_result result = doc.load_string(recipeSerialization.c_str());
@@ -38,7 +38,7 @@ Recipe FileRecipeStorage::readRecipe(std::string recipeSerialization)
     return recipe;
 }
 
-std::string FileRecipeStorage::serializeRecipe(Recipe recipe)
+std::string FileRecipeStorage::serializeRecipe(Recipe recipe) const
 {
     pugi::xml_document doc;
     pugi::xml_node recipeNode = doc.append_child("Recipe");
@@ -64,7 +64,7 @@ std::string FileRecipeStorage::serializeRecipe(Recipe recipe)
     return ss.str();
 }
 
-std::vector<Recipe> FileRecipeStorage::read()
+std::vector<Recipe> FileRecipeStorage::read() const
 {
     pugi::xml_document doc;
     xml_parse_result result = doc.load_file(m_filename.c_str());
@@ -83,11 +83,11 @@ std::vector<Recipe> FileRecipeStorage::read()
     return recipes;
 }
 
-bool FileRecipeStorage::save(std::vector<Recipe> recipes)
+bool FileRecipeStorage::save(std::vector<Recipe> recipes) const
 {
     xml_document doc;
     xml_node recipeStoreNode = doc.append_child("RecipeStore");
-    for (int i(0); i < recipes.size(); ++i)
+    for (int i(0); i < (int) recipes.size(); ++i)
     {
         Recipe recipe = recipes[i];
         pugi::xml_document doc;

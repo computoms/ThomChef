@@ -1,11 +1,13 @@
 #include <sstream>
 #include <fstream>
 #include "recipestoragetests.h"
-#include "ThomChefCore/filerecipestorage.h"
 
 
 
-RecipeStorageTests::RecipeStorageTests()
+
+RecipeStorageTests::RecipeStorageTests():
+    m_storage("test.xml"),
+    m_defaultFilename   ("test.xml")
 {
 
 }
@@ -15,32 +17,29 @@ RecipeStorageTests::~RecipeStorageTests()
 
 }
 
-void RecipeStorageTests::saveSimpleFileStorage(std::string filename)
+void RecipeStorageTests::saveSimpleFileStorage()
 {
-    FileRecipeStorage storage(filename);
     std::vector<Recipe> recipes;
     Recipe recipe("Testing recipe", Category_Standard, "Description of the recipe.", 20);
     recipe.addIngredient(Ingredient("Tomato", 1, UnitType_Number));
     recipe.addIngredient(Ingredient("Egg", 2, UnitType_Number));
     recipes.push_back(recipe);
 
-    storage.save(recipes);
+    m_storage.save(recipes);
 }
 
 std::string RecipeStorageTests::serializeSimpleRecipe()
 {
-    FileRecipeStorage storage("test.xml");
     Recipe probingRecipe("My Testing Recipe", Category_Quick, "This is my description", 45);
     probingRecipe.addIngredient(Ingredient("Eggs", 2, UnitType_Number));
     probingRecipe.addIngredient(Ingredient("Cream", 20, UnitType_Mililiters));
     probingRecipe.addIngredient(Ingredient("Cheese", 2, UnitType_Cup));
 
-    return storage.serializeRecipe(probingRecipe);
+    return m_storage.serializeRecipe(probingRecipe);
 }
 
 std::string RecipeStorageTests::generateSimpleRecipeSerialization()
 {
-    FileRecipeStorage storage("test.xml");
     pugi::xml_document doc;
     pugi::xml_node recipeNode = doc.append_child("Recipe");
     recipeNode.append_child("Name").append_child(pugi::node_pcdata).set_value("My Testing Recipe");
@@ -109,29 +108,25 @@ void RecipeStorageTests::serializeRecipe_ValidXmlNode_ReturnsValidRecipePrepTime
 
 void RecipeStorageTests::readRecipeSerialization_ValidXml_ReturnsValidRecipeName()
 {
-    FileRecipeStorage storage("test.xml");
-    Recipe recipe = storage.readRecipe(generateSimpleRecipeSerialization());
+    Recipe recipe = m_storage.readRecipe(generateSimpleRecipeSerialization());
     QVERIFY(recipe.getName() == "My Testing Recipe");
 }
 
 void RecipeStorageTests::readRecipeSerialization_ValidXml_ReturnsValidRecipeDescription()
 {
-    FileRecipeStorage storage("test.xml");
-    Recipe recipe = storage.readRecipe(generateSimpleRecipeSerialization());
+    Recipe recipe = m_storage.readRecipe(generateSimpleRecipeSerialization());
     QVERIFY(recipe.getDescription() == "This is my description");
 }
 
 void RecipeStorageTests::readRecipeSerialization_ValidXml_ReturnsValidRecipeCategory()
 {
-    FileRecipeStorage storage("test.xml");
-    Recipe recipe = storage.readRecipe(generateSimpleRecipeSerialization());
+    Recipe recipe = m_storage.readRecipe(generateSimpleRecipeSerialization());
     QVERIFY(recipe.getCategory() == Category_Quick);
 }
 
 void RecipeStorageTests::readRecipeSerialization_ValidXml_ReturnsValidRecipePrepTime()
 {
-    FileRecipeStorage storage("test.xml");
-    Recipe recipe = storage.readRecipe(generateSimpleRecipeSerialization());
+    Recipe recipe = m_storage.readRecipe(generateSimpleRecipeSerialization());
     QVERIFY(recipe.getPreparationTimeInMinutes() == 45);
 }
 
@@ -186,17 +181,15 @@ void RecipeStorageTests::pugiXmlSave_UsingAppendCopy_SaveValidXmlFile()
 
 void RecipeStorageTests::save_StoreWithOneRecipe_CreatesValidXmlFile()
 {
-    std::string filename = "test.xml";
-    saveSimpleFileStorage(filename);
-    std::ifstream f(filename.c_str());
+    saveSimpleFileStorage();
+    std::ifstream f(m_defaultFilename.c_str());
     QVERIFY(f.good());
 }
 
 void RecipeStorageTests::save_StoreWithOneRecipe_CreatesValidRootTag()
 {
-    std::string filename = "test.xml";
-    saveSimpleFileStorage(filename);
-    std::ifstream f(filename.c_str());
+    saveSimpleFileStorage();
+    std::ifstream f(m_defaultFilename.c_str());
     std::string line;
     std::getline(f, line); // Skip first line, xml tag definition
     std::getline(f, line);
@@ -205,8 +198,7 @@ void RecipeStorageTests::save_StoreWithOneRecipe_CreatesValidRootTag()
 
 void RecipeStorageTests::save_StoreWithOneRecipe_CreatesValidContent()
 {
-    std::string filename = "test.xml";
-    std::ifstream f(filename.c_str());
+    std::ifstream f(m_defaultFilename.c_str());
     std::string line;
     std::getline(f, line);
     std::getline(f, line);

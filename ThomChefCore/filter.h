@@ -10,6 +10,7 @@ public:
     Filter();
 
     bool isInFilter(Recipe &recipe) const;
+    void addIngredientFilter(std::string ingredientFilter);
 
 private:
     bool hasFilter(std::string ingredientFilter, Recipe &recipe) const;

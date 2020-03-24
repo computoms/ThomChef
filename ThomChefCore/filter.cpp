@@ -14,6 +14,11 @@ bool Filter::isInFilter(Recipe &recipe) const
     return true;
 }
 
+void Filter::addIngredientFilter(std::string ingredientFilter)
+{
+    m_ingredientFilters.push_back(ingredientFilter);
+}
+
 bool Filter::hasFilter(std::string ingredientFilter, Recipe &recipe) const
 {
     int nbOfIngredients = recipe.getNumberOfIngredients();

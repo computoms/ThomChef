@@ -8,20 +8,25 @@
 #include "filerecipestorage.h"
 #include "filter.h"
 
+/**
+ * @brief The RecipeStore class represents the database interface to the recipes.
+ */
 class RecipeStore : public QObject
 {
     Q_OBJECT
 
 public:
-    RecipeStore(std::shared_ptr<FileRecipeStorage> storage);
+    RecipeStore(std::shared_ptr<RecipeStorage> storage);
 
     void initialize();
 
     int getNumberOfRecipes() const;
     Recipe getRecipe(int recipeIndex) const;
     Recipe findRecipeByName(std::string name) const;
+    Recipe findRecipe(long id) const;
 
     void addRecipe(Recipe recipe);
+    bool updateRecipe(Recipe recipe);
     void deleteRecipe(Recipe recipe);
 
     void setFilter(std::shared_ptr<Filter> filter);
@@ -32,7 +37,7 @@ signals:
 
 private:
     std::vector<Recipe> m_recipes;
-    std::shared_ptr<FileRecipeStorage> m_storage;
+    std::shared_ptr<RecipeStorage> m_storage;
     std::shared_ptr<Filter> m_filter;
     std::vector<int> m_filteredRecipeIndexes;
 

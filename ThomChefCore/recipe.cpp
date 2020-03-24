@@ -1,4 +1,6 @@
 #include "recipe.h"
+#include <ctime>
+#include <chrono>
 
 Recipe::Recipe(std::string name, Category category,
                std::string description, double preparationTimeInMinutes):
@@ -7,7 +9,23 @@ Recipe::Recipe(std::string name, Category category,
     m_description       (description),
     m_prepTimeInMinutes (preparationTimeInMinutes)
 {
+    m_id = generateGuid();
+}
 
+Recipe::Recipe(long id, std::string name, Category category,
+               std::string description, double prepTimeInMinutes):
+    m_id            (id),
+    m_name          (name),
+    m_category      (category),
+    m_description   (description),
+    m_prepTimeInMinutes(prepTimeInMinutes)
+{
+
+}
+
+long Recipe::getId() const
+{
+    return m_id;
 }
 
 std::string Recipe::getName() const
@@ -61,4 +79,12 @@ std::string Recipe::getFriendlyIngredients()
     }
 
     return ingredientsDescription;
+}
+
+time_t Recipe::generateGuid()
+{
+    auto now = std::chrono::system_clock::now();
+    time_t nowTt = std::chrono::system_clock::to_time_t(now);
+    time_t reference = 1577836800; // 01-01-2020
+    return nowTt - reference;
 }

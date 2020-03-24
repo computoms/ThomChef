@@ -1,6 +1,6 @@
 #include "recipestore.h"
 
-RecipeStore::RecipeStore(std::shared_ptr<FileRecipeStorage> storage):
+RecipeStore::RecipeStore(std::shared_ptr<RecipeStorage> storage):
     m_storage   (storage)
 {
 
@@ -42,11 +42,34 @@ Recipe RecipeStore::findRecipeByName(std::string name) const
     throw std::invalid_argument("Could not find recipe with name " + name);
 }
 
+Recipe RecipeStore::findRecipe(long id) const
+{
+    for (auto &recipe : m_recipes)
+        if (recipe.getId() == id)
+            return recipe;
+    throw std::invalid_argument("Could not find recipe of id " + std::to_string(id));
+}
+
 void RecipeStore::addRecipe(Recipe recipe)
 {
     m_recipes.push_back(recipe);
     m_storage->save(m_recipes);
     emit changed();
+}
+
+bool RecipeStore::updateRecipe(Recipe recipe)
+{
+    for (size_t i = 0; i < m_recipes.size(); ++i)
+    {
+        if (m_recipes[i].getId() == recipe.getId())
+        {
+            m_recipes[i] = recipe;
+            m_storage->save(m_recipes);
+            emit changed();
+            return true;
+        }
+    }
+    return false;
 }
 
 void RecipeStore::deleteRecipe(Recipe recipe)
