@@ -43,68 +43,28 @@ time_t Conversions::to_time_t(std::string input)
     return output;
 }
 
-UnitType Conversions::to_unitType(std::string input)
+UnitType Conversions::to_unitType(std::string input, bool isFriendlyName)
 {
-    if (input == "UnitType_Number")
-        return UnitType_Number;
-    if (input == "UnitType_Grammes")
-        return UnitType_Grammes;
-    if (input == "UnitType_Liters")
-        return UnitType_Liters;
-    if (input == "UnitType_Mililiters")
-        return UnitType_Mililiters;
-    if (input == "UnitType_Cup")
-        return UnitType_Cup;
-    if (input == "UnitType_BigSpoon")
-        return UnitType_BigSpoon;
-    if (input == "UnitType_TeaSpoon")
-        return UnitType_TeaSpoon;
+    for (auto &type : (UnitTypes()).getTypes())
+    {
+        if (isFriendlyName && input == type.friendlyName)
+            return type;
+        if (!isFriendlyName && input == type.serialization)
+            return type;
+    }
     throw std::invalid_argument("Cannot convert " + input + " to a UnitType");
 }
 
-Category Conversions::to_category(std::string input)
+Category Conversions::to_category(std::string input, bool isFriendlyName)
 {
-    if (input == "Category_Quick")
-        return Category_Quick;
-    if (input == "Category_Standard")
-        return Category_Standard;
-    if (input == "Category_Long")
-        return Category_Long;
+    for (auto &type : Categories::getTypes())
+    {
+        if (isFriendlyName && input == type.friendlyName)
+            return type;
+        if (!isFriendlyName && input == type.serialization)
+            return type;
+    }
     throw std::invalid_argument("Cannot convert " + input + " to a Category");
-}
-
-std::string Conversions::to_string(UnitType unit)
-{
-    switch (unit) {
-    case UnitType_Number:
-        return "UnitType_Number";
-    case UnitType_Grammes:
-        return "UnitType_Grammes";
-    case UnitType_Liters:
-        return "UnitType_Liters";
-    case UnitType_Mililiters:
-        return "UnitType_Mililiters";
-    case UnitType_Cup:
-        return "UnitType_Cup";
-    case UnitType_BigSpoon:
-        return "UnitType_BigSpoon";
-    case UnitType_TeaSpoon:
-        return "UnitType_TeaSpoon";
-    }
-    throw std::invalid_argument("Unknown UnitType");
-}
-
-std::string Conversions::to_string(Category cat)
-{
-    switch (cat) {
-    case Category_Quick:
-        return "Category_Quick";
-    case Category_Standard:
-        return "Category_Standard";
-    case Category_Long:
-        return "Category_Long";
-    }
-    throw std::invalid_argument("Unknown Category");
 }
 
 std::string Conversions::to_string(double quantity)
@@ -115,25 +75,4 @@ std::string Conversions::to_string(double quantity)
     if (result[result.length() - 1] == '.')
         result = result.substr(0, result.length() - 1);
     return result;
-}
-
-std::string Conversions::to_friendlyUnit(UnitType unit)
-{
-    switch (unit) {
-    case UnitType_Number:
-        return "";
-    case UnitType_Grammes:
-        return "g";
-    case UnitType_Liters:
-        return "L";
-    case UnitType_Mililiters:
-        return "mL";
-    case UnitType_Cup:
-        return "cup";
-    case UnitType_BigSpoon:
-        return "b.s.";
-    case UnitType_TeaSpoon:
-        return "t.s.";
-    }
-    throw std::invalid_argument("Unknown UnitType");
 }

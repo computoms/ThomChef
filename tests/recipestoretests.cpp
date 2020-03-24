@@ -22,8 +22,8 @@ void TestingRecipeStorage::reset()
 RecipeStoreTests::RecipeStoreTests():
     storage(std::make_shared<TestingRecipeStorage>()),
     store(storage),
-    recipe1(1, "Test1", Category_Quick, "", 5),
-    recipe2(2, "Test2", Category_Standard, "", 10)
+    recipe1(1, "Test1", Categories().Quick, "", 5),
+    recipe2(2, "Test2", Categories().Standard, "", 10)
 {
 }
 
@@ -39,7 +39,7 @@ void RecipeStoreTests::update_storeContainingSingleRecipe_UpdatesRecipe()
 {
     init();
 
-    Recipe updatedRecipe(1, "Test2", Category_Quick, "This is a description", 25);
+    Recipe updatedRecipe(1, "Test2", Categories().Quick, "This is a description", 25);
     store.updateRecipe(updatedRecipe);
 
     QCOMPARE(storage->m_recipes[0].getId(), 1);
@@ -77,8 +77,10 @@ void RecipeStoreTests::setFilter_withFilterThatRestrictsStoreToOneRecipe_Returns
 {
     init();
 
-    recipe1.addIngredient(Ingredient("Tomato", 1, UnitType_Number));
+    recipe1.addIngredient(Ingredient("Tomato", 1, UnitTypes().Number));
     store.updateRecipe(recipe1);
+    recipe2.addIngredient(Ingredient("Carottes", 2, UnitTypes().Number));
+    store.updateRecipe(recipe2);
 
     QCOMPARE(store.getNumberOfRecipes(), 2);
 
@@ -93,7 +95,7 @@ void RecipeStoreTests::setFilter_partialFilter_SelectsCorrectRecipes()
 {
     init();
 
-    recipe1.addIngredient(Ingredient("Tomato", 1, UnitType_Number));
+    recipe1.addIngredient(Ingredient("Tomato", 1, UnitTypes().Number));
 
     std::shared_ptr<Filter> filter = std::make_shared<Filter>();
     filter->addIngredientFilter("Toma");

@@ -24,7 +24,7 @@ Recipe FileRecipeStorage::readRecipe(std::string recipeSerialization) const
     std::string description = recipeNode.child("Description").child_value();
     std::string prepTime = recipeNode.child("PreparationTime").child_value();
 
-    Recipe recipe(id, name, Conversions::to_category(category), description, Conversions::to_double(prepTime));
+    Recipe recipe(id, name, Conversions::to_category(category, false), description, Conversions::to_double(prepTime));
     for (pugi::xml_node ingNode = recipeNode.child("Ingredients").child("Ingredient");
              ingNode; ingNode = ingNode.next_sibling("Ingredient"))
     {
@@ -32,7 +32,7 @@ Recipe FileRecipeStorage::readRecipe(std::string recipeSerialization) const
         std::string quantity = ingNode.child("Quantity").child_value();
         std::string unit = ingNode.child("Unit").child_value();
 
-        Ingredient ing(ingName, Conversions::to_double(quantity), Conversions::to_unitType(unit));
+        Ingredient ing(ingName, Conversions::to_double(quantity), Conversions::to_unitType(unit, false));
         recipe.addIngredient(ing);
     }
 
@@ -45,7 +45,7 @@ std::string FileRecipeStorage::serializeRecipe(Recipe recipe) const
     pugi::xml_node recipeNode = doc.append_child("Recipe");
     recipeNode.append_child("Id").append_child(pugi::node_pcdata).set_value(std::to_string(recipe.getId()).c_str());
     recipeNode.append_child("Name").append_child(pugi::node_pcdata).set_value(recipe.getName().c_str());
-    recipeNode.append_child("Category").append_child(pugi::node_pcdata).set_value(Conversions::to_string(recipe.getCategory()).c_str());
+    recipeNode.append_child("Category").append_child(pugi::node_pcdata).set_value(recipe.getCategory().serialization.c_str());
     recipeNode.append_child("Description").append_child(pugi::node_pcdata).set_value(recipe.getDescription().c_str());
     recipeNode.append_child("PreparationTime").append_child(pugi::node_pcdata).set_value(std::to_string(recipe.getPreparationTimeInMinutes()).c_str());
     pugi::xml_node ingredientCollectionNode = recipeNode.append_child("Ingredients");
@@ -57,7 +57,7 @@ std::string FileRecipeStorage::serializeRecipe(Recipe recipe) const
         pugi::xml_node ingNode = ingredientCollectionNode.append_child("Ingredient");
         ingNode.append_child("Name").append_child(pugi::node_pcdata).set_value(ing.getName().c_str());
         ingNode.append_child("Quantity").append_child(pugi::node_pcdata).set_value(std::to_string(ing.getQuantity()).c_str());
-        ingNode.append_child("Unit").append_child(pugi::node_pcdata).set_value(Conversions::to_string(ing.getUnit()).c_str());
+        ingNode.append_child("Unit").append_child(pugi::node_pcdata).set_value(ing.getUnit().serialization.c_str());
     }
 
     std::stringstream ss;

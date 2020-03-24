@@ -1,7 +1,7 @@
 #include "filtertests.h"
 
 FilterTests::FilterTests():
-    m_recipe    ("TestRecipe", Category_Quick, "", 0)
+    m_recipe    ("TestRecipe", Categories().Quick, "", 0)
 {
 
 }
@@ -9,8 +9,8 @@ FilterTests::FilterTests():
 void FilterTests::initTestCase()
 {
     qDebug("Init called");
-    m_recipe = Recipe("TestRecipe", Category_Quick, "", 0);
-    m_recipe.addIngredient(Ingredient("Tomato", 1, UnitType_Number));
+    m_recipe = Recipe("TestRecipe", Categories().Quick, "", 0);
+    m_recipe.addIngredient(Ingredient("Tomato", 1, UnitTypes().Number));
 }
 
 void FilterTests::isInFilter_recipeWithFilterIngredient_ReturnsTrue()
@@ -46,10 +46,10 @@ void FilterTests::isInFilter_recipeWithPartialFilter_ReturnsTrue()
 void FilterTests::removeIngredientFilter_recipeWithDifferentIngredient_isNowInFilter()
 {
     Filter filter;
-    filter.addIngredientFilter("Carottes");
-    QCOMPARE(filter.isInFilter(m_recipe), false);
-
-    filter.removeIngredientFilter("Carottes");
-
+    filter.addIngredientFilter("Tomato");
     QCOMPARE(filter.isInFilter(m_recipe), true);
+
+    filter.removeIngredientFilter("Tomato");
+
+    QCOMPARE(filter.isInFilter(m_recipe), false);
 }

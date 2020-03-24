@@ -7,8 +7,8 @@ Filter::Filter()
 
 bool Filter::isInFilter(Recipe &recipe) const
 {
-    for (auto &filterIngredient : m_ingredientFilters)
-        if (!hasFilter(filterIngredient, recipe))
+    for (int i = 0; i < recipe.getNumberOfIngredients(); ++i)
+        if (!isInFilter(recipe.getIngredient(i)))
             return false;
 
     return true;
@@ -38,17 +38,15 @@ bool Filter::isEmpty() const
     return m_ingredientFilters.empty();
 }
 
-bool Filter::hasFilter(std::string ingredientFilter, Recipe &recipe) const
+bool Filter::isInFilter(Ingredient ingredient) const
 {
-    int nbOfIngredients = recipe.getNumberOfIngredients();
-    for (int j = 0; j < nbOfIngredients; ++j)
-        if (filter(ingredientFilter, recipe.getIngredient(j)))
+    for (auto &f : m_ingredientFilters)
+        if (this->match(f, ingredient))
             return true;
-
     return false;
 }
 
-bool Filter::filter(std::string ingredientFilter, Ingredient ingredient) const
+bool Filter::match(std::string ingredientFilter, Ingredient ingredient) const
 {
     return ingredient.getName().find(ingredientFilter) != std::string::npos;
 }

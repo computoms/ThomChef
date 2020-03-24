@@ -1,20 +1,76 @@
 #ifndef DEFINITIONS_H
 #define DEFINITIONS_H
 
-enum UnitType {
-    UnitType_Number,
-    UnitType_Grammes,
-    UnitType_Liters,
-    UnitType_Mililiters,
-    UnitType_Cup,
-    UnitType_TeaSpoon,
-    UnitType_BigSpoon
+#include <string>
+#include <vector>
+
+struct EnumValue
+{
+    EnumValue(int c, std::string s, std::string fName)
+    {
+        code = c;
+        serialization = s;
+        friendlyName = fName;
+    }
+
+    int code;
+    std::string serialization;
+    std::string friendlyName;
 };
 
-enum Category {
-    Category_Quick,
-    Category_Standard,
-    Category_Long
+struct UnitType : public EnumValue
+{
+    UnitType(int c, std::string s, std::string fName): EnumValue(c, s, fName) {}
+};
+
+struct Category : public EnumValue
+{
+    Category(int c, std::string s, std::string fName): EnumValue(c, s, fName) {}
+};
+
+class UnitTypes
+{
+public:
+    const UnitType Number      = UnitType(0, "UnitType_Number", "Number");
+    const UnitType Grammes     = UnitType(1, "UnitType_Grammes", "g");
+    const UnitType Liters      = UnitType(2, "UnitType_Liters", "L");
+    const UnitType Mililiters  = UnitType(3, "UnitType_Mililiters", "mL");
+    const UnitType Cup         = UnitType(4, "UnitType_Cup", "cup");
+    const UnitType TeaSpoon    = UnitType(5, "UnitType_TeaSpoon", "tea spoon");
+    const UnitType BigSpon     = UnitType(6, "UnitType_BigSpoon", "big spoon");
+
+    static std::vector<UnitType> getTypes()
+    {
+        UnitTypes types;
+        std::vector<UnitType> allTypes = {
+            types.Number, types.Grammes, types.Liters, types.Mililiters, types.Cup, types.TeaSpoon, types.BigSpon
+        };
+        return allTypes;
+    }
+};
+
+class Categories
+{
+public:
+    const Category Quick       = Category(0, "Category_Quick", "Quick");
+    const Category Standard    = Category(1, "Category_Standard", "Standard");
+    const Category Long        = Category(2, "Category_Long", "Long");
+
+    static std::vector<Category> getTypes()
+    {
+        Categories cats;
+        std::vector<Category> allCategories = {
+            cats.Quick, cats.Standard, cats.Long
+        };
+        return allCategories;
+    }
+};
+
+class AvailabilityFlags
+{
+public:
+    const EnumValue Standard        = EnumValue(0, "Standard", "Standard");
+    const EnumValue AlwaysAvailable = EnumValue(1, "AlwaysAvailable", "Always Available");
 };
 
 #endif // DEFINITIONS_H

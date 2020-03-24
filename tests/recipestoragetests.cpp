@@ -20,9 +20,9 @@ RecipeStorageTests::~RecipeStorageTests()
 void RecipeStorageTests::saveSimpleFileStorage()
 {
     std::vector<Recipe> recipes;
-    Recipe recipe(1, "Testing recipe", Category_Standard, "Description of the recipe.", 20);
-    recipe.addIngredient(Ingredient("Tomato", 1, UnitType_Number));
-    recipe.addIngredient(Ingredient("Egg", 2, UnitType_Number));
+    Recipe recipe(1, "Testing recipe", Categories().Standard, "Description of the recipe.", 20);
+    recipe.addIngredient(Ingredient("Tomato", 1, UnitTypes().Number));
+    recipe.addIngredient(Ingredient("Egg", 2, UnitTypes().Number));
     recipes.push_back(recipe);
 
     m_storage.save(recipes);
@@ -30,10 +30,10 @@ void RecipeStorageTests::saveSimpleFileStorage()
 
 std::string RecipeStorageTests::serializeSimpleRecipe()
 {
-    Recipe probingRecipe(1, "My Testing Recipe", Category_Quick, "This is my description", 45);
-    probingRecipe.addIngredient(Ingredient("Eggs", 2, UnitType_Number));
-    probingRecipe.addIngredient(Ingredient("Cream", 20, UnitType_Mililiters));
-    probingRecipe.addIngredient(Ingredient("Cheese", 2, UnitType_Cup));
+    Recipe probingRecipe(1, "My Testing Recipe", Categories().Quick, "This is my description", 45);
+    probingRecipe.addIngredient(Ingredient("Eggs", 2, UnitTypes().Number));
+    probingRecipe.addIngredient(Ingredient("Cream", 20, UnitTypes().Mililiters));
+    probingRecipe.addIngredient(Ingredient("Cheese", 2, UnitTypes().Cup));
 
     return m_storage.serializeRecipe(probingRecipe);
 }
@@ -140,7 +140,7 @@ void RecipeStorageTests::readRecipeSerialization_ValidXml_ReturnsValidRecipeDesc
 void RecipeStorageTests::readRecipeSerialization_ValidXml_ReturnsValidRecipeCategory()
 {
     Recipe recipe = m_storage.readRecipe(generateSimpleRecipeSerialization());
-    QCOMPARE(recipe.getCategory(), Category_Quick);
+    QCOMPARE(recipe.getCategory().serialization, Categories().Quick.serialization);
 }
 
 void RecipeStorageTests::readRecipeSerialization_ValidXml_ReturnsValidRecipePrepTime()

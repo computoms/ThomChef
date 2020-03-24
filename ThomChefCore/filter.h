@@ -21,8 +21,8 @@ signals:
     void updated();
 
 private:
-    bool hasFilter(std::string ingredientFilter, Recipe &recipe) const;
-    bool filter(std::string ingredientFilter, Ingredient ingredient) const;
+    bool isInFilter(Ingredient ingredient) const;
+    bool match(std::string ingredientFilter, Ingredient ingredient) const;
 
 private:
     std::vector<std::string> m_ingredientFilters;
