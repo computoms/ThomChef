@@ -34,6 +34,15 @@ bool Conversions::to_bool(std::string input)
     return output;
 }
 
+time_t Conversions::to_time_t(std::string input)
+{
+    std::stringstream ss;
+    ss << input;
+    time_t output(0);
+    ss >> output;
+    return output;
+}
+
 UnitType Conversions::to_unitType(std::string input)
 {
     if (input == "UnitType_Number")

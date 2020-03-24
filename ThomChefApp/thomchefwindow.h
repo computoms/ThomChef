@@ -35,6 +35,7 @@ private:
     void updateSelectedRecipe();
     void modifySelectedRecipe();
     void deleteSelectedRecipe();
+    time_t getCurrentRecipeId() const;
 
 private:
     Ui::ThomChefWindow *ui;

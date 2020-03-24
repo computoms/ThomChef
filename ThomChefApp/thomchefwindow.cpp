@@ -2,6 +2,7 @@
 #include "ui_thomchefwindow.h"
 #include "addrecipe.h"
 #include "viewutils.h"
+#include "recipelistwidgetitem.h"
 
 #include "ThomChefCore/filerecipestorage.h"
 #include <ios>
@@ -74,7 +75,7 @@ void ThomChefWindow::updateSelectedRecipe()
     if (m_updating)
         return;
 
-    Recipe recipe = m_store->findRecipeByName(ui->listrecipes->currentItem()->text().toStdString());
+    Recipe recipe = m_store->findRecipe(getCurrentRecipeId());
     ui->label_recipeName->setText(recipe.getName().c_str());
     ui->label_recipeIngredients->setText(recipe.getFriendlyIngredients().c_str());
     ui->label_recipeTime->setText(recipe.getPreparationTime().c_str());
@@ -83,7 +84,8 @@ void ThomChefWindow::updateSelectedRecipe()
 
 void ThomChefWindow::modifySelectedRecipe()
 {
-    Recipe recipe = m_store->findRecipeByName(ui->listrecipes->currentItem()->text().toStdString());
+    Recipe recipe = m_store->findRecipe(getCurrentRecipeId());
+
     AddRecipe *addRecipeView = new AddRecipe(this, m_store, recipe);
     addRecipeView->setAttribute(Qt::WA_DeleteOnClose, true);
     addRecipeView->show();
@@ -91,8 +93,14 @@ void ThomChefWindow::modifySelectedRecipe()
 
 void ThomChefWindow::deleteSelectedRecipe()
 {
-    Recipe recipe = m_store->findRecipeByName(ui->listrecipes->currentItem()->text().toStdString());
+    Recipe recipe = m_store->findRecipe(getCurrentRecipeId());
     m_store->deleteRecipe(recipe);
+}
+
+time_t ThomChefWindow::getCurrentRecipeId() const
+{
+    RecipeListWidgetItem *currentItem = dynamic_cast<RecipeListWidgetItem*>(ui->listrecipes->currentItem());
+    return currentItem->getId();
 }
 
 

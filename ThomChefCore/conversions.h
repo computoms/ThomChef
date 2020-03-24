@@ -12,6 +12,7 @@ public:
     static int to_int(std::string input);
     static double to_double(std::string input);
     static bool to_bool(std::string input);
+    static time_t to_time_t(std::string input);
 
     static UnitType to_unitType(std::string input);
     static Category to_category(std::string input);

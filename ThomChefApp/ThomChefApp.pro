@@ -17,11 +17,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
+    recipelistwidgetitem.cpp \
     thomchefwindow.cpp \
     addrecipe.cpp \
     viewutils.cpp
 
 HEADERS += \
+    recipelistwidgetitem.h \
     thomchefwindow.h \
     addrecipe.h \
     viewutils.h

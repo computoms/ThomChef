@@ -20,7 +20,7 @@ RecipeStorageTests::~RecipeStorageTests()
 void RecipeStorageTests::saveSimpleFileStorage()
 {
     std::vector<Recipe> recipes;
-    Recipe recipe("Testing recipe", Category_Standard, "Description of the recipe.", 20);
+    Recipe recipe(1, "Testing recipe", Category_Standard, "Description of the recipe.", 20);
     recipe.addIngredient(Ingredient("Tomato", 1, UnitType_Number));
     recipe.addIngredient(Ingredient("Egg", 2, UnitType_Number));
     recipes.push_back(recipe);
@@ -30,7 +30,7 @@ void RecipeStorageTests::saveSimpleFileStorage()
 
 std::string RecipeStorageTests::serializeSimpleRecipe()
 {
-    Recipe probingRecipe("My Testing Recipe", Category_Quick, "This is my description", 45);
+    Recipe probingRecipe(1, "My Testing Recipe", Category_Quick, "This is my description", 45);
     probingRecipe.addIngredient(Ingredient("Eggs", 2, UnitType_Number));
     probingRecipe.addIngredient(Ingredient("Cream", 20, UnitType_Mililiters));
     probingRecipe.addIngredient(Ingredient("Cheese", 2, UnitType_Cup));
@@ -42,6 +42,7 @@ std::string RecipeStorageTests::generateSimpleRecipeSerialization()
 {
     pugi::xml_document doc;
     pugi::xml_node recipeNode = doc.append_child("Recipe");
+    recipeNode.append_child("Id").append_child(pugi::node_pcdata).set_value("1");
     recipeNode.append_child("Name").append_child(pugi::node_pcdata).set_value("My Testing Recipe");
     recipeNode.append_child("Category").append_child(pugi::node_pcdata).set_value("Category_Quick");
     recipeNode.append_child("Description").append_child(pugi::node_pcdata).set_value("This is my description");
@@ -56,6 +57,18 @@ std::string RecipeStorageTests::generateSimpleRecipeSerialization()
     std::stringstream ss;
     doc.save(ss);
     return ss.str();
+}
+
+void RecipeStorageTests::serializeRecipe_ValidXmlNode_ReturnsValidRecipeId()
+{
+    std::string serialization = serializeSimpleRecipe();
+
+    pugi::xml_document doc;
+    doc.load_string(serialization.c_str());
+
+    std::string id = doc.first_child().child_value("Id");
+
+    QCOMPARE(id, "1");
 }
 
 void RecipeStorageTests::serializeRecipe_ValidXmlNode_ReturnsValidRecipeName()
@@ -106,28 +119,34 @@ void RecipeStorageTests::serializeRecipe_ValidXmlNode_ReturnsValidRecipePrepTime
     QVERIFY(time == "45");
 }
 
+void RecipeStorageTests::readRecipeSerialization_ValidXml_ReturnsValidRecipeId()
+{
+    Recipe recipe = m_storage.readRecipe(generateSimpleRecipeSerialization());
+    QCOMPARE(recipe.getId(), 1);
+}
+
 void RecipeStorageTests::readRecipeSerialization_ValidXml_ReturnsValidRecipeName()
 {
     Recipe recipe = m_storage.readRecipe(generateSimpleRecipeSerialization());
-    QVERIFY(recipe.getName() == "My Testing Recipe");
+    QCOMPARE(recipe.getName(), "My Testing Recipe");
 }
 
 void RecipeStorageTests::readRecipeSerialization_ValidXml_ReturnsValidRecipeDescription()
 {
     Recipe recipe = m_storage.readRecipe(generateSimpleRecipeSerialization());
-    QVERIFY(recipe.getDescription() == "This is my description");
+    QCOMPARE(recipe.getDescription(), "This is my description");
 }
 
 void RecipeStorageTests::readRecipeSerialization_ValidXml_ReturnsValidRecipeCategory()
 {
     Recipe recipe = m_storage.readRecipe(generateSimpleRecipeSerialization());
-    QVERIFY(recipe.getCategory() == Category_Quick);
+    QCOMPARE(recipe.getCategory(), Category_Quick);
 }
 
 void RecipeStorageTests::readRecipeSerialization_ValidXml_ReturnsValidRecipePrepTime()
 {
     Recipe recipe = m_storage.readRecipe(generateSimpleRecipeSerialization());
-    QVERIFY(recipe.getPreparationTimeInMinutes() == 45);
+    QCOMPARE(recipe.getPreparationTimeInMinutes(), 45);
 }
 
 void RecipeStorageTests::pugiXmlSave_WithOneRootAndTwoChildren_SaveValidXmlFile()
@@ -198,18 +217,21 @@ void RecipeStorageTests::save_StoreWithOneRecipe_CreatesValidRootTag()
 
 void RecipeStorageTests::save_StoreWithOneRecipe_CreatesValidContent()
 {
+    saveSimpleFileStorage();
     std::ifstream f(m_defaultFilename.c_str());
     std::string line;
     std::getline(f, line);
     std::getline(f, line);
     std::getline(f, line);
-    QVERIFY(line == "\t<Recipe>");
+    QCOMPARE(line, "\t<Recipe>");
     std::getline(f, line);
-    QVERIFY(line == "\t\t<Name>Testing recipe</Name>");
+    QCOMPARE(line, "\t\t<Id>1</Id>");
     std::getline(f, line);
-    QVERIFY(line == "\t\t<Category>Category_Standard</Category>");
+    QCOMPARE(line, "\t\t<Name>Testing recipe</Name>");
     std::getline(f, line);
-    QVERIFY(line == "\t\t<Description>Description of the recipe.</Description>");
+    QCOMPARE(line, "\t\t<Category>Category_Standard</Category>");
     std::getline(f, line);
-    QVERIFY(line == "\t\t<PreparationTime>20</PreparationTime>");
+    QCOMPARE(line, "\t\t<Description>Description of the recipe.</Description>");
+    std::getline(f, line);
+    QCOMPARE(line, "\t\t<PreparationTime>20</PreparationTime>");
 }

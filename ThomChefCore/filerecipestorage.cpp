@@ -18,12 +18,13 @@ Recipe FileRecipeStorage::readRecipe(std::string recipeSerialization) const
         throw std::ios_base::failure("Could not read the RecipeStore file");
 
     xml_node recipeNode = doc.first_child();
+    time_t id = Conversions::to_time_t(recipeNode.child("Id").child_value());
     std::string name = recipeNode.child("Name").child_value();
     std::string category = recipeNode.child("Category").child_value();
     std::string description = recipeNode.child("Description").child_value();
     std::string prepTime = recipeNode.child("PreparationTime").child_value();
 
-    Recipe recipe(name, Conversions::to_category(category), description, Conversions::to_double(prepTime));
+    Recipe recipe(id, name, Conversions::to_category(category), description, Conversions::to_double(prepTime));
     for (pugi::xml_node ingNode = recipeNode.child("Ingredients").child("Ingredient");
              ingNode; ingNode = ingNode.next_sibling("Ingredient"))
     {
@@ -42,6 +43,7 @@ std::string FileRecipeStorage::serializeRecipe(Recipe recipe) const
 {
     pugi::xml_document doc;
     pugi::xml_node recipeNode = doc.append_child("Recipe");
+    recipeNode.append_child("Id").append_child(pugi::node_pcdata).set_value(std::to_string(recipe.getId()).c_str());
     recipeNode.append_child("Name").append_child(pugi::node_pcdata).set_value(recipe.getName().c_str());
     recipeNode.append_child("Category").append_child(pugi::node_pcdata).set_value(Conversions::to_string(recipe.getCategory()).c_str());
     recipeNode.append_child("Description").append_child(pugi::node_pcdata).set_value(recipe.getDescription().c_str());

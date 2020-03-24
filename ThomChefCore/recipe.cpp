@@ -12,7 +12,7 @@ Recipe::Recipe(std::string name, Category category,
     m_id = generateGuid();
 }
 
-Recipe::Recipe(long id, std::string name, Category category,
+Recipe::Recipe(time_t id, std::string name, Category category,
                std::string description, double prepTimeInMinutes):
     m_id            (id),
     m_name          (name),
@@ -23,7 +23,7 @@ Recipe::Recipe(long id, std::string name, Category category,
 
 }
 
-long Recipe::getId() const
+time_t Recipe::getId() const
 {
     return m_id;
 }

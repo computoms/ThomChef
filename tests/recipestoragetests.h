@@ -18,11 +18,13 @@ private:
     std::string generateSimpleRecipeSerialization();
 
 private slots:
+    void serializeRecipe_ValidXmlNode_ReturnsValidRecipeId();
     void serializeRecipe_ValidXmlNode_ReturnsValidRecipeName();
     void serializeRecipe_ValidXmlNode_ReturnsValidRecipeDescription();
     void serializeRecipe_ValidXmlNode_ReturnsValidRecipeCategory();
     void serializeRecipe_ValidXmlNode_ReturnsValidRecipePrepTime();
 
+    void readRecipeSerialization_ValidXml_ReturnsValidRecipeId();
     void readRecipeSerialization_ValidXml_ReturnsValidRecipeName();
     void readRecipeSerialization_ValidXml_ReturnsValidRecipeDescription();
     void readRecipeSerialization_ValidXml_ReturnsValidRecipeCategory();
