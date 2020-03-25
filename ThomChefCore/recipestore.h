@@ -5,7 +5,7 @@
 
 #include "recipe.h"
 #include <vector>
-#include "filerecipestorage.h"
+#include "Storage/recipestorage.h"
 #include "ingredientfilter.h"
 
 /**

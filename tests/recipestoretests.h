@@ -2,8 +2,8 @@
 #define RECIPESTORETESTS_H
 #include <QtTest>
 
-#include "ThomChefCore/filerecipestorage.h"
-#include "ThomChefCore/recipestore.h"
+#include "Storage/recipestoragefile.h"
+#include "recipestore.h"
 
 class TestingRecipeStorage : public RecipeStorage
 {

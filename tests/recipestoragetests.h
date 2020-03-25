@@ -2,7 +2,7 @@
 #define RECIPESTORAGETESTS_H
 
 #include <QtTest>
-#include "ThomChefCore/filerecipestorage.h"
+#include "Storage/recipestoragefile.h"
 
 class RecipeStorageTests : public QObject
 {
@@ -37,7 +37,7 @@ private slots:
     void save_StoreWithOneRecipe_CreatesValidContent();
 
 private:
-    FileRecipeStorage m_storage;
+    RecipeStorageFile m_storage;
     std::string m_defaultFilename;
 
 };

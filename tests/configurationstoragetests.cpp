@@ -1,5 +1,5 @@
 #include "configurationstoragetests.h"
-#include "configurationstorage.h"
+#include "Storage/configurationstoragefile.h"
 #include "configuration.h"
 
 ConfigurationStorageTests::ConfigurationStorageTests()
@@ -16,7 +16,7 @@ void ConfigurationStorageTests::saveToXml_WithTwoDefaultIngredients_GeneratesVal
     config.setDefaultIngredients(defaultIngredients);
 
     pugi::xml_document doc;
-    ConfigurationStorage storage("test.xml");
+    ConfigurationStorageFile storage("test.xml");
     storage.saveToXml(config, doc);
     pugi::xml_node defIngsNode = doc.first_child().child("IngredientFilter").child("DefaultIngredients");
 
@@ -32,7 +32,7 @@ void ConfigurationStorageTests::loadFromXml_WithIngredientFilterXml_GeneratesVal
     defIngsNode.append_child("IngredientFilter").append_child(pugi::node_pcdata).set_value("Salt");
     defIngsNode.append_child("IngredientFilter").append_child(pugi::node_pcdata).set_value("Pepper");
 
-    Configuration config = (ConfigurationStorage("test.xml")).readFromXml(doc);
+    Configuration config = (ConfigurationStorageFile("test.xml")).readFromXml(doc);
 
     auto ings = config.getDefaultIngredients();
     QCOMPARE(ings.size(), 2);

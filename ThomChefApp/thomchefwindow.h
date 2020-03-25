@@ -5,7 +5,8 @@
 #include <QListWidgetItem>
 
 #include "ThomChefCore/recipestore.h"
-#include "ThomChefCore/configurationstorage.h"
+#include "ThomChefCore/Storage/configurationstoragefile.h"
+#include "ThomChefCore/Storage/recipestoragefile.h"
 #include "ThomChefCore/configuration.h"
 
 namespace Ui {
@@ -50,8 +51,8 @@ private:
 
 private:
     Ui::ThomChefWindow *ui;
-    ConfigurationStorage m_configurationStorage;
-    FileRecipeStorage m_storage;
+    ConfigurationStorageFile m_configurationStorage;
+    RecipeStorageFile m_storage;
     Configuration m_configuration;
     RecipeStore m_store;
     IngredientFilter m_filter;

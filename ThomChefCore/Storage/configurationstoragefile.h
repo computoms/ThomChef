@@ -1,13 +1,13 @@
 #ifndef CONFIGURATIONSTORAGE_H
 #define CONFIGURATIONSTORAGE_H
 
-#include "configuration.h"
+#include "ThomChefCore/configuration.h"
 #include "libs/pugixml-1.9/src/pugixml.hpp"
 
-class ConfigurationStorage
+class ConfigurationStorageFile
 {
 public:
-    ConfigurationStorage(std::string filename);
+    ConfigurationStorageFile(std::string filename);
 
     Configuration read() const;
     void save(Configuration configuration) const;

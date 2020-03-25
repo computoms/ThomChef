@@ -19,25 +19,26 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     configuration.cpp \
-    configurationstorage.cpp \
+    Storage/configurationstoragefile.cpp \
     conversions.cpp \
-    filerecipestorage.cpp \
     ingredient.cpp \
     ingredientfilter.cpp \
     recipe.cpp \
+    Storage/recipestoragefile.cpp \
     recipestore.cpp \
     ../libs/pugixml-1.9/src/pugixml.cpp
 
 HEADERS += \
+    Storage/recipestorage.h \
     ThomChefCore_global.h \
     configuration.h \
-    configurationstorage.h \
+    Storage/configurationstoragefile.h \
     conversions.h \
     definitions.h \
-    filerecipestorage.h \
     ingredient.h \
     ingredientfilter.h \
     recipe.h \
+    Storage/recipestoragefile.h \
     recipestore.h \
     thomchefcore.h \
     ../libs/pugixml-1.9/src/pugixml.hpp \

@@ -1,13 +1,13 @@
-#include "configurationstorage.h"
+#include "Storage/configurationstoragefile.h"
 #include <sstream>
 
-ConfigurationStorage::ConfigurationStorage(std::string filename):
+ConfigurationStorageFile::ConfigurationStorageFile(std::string filename):
     m_filename  (filename)
 {
 
 }
 
-Configuration ConfigurationStorage::read() const
+Configuration ConfigurationStorageFile::read() const
 {
     pugi::xml_document doc;
     pugi::xml_parse_result result = doc.load_file(m_filename.c_str());
@@ -17,7 +17,7 @@ Configuration ConfigurationStorage::read() const
     return readFromXml(doc);
 }
 
-void ConfigurationStorage::save(Configuration configuration) const
+void ConfigurationStorageFile::save(Configuration configuration) const
 {
     pugi::xml_document doc;
     saveToXml(configuration, doc);
@@ -25,7 +25,7 @@ void ConfigurationStorage::save(Configuration configuration) const
     doc.save_file(m_filename.c_str());
 }
 
-void ConfigurationStorage::saveToXml(Configuration configuration, pugi::xml_document &doc) const
+void ConfigurationStorageFile::saveToXml(Configuration configuration, pugi::xml_document &doc) const
 {
     pugi::xml_node configNode = doc.append_child("Configuration");
     pugi::xml_node defaultIngredientsNode = configNode.append_child("IngredientFilter").append_child("DefaultIngredients");
@@ -35,7 +35,7 @@ void ConfigurationStorage::saveToXml(Configuration configuration, pugi::xml_docu
         defaultIngredientsNode.append_child("IngredientFilter").append_child(pugi::node_pcdata).set_value(ing.c_str());
 }
 
-Configuration ConfigurationStorage::readFromXml(const pugi::xml_document &doc) const
+Configuration ConfigurationStorageFile::readFromXml(const pugi::xml_document &doc) const
 {
     std::vector<std::string> defaultIngredients;
     pugi::xml_node configNode = doc.first_child();

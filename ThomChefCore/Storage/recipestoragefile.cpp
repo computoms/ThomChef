@@ -1,16 +1,16 @@
-#include "filerecipestorage.h"
+#include "Storage/recipestoragefile.h"
 #include "conversions.h"
 #include <sstream>
 
 using namespace pugi;
 
-FileRecipeStorage::FileRecipeStorage(std::string filename):
+RecipeStorageFile::RecipeStorageFile(std::string filename):
     m_filename  (filename)
 {
 
 }
 
-Recipe FileRecipeStorage::readRecipe(std::string recipeSerialization) const
+Recipe RecipeStorageFile::readRecipe(std::string recipeSerialization) const
 {
     xml_document doc;
     xml_parse_result result = doc.load_string(recipeSerialization.c_str());
@@ -39,7 +39,7 @@ Recipe FileRecipeStorage::readRecipe(std::string recipeSerialization) const
     return recipe;
 }
 
-std::string FileRecipeStorage::serializeRecipe(Recipe recipe) const
+std::string RecipeStorageFile::serializeRecipe(Recipe recipe) const
 {
     pugi::xml_document doc;
     pugi::xml_node recipeNode = doc.append_child("Recipe");
@@ -66,7 +66,7 @@ std::string FileRecipeStorage::serializeRecipe(Recipe recipe) const
     return ss.str();
 }
 
-std::vector<Recipe> FileRecipeStorage::read() const
+std::vector<Recipe> RecipeStorageFile::read() const
 {
     pugi::xml_document doc;
     xml_parse_result result = doc.load_file(m_filename.c_str());
@@ -85,7 +85,7 @@ std::vector<Recipe> FileRecipeStorage::read() const
     return recipes;
 }
 
-bool FileRecipeStorage::save(std::vector<Recipe> recipes) const
+bool RecipeStorageFile::save(std::vector<Recipe> recipes) const
 {
     xml_document doc;
     xml_node recipeStoreNode = doc.append_child("RecipeStore");

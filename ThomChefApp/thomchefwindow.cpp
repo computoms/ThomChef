@@ -5,8 +5,8 @@
 #include "recipelistwidgetitem.h"
 #include "filtersettingsview.h"
 
-#include "ThomChefCore/filerecipestorage.h"
-#include "ThomChefCore/configurationstorage.h"
+#include "ThomChefCore/Storage/recipestoragefile.h"
+#include "ThomChefCore/Storage/configurationstoragefile.h"
 #include <ios>
 
 ThomChefWindow::ThomChefWindow(QWidget *parent) :
@@ -14,7 +14,7 @@ ThomChefWindow::ThomChefWindow(QWidget *parent) :
     ui                      (new Ui::ThomChefWindow),
     m_configurationStorage  ("configuration.xml"),
     m_storage               ("recipes.xml"),
-    m_store                 (std::shared_ptr<FileRecipeStorage>(&m_storage)),
+    m_store                 (std::shared_ptr<RecipeStorageFile>(&m_storage)),
     m_updating              (false)
 {
     ui->setupUi(this);
@@ -33,7 +33,7 @@ void ThomChefWindow::initialize()
     {
         m_store.initialize();
         updateRecipeList();
-        ConfigurationStorage configStorage("configuration.xml");
+        ConfigurationStorageFile configStorage("configuration.xml");
         m_configuration = configStorage.read();
         m_filter.setDefaultIngredients(m_configuration.getDefaultIngredients());
     }
