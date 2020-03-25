@@ -20,6 +20,7 @@ class FileRecipeStorage : public RecipeStorage
 {
 public:
     FileRecipeStorage(std::string filename);
+    virtual ~FileRecipeStorage() {}
 
     Recipe readRecipe(std::string recipeSerialization) const;
     std::string serializeRecipe(Recipe recipe) const;

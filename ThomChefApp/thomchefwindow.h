@@ -5,6 +5,7 @@
 #include <QListWidgetItem>
 
 #include "ThomChefCore/recipestore.h"
+#include "ThomChefCore/configurationstorage.h"
 #include "ThomChefCore/configuration.h"
 
 namespace Ui {
@@ -36,6 +37,8 @@ private slots:
 
     void on_button_ingredientfilter_remove_clicked();
 
+    void on_button_filter_configure_clicked();
+
 private:
     void updateRecipeList();
     void updateSelectedRecipe();
@@ -47,11 +50,13 @@ private:
 
 private:
     Ui::ThomChefWindow *ui;
-    std::shared_ptr<FileRecipeStorage> m_storage;
-    std::shared_ptr<RecipeStore> m_store;
-    std::shared_ptr<IngredientFilter> m_filter;
+    ConfigurationStorage m_configurationStorage;
+    FileRecipeStorage m_storage;
     Configuration m_configuration;
+    RecipeStore m_store;
+    IngredientFilter m_filter;
     bool m_updating;
 };
 
 #endif // THOMCHEFWINDOW_H
+

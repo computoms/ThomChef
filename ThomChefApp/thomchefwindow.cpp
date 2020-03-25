@@ -3,21 +3,23 @@
 #include "addrecipe.h"
 #include "viewutils.h"
 #include "recipelistwidgetitem.h"
+#include "filtersettingsview.h"
 
 #include "ThomChefCore/filerecipestorage.h"
 #include "ThomChefCore/configurationstorage.h"
 #include <ios>
 
 ThomChefWindow::ThomChefWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::ThomChefWindow),
-    m_updating  (false)
+    QMainWindow             (parent),
+    ui                      (new Ui::ThomChefWindow),
+    m_configurationStorage  ("configuration.xml"),
+    m_storage               ("recipes.xml"),
+    m_store                 (std::shared_ptr<FileRecipeStorage>(&m_storage)),
+    m_updating              (false)
 {
     ui->setupUi(this);
-    m_storage = std::make_shared<FileRecipeStorage>("recipes.xml");
-    m_store = std::make_shared<RecipeStore>(m_storage);
-    m_filter = std::make_shared<IngredientFilter>();
-    connect(m_store.get(), SIGNAL(changed()), this, SLOT(on_store_changed()));
+
+    connect(&m_store, SIGNAL(changed()), this, SLOT(on_store_changed()));
 }
 
 ThomChefWindow::~ThomChefWindow()
@@ -29,11 +31,11 @@ void ThomChefWindow::initialize()
 {
     try
     {
-        m_store->initialize();
+        m_store.initialize();
         updateRecipeList();
         ConfigurationStorage configStorage("configuration.xml");
         m_configuration = configStorage.read();
-        m_filter->setDefaultIngredients(m_configuration.getDefaultIngredients());
+        m_filter.setDefaultIngredients(m_configuration.getDefaultIngredients());
     }
     catch (std::ios_base::failure f)
     {
@@ -44,19 +46,19 @@ void ThomChefWindow::initialize()
 
 void ThomChefWindow::on_button_addrecipe_clicked()
 {
-    AddRecipe *addRecipeView = new AddRecipe(this, m_store);
-    addRecipeView->setAttribute(Qt::WA_DeleteOnClose, true);
-    addRecipeView->exec();
+    AddRecipe addRecipeView(this, std::shared_ptr<RecipeStore>(&m_store));
+    addRecipeView.setAttribute(Qt::WA_DeleteOnClose, true);
+    addRecipeView.exec();
 }
 
 void ThomChefWindow::updateRecipeList()
 {
     m_updating = true;
     ui->listrecipes->clear();
-    int nbRecipes = m_store->getNumberOfRecipes();
+    int nbRecipes = m_store.getNumberOfRecipes();
     for (int i = 0; i < nbRecipes; ++i)
     {
-        Recipe recipe = m_store->getRecipe(i);
+        Recipe recipe = m_store.getRecipe(i);
         ui->listrecipes->addItem(new RecipeListWidgetItem(recipe.getId(), recipe.getName().c_str()));
     }
     m_updating = false;
@@ -80,7 +82,7 @@ void ThomChefWindow::updateSelectedRecipe()
     if (m_updating)
         return;
 
-    Recipe recipe = m_store->findRecipe(getCurrentRecipeId());
+    Recipe recipe = m_store.findRecipe(getCurrentRecipeId());
     ui->label_recipeName->setText(recipe.getName().c_str());
     ui->label_recipeIngredients->setText(recipe.getFriendlyIngredients().c_str());
     ui->label_recipeTime->setText(recipe.getPreparationTime().c_str());
@@ -89,17 +91,17 @@ void ThomChefWindow::updateSelectedRecipe()
 
 void ThomChefWindow::modifySelectedRecipe()
 {
-    Recipe recipe = m_store->findRecipe(getCurrentRecipeId());
+    Recipe recipe = m_store.findRecipe(getCurrentRecipeId());
 
-    AddRecipe *addRecipeView = new AddRecipe(this, m_store, recipe);
-    addRecipeView->setAttribute(Qt::WA_DeleteOnClose, true);
-    addRecipeView->show();
+    AddRecipe addRecipeView(this, std::shared_ptr<RecipeStore>(&m_store), recipe);
+    addRecipeView.setAttribute(Qt::WA_DeleteOnClose, true);
+    addRecipeView.exec();
 }
 
 void ThomChefWindow::deleteSelectedRecipe()
 {
-    Recipe recipe = m_store->findRecipe(getCurrentRecipeId());
-    m_store->deleteRecipe(recipe);
+    Recipe recipe = m_store.findRecipe(getCurrentRecipeId());
+    m_store.deleteRecipe(recipe);
 }
 
 time_t ThomChefWindow::getCurrentRecipeId() const
@@ -110,16 +112,16 @@ time_t ThomChefWindow::getCurrentRecipeId() const
 
 void ThomChefWindow::addIngredientFilter(std::string filter)
 {
-    m_filter->addIngredientFilter(filter);
-    if (!m_store->hasFilter())
-        m_store->setFilter(m_filter);
+    m_filter.addIngredientFilter(filter);
+    if (!m_store.hasFilter())
+        m_store.setFilter(std::shared_ptr<IngredientFilter>(&m_filter));
 }
 
 void ThomChefWindow::removeIngredientFilter(std::string filter)
 {
-    m_filter->removeIngredientFilter(filter);
-    if (m_filter->isEmpty() && m_store->hasFilter())
-        m_store->removeFilter();
+    m_filter.removeIngredientFilter(filter);
+    if (m_filter.isEmpty() && m_store.hasFilter())
+        m_store.removeFilter();
 }
 
 
@@ -193,7 +195,7 @@ void ThomChefWindow::on_button_ingredientfilter_remove_clicked()
     {
         removeIngredientFilter(ui->listIngredientFilters->currentItem()->text().toStdString());
         ui->listIngredientFilters->takeItem(ui->listIngredientFilters->currentRow());
-        if (m_filter->isEmpty())
+        if (m_filter.isEmpty())
             ui->button_ingredientfilter_remove->setEnabled(false);
         else if (!ui->button_ingredientfilter_remove->isEnabled())
             ui->button_ingredientfilter_remove->setEnabled(true);
@@ -202,4 +204,13 @@ void ThomChefWindow::on_button_ingredientfilter_remove_clicked()
     {
         ViewUtils::showError(e.what());
     }
+}
+
+void ThomChefWindow::on_button_filter_configure_clicked()
+{
+    FilterSettingsView settings(this);
+    settings.init(m_configuration);
+    settings.exec();
+    m_configuration.setDefaultIngredients(settings.getDefaultIngredients());
+    m_configurationStorage.save(m_configuration);
 }

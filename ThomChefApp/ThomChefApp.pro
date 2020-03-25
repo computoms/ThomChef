@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    filtersettingsview.cpp \
     main.cpp \
     recipelistwidgetitem.cpp \
     thomchefwindow.cpp \
@@ -23,12 +24,14 @@ SOURCES += \
     viewutils.cpp
 
 HEADERS += \
+    filtersettingsview.h \
     recipelistwidgetitem.h \
     thomchefwindow.h \
     addrecipe.h \
     viewutils.h
 
 FORMS += \
+    filtersettingsview.ui \
     thomchefwindow.ui \
     addrecipe.ui
 

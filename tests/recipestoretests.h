@@ -8,6 +8,9 @@
 class TestingRecipeStorage : public RecipeStorage
 {
 public:
+    TestingRecipeStorage() {}
+    virtual ~TestingRecipeStorage() {}
+
     virtual std::vector<Recipe> read() const override;
     virtual bool save(std::vector<Recipe> recipes) const override;
 

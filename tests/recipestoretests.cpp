@@ -31,7 +31,7 @@ void RecipeStoreTests::add_twoRecipesToEmptyStore_addsRecipeToStore()
 {
     init();
 
-    QCOMPARE(storage->m_recipes.size(), 2);
+    QCOMPARE((int)storage->m_recipes.size(), 2);
     QCOMPARE(storage->m_recipes[0].getId(), 1);
 }
 
