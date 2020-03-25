@@ -1,7 +1,8 @@
 #include "recipestore.h"
 
-RecipeStore::RecipeStore(std::shared_ptr<RecipeStorage> storage):
-    m_storage   (storage)
+RecipeStore::RecipeStore(RecipeStorage *storage):
+    m_storage   (storage),
+    m_filter    (nullptr)
 {
 
 }
@@ -91,11 +92,11 @@ bool RecipeStore::hasFilter() const
     return m_filter != nullptr;
 }
 
-void RecipeStore::setFilter(std::shared_ptr<IngredientFilter> filter)
+void RecipeStore::setFilter(IngredientFilter *filter)
 {
     m_filter = filter;
     if (m_filter)
-        connect(m_filter.get(), SIGNAL(updated()), this, SLOT(on_filter_updated()));
+        connect(m_filter, SIGNAL(updated()), this, SLOT(on_filter_updated()));
 
     updateFilter();
     emit changed();
@@ -103,7 +104,7 @@ void RecipeStore::setFilter(std::shared_ptr<IngredientFilter> filter)
 
 void RecipeStore::removeFilter()
 {
-    m_filter.reset();
+    m_filter = nullptr;
     m_filteredRecipeIndexes.clear();
 }
 

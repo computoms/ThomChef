@@ -16,7 +16,7 @@ class RecipeStore : public QObject
     Q_OBJECT
 
 public:
-    RecipeStore(std::shared_ptr<RecipeStorage> storage);
+    RecipeStore(RecipeStorage *storage);
 
     void initialize();
 
@@ -30,7 +30,7 @@ public:
     void deleteRecipe(Recipe recipe);
 
     bool hasFilter() const;
-    void setFilter(std::shared_ptr<IngredientFilter> filter);
+    void setFilter(IngredientFilter *filter);
     void removeFilter();
 
 signals:
@@ -44,8 +44,8 @@ private:
 
 private:
     std::vector<Recipe> m_recipes;
-    std::shared_ptr<RecipeStorage> m_storage;
-    std::shared_ptr<IngredientFilter> m_filter;
+    RecipeStorage *m_storage;
+    IngredientFilter *m_filter;
     std::vector<int> m_filteredRecipeIndexes;
 
 };

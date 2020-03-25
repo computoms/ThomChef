@@ -7,7 +7,7 @@
 #include <QString>
 #include <iostream>
 
-AddRecipe::AddRecipe(QWidget *parent, std::shared_ptr<RecipeStore> recipeStore) :
+AddRecipe::AddRecipe(QWidget *parent, RecipeStore *recipeStore) :
     QDialog             (parent),
     ui                  (new Ui::AddRecipe),
     m_store             (recipeStore),
@@ -18,7 +18,7 @@ AddRecipe::AddRecipe(QWidget *parent, std::shared_ptr<RecipeStore> recipeStore) 
     init();
 }
 
-AddRecipe::AddRecipe(QWidget *parent, std::shared_ptr<RecipeStore> recipeStore, Recipe selectedRecipe):
+AddRecipe::AddRecipe(QWidget *parent, RecipeStore *recipeStore, Recipe selectedRecipe):
     QDialog             (parent),
     ui                  (new Ui::AddRecipe),
     m_store             (recipeStore),

@@ -14,7 +14,7 @@ ThomChefWindow::ThomChefWindow(QWidget *parent) :
     ui                      (new Ui::ThomChefWindow),
     m_configurationStorage  ("configuration.xml"),
     m_storage               ("recipes.xml"),
-    m_store                 (std::shared_ptr<RecipeStorageFile>(&m_storage)),
+    m_store                 (&m_storage),
     m_updating              (false)
 {
     ui->setupUi(this);
@@ -46,7 +46,7 @@ void ThomChefWindow::initialize()
 
 void ThomChefWindow::on_button_addrecipe_clicked()
 {
-    AddRecipe addRecipeView(this, std::shared_ptr<RecipeStore>(&m_store));
+    AddRecipe addRecipeView(this, &m_store);
     addRecipeView.setAttribute(Qt::WA_DeleteOnClose, true);
     addRecipeView.exec();
 }
@@ -93,7 +93,7 @@ void ThomChefWindow::modifySelectedRecipe()
 {
     Recipe recipe = m_store.findRecipe(getCurrentRecipeId());
 
-    AddRecipe addRecipeView(this, std::shared_ptr<RecipeStore>(&m_store), recipe);
+    AddRecipe addRecipeView(this, &m_store, recipe);
     addRecipeView.setAttribute(Qt::WA_DeleteOnClose, true);
     addRecipeView.exec();
 }
@@ -114,7 +114,7 @@ void ThomChefWindow::addIngredientFilter(std::string filter)
 {
     m_filter.addIngredientFilter(filter);
     if (!m_store.hasFilter())
-        m_store.setFilter(std::shared_ptr<IngredientFilter>(&m_filter));
+        m_store.setFilter(&m_filter);
 }
 
 void ThomChefWindow::removeIngredientFilter(std::string filter)

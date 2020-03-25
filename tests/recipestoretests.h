@@ -37,7 +37,7 @@ private slots:
 
 private:
     void init();
-    std::shared_ptr<TestingRecipeStorage> storage;
+    TestingRecipeStorage storage;
     RecipeStore store;
     Recipe recipe1;
     Recipe recipe2;

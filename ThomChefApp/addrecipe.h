@@ -13,8 +13,8 @@ class AddRecipe : public QDialog
     Q_OBJECT
 
 public:
-    explicit AddRecipe(QWidget *parent = nullptr, std::shared_ptr<RecipeStore> recipeStore = nullptr);
-    AddRecipe(QWidget *parent, std::shared_ptr<RecipeStore> recipeStore, Recipe selectedRecipe);
+    explicit AddRecipe(QWidget *parent = nullptr, RecipeStore *recipeStore = nullptr);
+    AddRecipe(QWidget *parent, RecipeStore *recipeStore, Recipe selectedRecipe);
     ~AddRecipe();
 
     void init();
@@ -34,7 +34,7 @@ private:
 
 private:
     Ui::AddRecipe *ui;
-    std::shared_ptr<RecipeStore> m_store;
+    RecipeStore *m_store;
     Recipe m_selectedRecipe;
     bool m_isModifyingRecipe;
     std::vector<Ingredient> m_currentIngredients;
