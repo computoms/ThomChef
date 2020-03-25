@@ -2,7 +2,7 @@
 #define FILTERTESTS_H
 
 #include <QtTest>
-#include "filter.h"
+#include "ingredientfilter.h"
 
 
 class FilterTests: public QObject
@@ -18,6 +18,7 @@ private slots:
     void isInFilter_recipeWithFilterIngredient_ReturnsTrue();
     void isInFilter_recipeWithDifferentIngredient_ReturnsFalse();
     void isInFilter_recipeWithPartialFilter_ReturnsTrue();
+    void isInFilter_recipeWithDifferingCaseIngredient_ReturnsTrue();
 
     void removeIngredientFilter_recipeWithDifferentIngredient_isNowInFilter();
 

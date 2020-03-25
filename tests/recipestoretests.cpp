@@ -84,7 +84,7 @@ void RecipeStoreTests::setFilter_withFilterThatRestrictsStoreToOneRecipe_Returns
 
     QCOMPARE(store.getNumberOfRecipes(), 2);
 
-    std::shared_ptr<Filter> filter = std::make_shared<Filter>();
+    std::shared_ptr<IngredientFilter> filter = std::make_shared<IngredientFilter>();
     filter->addIngredientFilter("Tomato");
     store.setFilter(filter);
 
@@ -97,7 +97,7 @@ void RecipeStoreTests::setFilter_partialFilter_SelectsCorrectRecipes()
 
     recipe1.addIngredient(Ingredient("Tomato", 1, UnitTypes().Number));
 
-    std::shared_ptr<Filter> filter = std::make_shared<Filter>();
+    std::shared_ptr<IngredientFilter> filter = std::make_shared<IngredientFilter>();
     filter->addIngredientFilter("Toma");
     store.setFilter(filter);
 

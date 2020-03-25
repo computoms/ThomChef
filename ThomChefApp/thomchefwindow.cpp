@@ -5,6 +5,7 @@
 #include "recipelistwidgetitem.h"
 
 #include "ThomChefCore/filerecipestorage.h"
+#include "ThomChefCore/configurationstorage.h"
 #include <ios>
 
 ThomChefWindow::ThomChefWindow(QWidget *parent) :
@@ -15,7 +16,7 @@ ThomChefWindow::ThomChefWindow(QWidget *parent) :
     ui->setupUi(this);
     m_storage = std::make_shared<FileRecipeStorage>("recipes.xml");
     m_store = std::make_shared<RecipeStore>(m_storage);
-    m_filter = std::make_shared<Filter>();
+    m_filter = std::make_shared<IngredientFilter>();
     connect(m_store.get(), SIGNAL(changed()), this, SLOT(on_store_changed()));
 }
 
@@ -30,6 +31,9 @@ void ThomChefWindow::initialize()
     {
         m_store->initialize();
         updateRecipeList();
+        ConfigurationStorage configStorage("configuration.xml");
+        m_configuration = configStorage.read();
+        m_filter->setDefaultIngredients(m_configuration.getDefaultIngredients());
     }
     catch (std::ios_base::failure f)
     {

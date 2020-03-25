@@ -18,21 +18,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    configuration.cpp \
+    configurationstorage.cpp \
     conversions.cpp \
     filerecipestorage.cpp \
-    filter.cpp \
     ingredient.cpp \
+    ingredientfilter.cpp \
     recipe.cpp \
     recipestore.cpp \
     ../libs/pugixml-1.9/src/pugixml.cpp
 
 HEADERS += \
     ThomChefCore_global.h \
+    configuration.h \
+    configurationstorage.h \
     conversions.h \
     definitions.h \
     filerecipestorage.h \
-    filter.h \
     ingredient.h \
+    ingredientfilter.h \
     recipe.h \
     recipestore.h \
     thomchefcore.h \

@@ -5,17 +5,19 @@
 #include "recipe.h"
 #include <QObject>
 
-class Filter : public QObject
+class IngredientFilter : public QObject
 {
     Q_OBJECT
 
 public:
-    Filter();
+    IngredientFilter();
 
     bool isInFilter(Recipe &recipe) const;
     void addIngredientFilter(std::string ingredientFilter);
     void removeIngredientFilter(std::string ingredientFilter);
     bool isEmpty() const;
+
+    void setDefaultIngredients(std::vector<std::string> defaultIngredients);
 
 signals:
     void updated();
@@ -26,6 +28,7 @@ private:
 
 private:
     std::vector<std::string> m_ingredientFilters;
+    std::vector<std::string> m_defaultIngredientFilters;
 };
 
 #endif // FILTER_H

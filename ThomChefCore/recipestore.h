@@ -6,7 +6,7 @@
 #include "recipe.h"
 #include <vector>
 #include "filerecipestorage.h"
-#include "filter.h"
+#include "ingredientfilter.h"
 
 /**
  * @brief The RecipeStore class represents the database interface to the recipes.
@@ -30,7 +30,7 @@ public:
     void deleteRecipe(Recipe recipe);
 
     bool hasFilter() const;
-    void setFilter(std::shared_ptr<Filter> filter);
+    void setFilter(std::shared_ptr<IngredientFilter> filter);
     void removeFilter();
 
 signals:
@@ -45,7 +45,7 @@ private:
 private:
     std::vector<Recipe> m_recipes;
     std::shared_ptr<RecipeStorage> m_storage;
-    std::shared_ptr<Filter> m_filter;
+    std::shared_ptr<IngredientFilter> m_filter;
     std::vector<int> m_filteredRecipeIndexes;
 
 };

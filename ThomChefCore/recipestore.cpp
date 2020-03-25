@@ -91,7 +91,7 @@ bool RecipeStore::hasFilter() const
     return m_filter != nullptr;
 }
 
-void RecipeStore::setFilter(std::shared_ptr<Filter> filter)
+void RecipeStore::setFilter(std::shared_ptr<IngredientFilter> filter)
 {
     m_filter = filter;
     if (m_filter)

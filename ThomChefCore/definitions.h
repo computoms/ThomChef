@@ -66,11 +66,4 @@ public:
     }
 };
 
-class AvailabilityFlags
-{
-public:
-    const EnumValue Standard        = EnumValue(0, "Standard", "Standard");
-    const EnumValue AlwaysAvailable = EnumValue(1, "AlwaysAvailable", "Always Available");
-};
-
 #endif // DEFINITIONS_H

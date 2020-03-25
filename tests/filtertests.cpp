@@ -15,7 +15,7 @@ void FilterTests::initTestCase()
 
 void FilterTests::isInFilter_recipeWithFilterIngredient_ReturnsTrue()
 {
-    Filter filter;
+    IngredientFilter filter;
     filter.addIngredientFilter("Tomato");
 
     bool result = filter.isInFilter(m_recipe);
@@ -25,7 +25,7 @@ void FilterTests::isInFilter_recipeWithFilterIngredient_ReturnsTrue()
 
 void FilterTests::isInFilter_recipeWithDifferentIngredient_ReturnsFalse()
 {
-    Filter filter;
+    IngredientFilter filter;
     filter.addIngredientFilter("Carotte");
 
     bool result = filter.isInFilter(m_recipe);
@@ -35,8 +35,18 @@ void FilterTests::isInFilter_recipeWithDifferentIngredient_ReturnsFalse()
 
 void FilterTests::isInFilter_recipeWithPartialFilter_ReturnsTrue()
 {
-    Filter filter;
+    IngredientFilter filter;
     filter.addIngredientFilter("Toma");
+
+    bool result = filter.isInFilter(m_recipe);
+
+    QCOMPARE(result, true);
+}
+
+void FilterTests::isInFilter_recipeWithDifferingCaseIngredient_ReturnsTrue()
+{
+    IngredientFilter filter;
+    filter.addIngredientFilter("toma");
 
     bool result = filter.isInFilter(m_recipe);
 
@@ -45,7 +55,7 @@ void FilterTests::isInFilter_recipeWithPartialFilter_ReturnsTrue()
 
 void FilterTests::removeIngredientFilter_recipeWithDifferentIngredient_isNowInFilter()
 {
-    Filter filter;
+    IngredientFilter filter;
     filter.addIngredientFilter("Tomato");
     QCOMPARE(filter.isInFilter(m_recipe), true);
 

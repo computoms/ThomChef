@@ -5,6 +5,7 @@
 #include <QListWidgetItem>
 
 #include "ThomChefCore/recipestore.h"
+#include "ThomChefCore/configuration.h"
 
 namespace Ui {
 class ThomChefWindow;
@@ -48,7 +49,8 @@ private:
     Ui::ThomChefWindow *ui;
     std::shared_ptr<FileRecipeStorage> m_storage;
     std::shared_ptr<RecipeStore> m_store;
-    std::shared_ptr<Filter> m_filter;
+    std::shared_ptr<IngredientFilter> m_filter;
+    Configuration m_configuration;
     bool m_updating;
 };
 
