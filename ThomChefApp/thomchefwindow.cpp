@@ -36,6 +36,9 @@ void ThomChefWindow::initialize()
         ConfigurationStorageFile configStorage("configuration.xml");
         m_configuration = configStorage.read();
         m_filter.setDefaultIngredients(m_configuration.getDefaultIngredients());
+
+        ui->button_ingredientfilter_remove->setEnabled(false);
+        ui->button_findRecipe_add->setEnabled(false);
     }
     catch (std::ios_base::failure f)
     {
@@ -46,8 +49,11 @@ void ThomChefWindow::initialize()
 
 void ThomChefWindow::on_button_addrecipe_clicked()
 {
-    AddRecipe addRecipeView(this, &m_store);
-    addRecipeView.exec();
+    AddRecipe addRecipeView(this);
+    int result = addRecipeView.exec();
+
+    if (result == QDialog::Accepted)
+        m_store.addRecipe(addRecipeView.getNewRecipe());
 }
 
 void ThomChefWindow::updateRecipeList()
@@ -92,8 +98,11 @@ void ThomChefWindow::modifySelectedRecipe()
 {
     Recipe recipe = m_store.findRecipe(getCurrentRecipeId());
 
-    AddRecipe addRecipeView(this, &m_store, recipe);
-    addRecipeView.exec();
+    AddRecipe addRecipeView(this, recipe);
+    int result = addRecipeView.exec();
+
+    if (result == QDialog::Accepted)
+        m_store.updateRecipe(addRecipeView.getNewRecipe());
 }
 
 void ThomChefWindow::deleteSelectedRecipe()
@@ -211,4 +220,34 @@ void ThomChefWindow::on_button_filter_configure_clicked()
     settings.exec();
     m_configuration.setDefaultIngredients(settings.getDefaultIngredients());
     m_configurationStorage.save(m_configuration);
+}
+
+void ThomChefWindow::on_edit_ingredientFilter_returnPressed()
+{
+    on_button_findRecipe_add_clicked();
+}
+
+void ThomChefWindow::on_edit_ingredientFilter_textChanged(const QString &arg1)
+{
+    if (!ui->button_findRecipe_add->isEnabled() && arg1 != "")
+        ui->button_findRecipe_add->setEnabled(true);
+    else if (ui->button_findRecipe_add->isEnabled() && arg1 == "")
+        ui->button_findRecipe_add->setEnabled(false);
+}
+
+void ThomChefWindow::on_button_ingredientfilter_clear_clicked()
+{
+    try
+    {
+        for (auto &item : ui->listIngredientFilters->findItems("*", Qt::MatchWildcard))
+        {
+            removeIngredientFilter(item->text().toStdString());
+        }
+        ui->listIngredientFilters->clear();
+        ui->button_ingredientfilter_remove->setEnabled(false);
+    }
+    catch (std::invalid_argument e)
+    {
+        ViewUtils::showError(e.what());
+    }
 }

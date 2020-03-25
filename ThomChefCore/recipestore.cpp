@@ -99,30 +99,33 @@ void RecipeStore::setFilter(IngredientFilter *filter)
         connect(m_filter, SIGNAL(updated()), this, SLOT(on_filter_updated()));
 
     updateFilter();
-    emit changed();
 }
 
 void RecipeStore::removeFilter()
 {
     m_filter = nullptr;
     m_filteredRecipeIndexes.clear();
+
+    updateFilter();
 }
 
 void RecipeStore::on_filter_updated()
 {
     updateFilter();
-    emit changed();
 }
 
 void RecipeStore::updateFilter()
 {
-    if (!hasFilter())
-        return;
-
     m_filteredRecipeIndexes.clear();
-    for (int i = 0; i < (int)m_recipes.size(); ++i)
+
+    if (hasFilter())
     {
-        if (m_filter->isInFilter(m_recipes[i]))
-            m_filteredRecipeIndexes.push_back(i);
+        for (int i = 0; i < (int)m_recipes.size(); ++i)
+        {
+            if (m_filter->isInFilter(m_recipes[i]))
+                m_filteredRecipeIndexes.push_back(i);
+        }
     }
+
+    emit changed();
 }

@@ -7,10 +7,9 @@
 #include <QString>
 #include <iostream>
 
-AddRecipe::AddRecipe(QWidget *parent, RecipeStore *recipeStore) :
+AddRecipe::AddRecipe(QWidget *parent) :
     QDialog             (parent),
     ui                  (new Ui::AddRecipe),
-    m_store             (recipeStore),
     m_selectedRecipe    ("", Categories().Quick, "", 0),
     m_isModifyingRecipe (false)
 {
@@ -18,10 +17,9 @@ AddRecipe::AddRecipe(QWidget *parent, RecipeStore *recipeStore) :
     init();
 }
 
-AddRecipe::AddRecipe(QWidget *parent, RecipeStore *recipeStore, Recipe selectedRecipe):
+AddRecipe::AddRecipe(QWidget *parent, Recipe selectedRecipe):
     QDialog             (parent),
     ui                  (new Ui::AddRecipe),
-    m_store             (recipeStore),
     m_selectedRecipe    (selectedRecipe),
     m_isModifyingRecipe (true)
 {
@@ -57,38 +55,7 @@ void AddRecipe::init()
     }
 }
 
-void AddRecipe::clearAll()
-{
-    ui->edit_name->setText("");
-    ui->edit_time->setText("");
-    ui->edit_description->clear();
-    ui->ingredient_edit_name->setText("");
-    ui->ingredient_edit_quantity->setText("");
-    ui->ingredientlist->clear();
-    m_currentIngredients.clear();
-}
-
-void AddRecipe::on_buttonBox_accepted()
-{
-    try
-    {
-        if (m_isModifyingRecipe)
-            m_store->deleteRecipe(m_selectedRecipe);
-
-        addCurrentRecipe();
-        clearAll();
-    }
-    catch (std::invalid_argument e)
-    {
-        ViewUtils::showError(e.what());
-    }
-    catch (std::ios_base::failure f)
-    {
-        ViewUtils::showError(f.what());
-    }
-}
-
-void AddRecipe::addCurrentRecipe()
+Recipe AddRecipe::getNewRecipe()
 {
     std::string name = ui->edit_name->text().toStdString();
     std::string description = ui->edit_description->toPlainText().toStdString();
@@ -98,8 +65,7 @@ void AddRecipe::addCurrentRecipe()
     Recipe recipe(name, cat, description, time);
     for (auto &ing : m_currentIngredients)
         recipe.addIngredient(ing);
-
-    m_store->addRecipe(recipe);
+    return recipe;
 }
 
 void AddRecipe::addCurrentIngredientAndClearIngredient()

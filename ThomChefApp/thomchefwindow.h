@@ -40,6 +40,12 @@ private slots:
 
     void on_button_filter_configure_clicked();
 
+    void on_edit_ingredientFilter_returnPressed();
+
+    void on_edit_ingredientFilter_textChanged(const QString &arg1);
+
+    void on_button_ingredientfilter_clear_clicked();
+
 private:
     void updateRecipeList();
     void updateSelectedRecipe();

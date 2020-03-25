@@ -26,6 +26,8 @@ private slots:
 
     void on_edit_defaultIngredient_textChanged(const QString &arg1);
 
+    void on_edit_defaultIngredient_returnPressed();
+
 private:
     Ui::FilterSettingsView *ui;
     std::vector<std::string> m_defaultIngredients;

@@ -54,3 +54,8 @@ void FilterSettingsView::on_edit_defaultIngredient_textChanged(const QString &ar
     else if (ui->button_addDefaultIngredient->isEnabled() && arg1 == "")
         ui->button_addDefaultIngredient->setEnabled(false);
 }
+
+void FilterSettingsView::on_edit_defaultIngredient_returnPressed()
+{
+    on_button_addDefaultIngredient_clicked();
+}
