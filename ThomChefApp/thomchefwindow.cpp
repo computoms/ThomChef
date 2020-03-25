@@ -47,7 +47,6 @@ void ThomChefWindow::initialize()
 void ThomChefWindow::on_button_addrecipe_clicked()
 {
     AddRecipe addRecipeView(this, &m_store);
-    addRecipeView.setAttribute(Qt::WA_DeleteOnClose, true);
     addRecipeView.exec();
 }
 
@@ -94,7 +93,6 @@ void ThomChefWindow::modifySelectedRecipe()
     Recipe recipe = m_store.findRecipe(getCurrentRecipeId());
 
     AddRecipe addRecipeView(this, &m_store, recipe);
-    addRecipeView.setAttribute(Qt::WA_DeleteOnClose, true);
     addRecipeView.exec();
 }
 
