@@ -55,18 +55,6 @@ UnitType Conversions::to_unitType(std::string input, bool isFriendlyName)
     throw std::invalid_argument("Cannot convert " + input + " to a UnitType");
 }
 
-Category Conversions::to_category(std::string input, bool isFriendlyName)
-{
-    for (auto &type : Categories::getTypes())
-    {
-        if (isFriendlyName && input == type.friendlyName)
-            return type;
-        if (!isFriendlyName && input == type.serialization)
-            return type;
-    }
-    throw std::invalid_argument("Cannot convert " + input + " to a Category");
-}
-
 std::string Conversions::to_string(double quantity)
 {
     std::string result = std::to_string(quantity);

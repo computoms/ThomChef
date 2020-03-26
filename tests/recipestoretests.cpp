@@ -5,8 +5,8 @@
 
 RecipeStoreTests::RecipeStoreTests():
     store(&storage),
-    recipe1(1, "Test1", Categories().Quick, "", 5),
-    recipe2(2, "Test2", Categories().Standard, "", 10)
+    recipe1(1, "Test1", 1, "", 5),
+    recipe2(2, "Test2", 1, "", 10)
 {
 }
 
@@ -22,7 +22,7 @@ void RecipeStoreTests::update_storeContainingSingleRecipe_UpdatesRecipe()
 {
     init();
 
-    Recipe updatedRecipe(1, "Test2", Categories().Quick, "This is a description", 25);
+    Recipe updatedRecipe(1, "Test2", 1, "This is a description", 25);
     store.updateRecipe(updatedRecipe);
 
     QCOMPARE(storage.m_recipes[0].getId(), 1);

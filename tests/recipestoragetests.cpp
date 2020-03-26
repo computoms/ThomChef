@@ -20,7 +20,7 @@ RecipeStorageTests::~RecipeStorageTests()
 void RecipeStorageTests::saveSimpleFileStorage()
 {
     std::vector<Recipe> recipes;
-    Recipe recipe(1, "Testing recipe", Categories().Standard, "Description of the recipe.", 20);
+    Recipe recipe(1, "Testing recipe", 1, "Description of the recipe.", 20);
     recipe.addIngredient(Ingredient("Tomato", 1, UnitTypes().Number));
     recipe.addIngredient(Ingredient("Egg", 2, UnitTypes().Number));
     recipes.push_back(recipe);
@@ -30,7 +30,7 @@ void RecipeStorageTests::saveSimpleFileStorage()
 
 std::string RecipeStorageTests::serializeSimpleRecipe()
 {
-    Recipe probingRecipe(1, "My Testing Recipe", Categories().Quick, "This is my description", 45);
+    Recipe probingRecipe(1, "My Testing Recipe", 1, "This is my description", 45);
     probingRecipe.addIngredient(Ingredient("Eggs", 2, UnitTypes().Number));
     probingRecipe.addIngredient(Ingredient("Cream", 20, UnitTypes().Mililiters));
     probingRecipe.addIngredient(Ingredient("Cheese", 2, UnitTypes().Cup));
@@ -95,16 +95,16 @@ void RecipeStorageTests::serializeRecipe_ValidXmlNode_ReturnsValidRecipeDescript
     QVERIFY(desc == "This is my description");
 }
 
-void RecipeStorageTests::serializeRecipe_ValidXmlNode_ReturnsValidRecipeCategory()
+void RecipeStorageTests::serializeRecipe_ValidXmlNode_ReturnsValidRecipeNumberOfPersons()
 {
     std::string serialization = serializeSimpleRecipe();
 
     pugi::xml_document doc;
     doc.load_string(serialization.c_str());
 
-    std::string category = doc.first_child().child_value("Category");
+    std::string category = doc.first_child().child_value("NumberOfPersons");
 
-    QVERIFY(category == "Category_Quick");
+    QVERIFY(category == "1");
 }
 
 void RecipeStorageTests::serializeRecipe_ValidXmlNode_ReturnsValidRecipePrepTime()
@@ -137,10 +137,10 @@ void RecipeStorageTests::readRecipeSerialization_ValidXml_ReturnsValidRecipeDesc
     QCOMPARE(recipe.getDescription(), "This is my description");
 }
 
-void RecipeStorageTests::readRecipeSerialization_ValidXml_ReturnsValidRecipeCategory()
+void RecipeStorageTests::readRecipeSerialization_ValidXml_ReturnsValidRecipeNumberOfPersons()
 {
     Recipe recipe = m_storage.readRecipe(generateSimpleRecipeSerialization());
-    QCOMPARE(recipe.getCategory().serialization, Categories().Quick.serialization);
+    QCOMPARE(recipe.getNumberOfPersons(), 1);
 }
 
 void RecipeStorageTests::readRecipeSerialization_ValidXml_ReturnsValidRecipePrepTime()
@@ -229,7 +229,7 @@ void RecipeStorageTests::save_StoreWithOneRecipe_CreatesValidContent()
     std::getline(f, line);
     QCOMPARE(line, "\t\t<Name>Testing recipe</Name>");
     std::getline(f, line);
-    QCOMPARE(line, "\t\t<Category>Category_Standard</Category>");
+    QCOMPARE(line, "\t\t<NumberOfPersons>1</NumberOfPersons>");
     std::getline(f, line);
     QCOMPARE(line, "\t\t<Description>Description of the recipe.</Description>");
     std::getline(f, line);

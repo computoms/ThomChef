@@ -28,11 +28,6 @@ struct UnitType : public EnumValue
     UnitType(int c, std::string s, std::string fName): EnumValue(c, s, fName) {}
 };
 
-struct Category : public EnumValue
-{
-    Category(int c, std::string s, std::string fName): EnumValue(c, s, fName) {}
-};
-
 class UnitTypes
 {
 public:
@@ -51,23 +46,6 @@ public:
             types.Number, types.Grammes, types.Liters, types.Mililiters, types.Cup, types.TeaSpoon, types.BigSpon
         };
         return allTypes;
-    }
-};
-
-class Categories
-{
-public:
-    const Category Quick       = Category(0, "Category_Quick", "Quick");
-    const Category Standard    = Category(1, "Category_Standard", "Standard");
-    const Category Long        = Category(2, "Category_Long", "Long");
-
-    static std::vector<Category> getTypes()
-    {
-        Categories cats;
-        std::vector<Category> allCategories = {
-            cats.Quick, cats.Standard, cats.Long
-        };
-        return allCategories;
     }
 };
 

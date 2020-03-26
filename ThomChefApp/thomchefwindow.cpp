@@ -263,6 +263,7 @@ void ThomChefWindow::updateSelectedRecipe()
 
     Recipe recipe = m_store.findRecipe(getCurrentRecipeId());
     ui->label_recipeName->setText(recipe.getName().c_str());
+    ui->label_numberOfPersons->setText(std::to_string(recipe.getNumberOfPersons()).c_str());
     ui->label_recipeIngredients->setText(recipe.getFriendlyIngredients().c_str());
     ui->label_recipeTime->setText(recipe.getPreparationTime().c_str());
     ui->label_recipeDescription->setText(recipe.getDescription().c_str());

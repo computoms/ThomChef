@@ -10,7 +10,7 @@
 AddRecipe::AddRecipe(QWidget *parent) :
     QDialog             (parent),
     ui                  (new Ui::AddRecipe),
-    m_selectedRecipe    ("", Categories().Quick, "", 0),
+    m_selectedRecipe    ("", 1, "", 0),
     m_isModifyingRecipe (false)
 {
     ui->setupUi(this);
@@ -34,9 +34,6 @@ AddRecipe::~AddRecipe()
 
 void AddRecipe::init()
 {
-    for (auto &type : Categories::getTypes())
-        ui->choose_category->addItem(type.friendlyName.c_str());
-
     for (auto &type : UnitTypes::getTypes())
         ui->ingredient_choose_unit->addItem(type.friendlyName.c_str());
 
@@ -58,11 +55,11 @@ void AddRecipe::init()
 Recipe AddRecipe::getNewRecipe()
 {
     std::string name = ui->edit_name->text().toStdString();
+    int numberOfPersons = ui->edit_numberOfPersons->value();
     std::string description = ui->edit_description->toPlainText().toStdString();
     double time = Conversions::to_double(ui->edit_time->text().toStdString());
-    Category cat = Conversions::to_category(ui->choose_category->currentText().toStdString(), true);
 
-    Recipe recipe(name, cat, description, time);
+    Recipe recipe(name, numberOfPersons, description, time);
     for (auto &ing : m_currentIngredients)
         recipe.addIngredient(ing);
     return recipe;

@@ -9,12 +9,12 @@
 class Recipe
 {
 public:
-    Recipe(std::string name, Category category, std::string description, double preparationTimeInMinutes);
-    Recipe(time_t id, std::string name, Category category, std::string description, double prepTimeInMinutes);
+    Recipe(std::string name, int numberOfPersons, std::string description, double preparationTimeInMinutes);
+    Recipe(time_t id, std::string name, int numberOfPersons, std::string description, double prepTimeInMinutes);
 
     time_t getId() const;
     std::string getName() const;
-    Category getCategory() const;
+    int getNumberOfPersons() const;
     std::string getDescription() const;
     int getPreparationTimeInMinutes() const;
     std::string getPreparationTime() const;
@@ -30,7 +30,7 @@ private:
 private:
     time_t m_id;
     std::string m_name;
-    Category m_category;
+    int m_numberOfPersons;
     std::string m_description;
     int m_prepTimeInMinutes;
 

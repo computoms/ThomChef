@@ -2,23 +2,23 @@
 #include <ctime>
 #include <chrono>
 
-Recipe::Recipe(std::string name, Category category,
+Recipe::Recipe(std::string name, int numberOfPersons,
                std::string description, double preparationTimeInMinutes):
     m_name              (name),
-    m_category          (category),
+    m_numberOfPersons   (numberOfPersons),
     m_description       (description),
     m_prepTimeInMinutes (preparationTimeInMinutes)
 {
     m_id = generateGuid();
 }
 
-Recipe::Recipe(time_t id, std::string name, Category category,
+Recipe::Recipe(time_t id, std::string name, int numberOfPersons,
                std::string description, double prepTimeInMinutes):
-    m_id            (id),
-    m_name          (name),
-    m_category      (category),
-    m_description   (description),
-    m_prepTimeInMinutes(prepTimeInMinutes)
+    m_id                (id),
+    m_name              (name),
+    m_numberOfPersons   (numberOfPersons),
+    m_description       (description),
+    m_prepTimeInMinutes (prepTimeInMinutes)
 {
 
 }
@@ -33,9 +33,9 @@ std::string Recipe::getName() const
     return m_name;
 }
 
-Category Recipe::getCategory() const
+int Recipe::getNumberOfPersons() const
 {
-    return m_category;
+    return m_numberOfPersons;
 }
 
 std::string Recipe::getDescription() const
@@ -75,7 +75,7 @@ std::string Recipe::getFriendlyIngredients()
     std::string ingredientsDescription;
     for (auto &ingredient : m_ingredients)
     {
-        ingredientsDescription += ingredient.getFriendlyName() + "\n";
+        ingredientsDescription += "- " + ingredient.getFriendlyName() + "\n";
     }
 
     return ingredientsDescription;
