@@ -44,7 +44,7 @@ std::string RecipeStorageTests::generateSimpleRecipeSerialization()
     pugi::xml_node recipeNode = doc.append_child("Recipe");
     recipeNode.append_child("Id").append_child(pugi::node_pcdata).set_value("1");
     recipeNode.append_child("Name").append_child(pugi::node_pcdata).set_value("My Testing Recipe");
-    recipeNode.append_child("Category").append_child(pugi::node_pcdata).set_value("Category_Quick");
+    recipeNode.append_child("NumberOfPersons").append_child(pugi::node_pcdata).set_value("1");
     recipeNode.append_child("Description").append_child(pugi::node_pcdata).set_value("This is my description");
     recipeNode.append_child("PreparationTime").append_child(pugi::node_pcdata).set_value("45");
     pugi::xml_node ingredientCollectionNode = recipeNode.append_child("Ingredients");

@@ -41,6 +41,33 @@ void RandomRecipeSelectorTests::getListOfIngredients_WithTwoIngredientsWithDiffe
     QCOMPARE(ingredientList[1].getName(), "Flour");
 }
 
+void RandomRecipeSelectorTests::addRecipeWithOneIngredient_EmptyStore_ReturnsOneIngredient()
+{
+    createSimpleSelector();
+    Recipe recipe("Test", 1, "", 0);
+    recipe.addIngredient(Ingredient("Flour", 200, UnitTypes().Grammes));
+    store.addRecipe(recipe);
+
+    selector = RandomRecipeSelector(&store);
+    selector.addRecipe(recipe);
+    auto ingredientList = selector.getListOfIngredients();
+    QCOMPARE((int) ingredientList.size(), 1);
+}
+
+void RandomRecipeSelectorTests::removeRecipeWithOneIngredient_StoreContainingOneRecipesWithSingleIngredients_ReturnsZeroIngredient()
+{
+    createSimpleSelector();
+    Recipe recipe("Test", 1, "", 0);
+    recipe.addIngredient(Ingredient("Flour", 200, UnitTypes().Grammes));
+    store.addRecipe(recipe);
+
+    selector = RandomRecipeSelector(&store);
+    selector.addRecipe(recipe);
+    selector.removeRecipe(recipe);
+    auto ingredientList = selector.getListOfIngredients();
+    QCOMPARE((int) ingredientList.size(), 0);
+}
+
 void RandomRecipeSelectorTests::createSimpleSelector()
 {
     storage.reset();

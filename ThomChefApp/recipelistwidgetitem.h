@@ -7,7 +7,7 @@
 class RecipeListWidgetItem : public QListWidgetItem
 {
 public:
-    RecipeListWidgetItem(time_t id, QString title);
+    RecipeListWidgetItem(QListWidget *parent, time_t id, QString title);
 
     time_t getId() const;
 

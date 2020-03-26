@@ -45,6 +45,7 @@ void ThomChefWindow::initialize()
         ui->button_ingredientfilter_clear->setEnabled(false);
         ui->edit_generate_numberOfMeals->setValue(1);
         ui->edit_generate_numberOfMeals->setRange(1, m_store.getNumberOfRecipes());
+        ui->button_shoppingListRemove->setEnabled(false);
     }
     catch (std::ios_base::failure f)
     {
@@ -79,6 +80,8 @@ void ThomChefWindow::on_button_deleteRecipe_clicked()
     try
     {
         if (ui->listrecipes->currentItem() == nullptr)
+            return;
+        if (!ViewUtils::askQuestion("Are you sure you want to delete the selected recipe?"))
             return;
 
         deleteSelectedRecipe();
@@ -210,10 +213,12 @@ void ThomChefWindow::on_button_generateRecipes_clicked()
         ui->listGenerateRecipes->clear();
         int nbOfMeals = ui->edit_generate_numberOfMeals->value();
         for (auto &recipe : m_recipeSelector.selectRecipes(nbOfMeals))
-            ui->listGenerateRecipes->addItem(recipe.getName().c_str());
+            ui->listGenerateRecipes->addItem(new RecipeListWidgetItem(ui->listGenerateRecipes, recipe.getId(), recipe.getName().c_str()));
 
         if (!ui->button_showShoppingList->isEnabled())
             ui->button_showShoppingList->setEnabled(true);
+        if (!ui->button_shoppingListRemove->isEnabled())
+            ui->button_shoppingListRemove->setEnabled(true);
     }
     catch (std::invalid_argument e)
     {
@@ -231,6 +236,39 @@ void ThomChefWindow::on_button_showShoppingList_clicked()
     m_configurationStorage.save(m_configuration);
 }
 
+void ThomChefWindow::on_edit_findrecipe_name_textChanged(const QString &arg1)
+{
+    if (arg1 != "" && !m_store.hasFilter(&m_nameFilter))
+        m_store.addFilter(&m_nameFilter);
+
+    if (arg1 == "")
+        m_store.removeFilter(&m_nameFilter);
+    else
+        m_nameFilter.setRecipeName(arg1.toStdString());
+}
+
+void ThomChefWindow::on_button_addToShoppingList_clicked()
+{
+    Recipe recipe = m_store.findRecipe(getCurrentRecipeId());
+    m_recipeSelector.addRecipe(recipe);
+
+    ui->listGenerateRecipes->addItem(new RecipeListWidgetItem(ui->listGenerateRecipes, recipe.getId(), recipe.getName().c_str()));
+    if (!ui->button_showShoppingList->isEnabled())
+        ui->button_showShoppingList->setEnabled(true);
+    if (!ui->button_shoppingListRemove->isEnabled())
+        ui->button_shoppingListRemove->setEnabled(true);
+}
+
+void ThomChefWindow::on_button_shoppingListRemove_clicked()
+{
+    RecipeListWidgetItem *currentItem = dynamic_cast<RecipeListWidgetItem*>(ui->listGenerateRecipes->currentItem());
+    Recipe r = m_store.findRecipe(currentItem->getId());
+    m_recipeSelector.removeRecipe(r);
+    ui->listGenerateRecipes->takeItem(ui->listGenerateRecipes->currentRow());
+    if (ui->listGenerateRecipes->count() == 0 && ui->button_shoppingListRemove->isEnabled())
+        ui->button_shoppingListRemove->setEnabled(false);
+}
+
 void ThomChefWindow::updateRecipeList()
 {
     m_updating = true;
@@ -239,7 +277,7 @@ void ThomChefWindow::updateRecipeList()
     for (int i = 0; i < nbRecipes; ++i)
     {
         Recipe recipe = m_store.getRecipe(i);
-        ui->listrecipes->addItem(new RecipeListWidgetItem(recipe.getId(), recipe.getName().c_str()));
+        ui->listrecipes->addItem(new RecipeListWidgetItem(ui->listrecipes, recipe.getId(), recipe.getName().c_str()));
     }
     m_updating = false;
     if (nbRecipes > 0)
@@ -249,11 +287,14 @@ void ThomChefWindow::updateRecipeList()
             ui->button_updateRecipe->setEnabled(true);
         if (!ui->button_deleteRecipe->isEnabled())
             ui->button_deleteRecipe->setEnabled(true);
+        if (!ui->button_addToShoppingList->isEnabled())
+            ui->button_addToShoppingList->setEnabled(true);
     }
     else
     {
         ui->button_updateRecipe->setEnabled(false);
         ui->button_deleteRecipe->setEnabled(false);
+        ui->button_addToShoppingList->setEnabled(false);
     }
 }
 
@@ -308,15 +349,4 @@ void ThomChefWindow::removeIngredientFilter(std::string filter)
     m_ingredientFilter.removeIngredientFilter(filter);
     if (m_ingredientFilter.isEmpty() && m_store.hasFilter(&m_ingredientFilter))
         m_store.removeFilter(&m_ingredientFilter);
-}
-
-void ThomChefWindow::on_edit_findrecipe_name_textChanged(const QString &arg1)
-{
-    if (arg1 != "" && !m_store.hasFilter(&m_nameFilter))
-        m_store.addFilter(&m_nameFilter);
-
-    if (arg1 == "")
-        m_store.removeFilter(&m_nameFilter);
-    else
-        m_nameFilter.setRecipeName(arg1.toStdString());
 }

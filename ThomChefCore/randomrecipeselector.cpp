@@ -18,6 +18,21 @@ std::vector<Recipe> RandomRecipeSelector::selectRecipes(int numberOfRecipes)
     return m_generatedRecipes;
 }
 
+void RandomRecipeSelector::addRecipe(const Recipe &recipe)
+{
+    m_generatedRecipes.push_back(recipe);
+}
+
+void RandomRecipeSelector::removeRecipe(const Recipe &recipe)
+{
+    for (auto it = m_generatedRecipes.begin(); it != m_generatedRecipes.end(); ++it)
+        if (it->getId() == recipe.getId())
+        {
+            m_generatedRecipes.erase(it);
+            break;
+        }
+}
+
 std::vector<Ingredient> RandomRecipeSelector::getListOfIngredients()
 {
     std::vector<Ingredient> ingredients;

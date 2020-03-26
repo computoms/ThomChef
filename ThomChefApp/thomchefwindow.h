@@ -54,6 +54,10 @@ private slots:
 
     void on_edit_findrecipe_name_textChanged(const QString &arg1);
 
+    void on_button_addToShoppingList_clicked();
+
+    void on_button_shoppingListRemove_clicked();
+
 private:
     void updateRecipeList();
     void updateSelectedRecipe();

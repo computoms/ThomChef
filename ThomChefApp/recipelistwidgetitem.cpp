@@ -1,8 +1,8 @@
 #include "recipelistwidgetitem.h"
 
 
-RecipeListWidgetItem::RecipeListWidgetItem(time_t id, QString title):
-    QListWidgetItem (title),
+RecipeListWidgetItem::RecipeListWidgetItem(QListWidget *parent, time_t id, QString title):
+    QListWidgetItem (title, parent),
     m_id            (id)
 {
 

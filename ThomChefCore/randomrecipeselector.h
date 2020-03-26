@@ -8,6 +8,8 @@ public:
     RandomRecipeSelector(RecipeStore *store);
 
     std::vector<Recipe> selectRecipes(int numberOfRecipes);
+    void addRecipe(const Recipe &recipe);
+    void removeRecipe(const Recipe &recipe);
     std::vector<Ingredient> getListOfIngredients();
 
 private:

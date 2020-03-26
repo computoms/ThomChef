@@ -10,6 +10,7 @@ public:
 
     static void showError(std::string message);
     static void showInformation(std::string message);
+    static bool askQuestion(std::string message);
 };
 
 #endif // VIEWUTILS_H

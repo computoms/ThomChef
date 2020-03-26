@@ -147,36 +147,6 @@
        <string>Recipes</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_7">
-       <item row="0" column="0" rowspan="2">
-        <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="0">
-          <widget class="QPushButton" name="button_addrecipe">
-           <property name="text">
-            <string>Add Recipe</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QListWidget" name="listrecipes">
-           <property name="minimumSize">
-            <size>
-             <width>300</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>300</width>
-             <height>16777215</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <layout class="QGridLayout" name="gridLayout_3"/>
-         </item>
-        </layout>
-       </item>
        <item row="0" column="1">
         <layout class="QGridLayout" name="gridLayout_2">
          <item row="10" column="0">
@@ -317,23 +287,53 @@
          </item>
         </layout>
        </item>
-       <item row="1" column="1">
-        <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="0" rowspan="3">
+        <layout class="QGridLayout" name="gridLayout">
          <item row="0" column="0">
+          <widget class="QPushButton" name="button_addrecipe">
+           <property name="text">
+            <string>Add Recipe</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QListWidget" name="listrecipes">
+           <property name="minimumSize">
+            <size>
+             <width>300</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>300</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
           <widget class="QPushButton" name="button_updateRecipe">
            <property name="text">
             <string>Update Recipe</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QPushButton" name="button_deleteRecipe">
-           <property name="text">
-            <string>Delete Recipe</string>
-           </property>
-          </widget>
-         </item>
         </layout>
+       </item>
+       <item row="3" column="0">
+        <widget class="QPushButton" name="button_deleteRecipe">
+         <property name="text">
+          <string>Delete Recipe</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QPushButton" name="button_addToShoppingList">
+         <property name="text">
+          <string>Add to Shopping List</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -347,14 +347,14 @@
        <string>Generate Meals and Shopping List</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_9">
-       <item row="2" column="0">
-        <widget class="QPushButton" name="button_showShoppingList">
+       <item row="3" column="0">
+        <widget class="QPushButton" name="button_shoppingListRemove">
          <property name="text">
-          <string>See Shopping List</string>
+          <string>Remove Recipe</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QListWidget" name="listGenerateRecipes">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
@@ -364,26 +364,33 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
+       <item row="1" column="0">
         <layout class="QGridLayout" name="gridLayout_10">
-         <item row="0" column="2">
+         <item row="2" column="2">
           <widget class="QPushButton" name="button_generateRecipes">
            <property name="text">
             <string>Generate Random Set</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QSpinBox" name="edit_generate_numberOfMeals"/>
-         </item>
-         <item row="0" column="0">
+         <item row="2" column="0">
           <widget class="QLabel" name="label_generate_numberOfMeals">
            <property name="text">
             <string>Number of meals:</string>
            </property>
           </widget>
          </item>
+         <item row="2" column="1">
+          <widget class="QSpinBox" name="edit_generate_numberOfMeals"/>
+         </item>
         </layout>
+       </item>
+       <item row="0" column="0">
+        <widget class="QPushButton" name="button_showShoppingList">
+         <property name="text">
+          <string>See Shopping List</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

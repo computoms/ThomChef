@@ -15,6 +15,9 @@ private slots:
     void getListOfIngredients_WithTwoIdenticalIngredients_ReturnsOnlyOneIngredient();
     void getListOfIngredients_WithTwoIngredientsWithDifferentUnits_ReturnsTwoIngredients();
 
+    void addRecipeWithOneIngredient_EmptyStore_ReturnsOneIngredient();
+    void removeRecipeWithOneIngredient_StoreContainingOneRecipesWithSingleIngredients_ReturnsZeroIngredient();
+
 private:
     void createSimpleSelector();
 
