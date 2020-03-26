@@ -35,7 +35,7 @@ void ConfigurationStorageTests::loadFromXml_WithIngredientFilterXml_GeneratesVal
     Configuration config = (ConfigurationStorageFile("test.xml")).readFromXml(doc);
 
     auto ings = config.getDefaultIngredients();
-    QCOMPARE(ings.size(), 2);
+    QCOMPARE((int) ings.size(), 2);
     QCOMPARE(ings[0], "Salt");
     QCOMPARE(ings[1], "Pepper");
 }

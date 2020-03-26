@@ -13,6 +13,11 @@ struct EnumValue
         friendlyName = fName;
     }
 
+    bool operator==(const EnumValue &other)
+    {
+        return other.code == code;
+    }
+
     int code;
     std::string serialization;
     std::string friendlyName;
