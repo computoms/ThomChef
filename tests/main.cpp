@@ -3,6 +3,7 @@
 #include "recipestoretests.h"
 #include "filtertests.h"
 #include "configurationstoragetests.h"
+#include "randomrecipeselectortests.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,6 +20,9 @@ int main(int argc, char *argv[])
 
     ConfigurationStorageTests configStorageTests;
     status |= QTest::qExec(&configStorageTests, argc, argv);
+
+    RandomRecipeSelectorTests recipeSelectorTests;
+    status |= QTest::qExec(&recipeSelectorTests, argc, argv);
 
     return status;
 }

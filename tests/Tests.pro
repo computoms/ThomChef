@@ -9,14 +9,18 @@ TEMPLATE = app
 SOURCES +=  main.cpp \
     configurationstoragetests.cpp \
     filtertests.cpp \
+    randomrecipeselectortests.cpp \
     recipestoragetests.cpp \
-    recipestoretests.cpp
+    recipestoretests.cpp \
+    testingrecipestorage.cpp
 
 HEADERS += \
     configurationstoragetests.h \
     filtertests.h \
+    randomrecipeselectortests.h \
     recipestoragetests.h \
-    recipestoretests.h
+    recipestoretests.h \
+    testingrecipestorage.h
 
 INCLUDEPATH += ../
 
