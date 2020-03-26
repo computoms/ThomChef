@@ -69,7 +69,7 @@ void RecipeStoreTests::setFilter_withFilterThatRestrictsStoreToOneRecipe_Returns
 
     IngredientFilter filter;
     filter.addIngredientFilter("Tomato");
-    store.setFilter(&filter);
+    store.addFilter(&filter);
 
     QCOMPARE(store.getNumberOfRecipes(), 1);
 }
@@ -82,7 +82,7 @@ void RecipeStoreTests::setFilter_partialFilter_SelectsCorrectRecipes()
 
     IngredientFilter filter;
     filter.addIngredientFilter("Toma");
-    store.setFilter(&filter);
+    store.addFilter(&filter);
 
     QCOMPARE(store.getNumberOfRecipes(), 1);
 }

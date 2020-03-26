@@ -7,7 +7,7 @@ IngredientFilter::IngredientFilter()
     m_defaultIngredientFilters.push_back("flour");
 }
 
-bool IngredientFilter::isInFilter(Recipe &recipe) const
+bool IngredientFilter::isInFilter(const Recipe &recipe) const
 {
     for (int i = 0; i < recipe.getNumberOfIngredients(); ++i)
         if (!isInFilter(recipe.getIngredient(i)))
@@ -19,7 +19,7 @@ bool IngredientFilter::isInFilter(Recipe &recipe) const
 void IngredientFilter::addIngredientFilter(std::string ingredientFilter)
 {
     m_ingredientFilters.push_back(ingredientFilter);
-    emit updated();
+    filterUpdated();
 }
 
 void IngredientFilter::removeIngredientFilter(std::string ingredientFilter)
@@ -32,7 +32,7 @@ void IngredientFilter::removeIngredientFilter(std::string ingredientFilter)
             break;
         }
     }
-    emit updated();
+    filterUpdated();
 }
 
 bool IngredientFilter::isEmpty() const

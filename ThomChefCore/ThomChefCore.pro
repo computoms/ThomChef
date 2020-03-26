@@ -21,11 +21,13 @@ SOURCES += \
     configuration.cpp \
     Storage/configurationstoragefile.cpp \
     conversions.cpp \
+    filter.cpp \
     ingredient.cpp \
     ingredientfilter.cpp \
     randomrecipeselector.cpp \
     recipe.cpp \
     Storage/recipestoragefile.cpp \
+    recipenamefilter.cpp \
     recipestore.cpp \
     ../libs/pugixml-1.9/src/pugixml.cpp
 
@@ -36,11 +38,13 @@ HEADERS += \
     Storage/configurationstoragefile.h \
     conversions.h \
     definitions.h \
+    filter.h \
     ingredient.h \
     ingredientfilter.h \
     randomrecipeselector.h \
     recipe.h \
     Storage/recipestoragefile.h \
+    recipenamefilter.h \
     recipestore.h \
     thomchefcore.h \
     ../libs/pugixml-1.9/src/pugixml.hpp \

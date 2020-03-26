@@ -1,26 +1,22 @@
-#ifndef FILTER_H
-#define FILTER_H
+#ifndef INGREDIENTFILTER_H
+#define INGREDIENTFILTER_H
 
 #include <vector>
+#include "filter.h"
 #include "recipe.h"
-#include <QObject>
 
-class IngredientFilter : public QObject
+class IngredientFilter : public Filter
 {
-    Q_OBJECT
 
 public:
     IngredientFilter();
 
-    bool isInFilter(Recipe &recipe) const;
+    virtual bool isInFilter(const Recipe &recipe) const override;
     void addIngredientFilter(std::string ingredientFilter);
     void removeIngredientFilter(std::string ingredientFilter);
     bool isEmpty() const;
 
     void setDefaultIngredients(std::vector<std::string> defaultIngredients);
-
-signals:
-    void updated();
 
 private:
     bool isInFilter(Ingredient ingredient) const;
@@ -31,4 +27,4 @@ private:
     std::vector<std::string> m_defaultIngredientFilters;
 };
 
-#endif // FILTER_H
+#endif // INGREDIENTFILTER_H

@@ -37,7 +37,7 @@ void ThomChefWindow::initialize()
         updateRecipeList();
         ConfigurationStorageFile configStorage("configuration.xml");
         m_configuration = configStorage.read();
-        m_filter.setDefaultIngredients(m_configuration.getDefaultIngredients());
+        m_ingredientFilter.setDefaultIngredients(m_configuration.getDefaultIngredients());
 
         ui->button_ingredientfilter_remove->setEnabled(false);
         ui->button_findRecipe_add->setEnabled(false);
@@ -144,7 +144,7 @@ void ThomChefWindow::on_button_ingredientfilter_remove_clicked()
         removeIngredientFilter(ui->listIngredientFilters->currentItem()->text().toStdString());
         ui->listIngredientFilters->takeItem(ui->listIngredientFilters->currentRow());
 
-        if (m_filter.isEmpty())
+        if (m_ingredientFilter.isEmpty())
         {
             ui->button_ingredientfilter_remove->setEnabled(false);
             ui->button_ingredientfilter_clear->setEnabled(false);
@@ -294,14 +294,25 @@ time_t ThomChefWindow::getCurrentRecipeId() const
 
 void ThomChefWindow::addIngredientFilter(std::string filter)
 {
-    m_filter.addIngredientFilter(filter);
-    if (!m_store.hasFilter())
-        m_store.setFilter(&m_filter);
+    m_ingredientFilter.addIngredientFilter(filter);
+    if (!m_store.hasFilter(&m_ingredientFilter))
+        m_store.addFilter(&m_ingredientFilter);
 }
 
 void ThomChefWindow::removeIngredientFilter(std::string filter)
 {
-    m_filter.removeIngredientFilter(filter);
-    if (m_filter.isEmpty() && m_store.hasFilter())
-        m_store.removeFilter();
+    m_ingredientFilter.removeIngredientFilter(filter);
+    if (m_ingredientFilter.isEmpty() && m_store.hasFilter(&m_ingredientFilter))
+        m_store.removeFilter(&m_ingredientFilter);
+}
+
+void ThomChefWindow::on_edit_findrecipe_name_textChanged(const QString &arg1)
+{
+    if (arg1 != "" && !m_store.hasFilter(&m_nameFilter))
+        m_store.addFilter(&m_nameFilter);
+
+    if (arg1 == "")
+        m_store.removeFilter(&m_nameFilter);
+    else
+        m_nameFilter.setRecipeName(arg1.toStdString());
 }

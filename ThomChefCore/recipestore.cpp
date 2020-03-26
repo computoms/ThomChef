@@ -1,8 +1,7 @@
 #include "recipestore.h"
 
 RecipeStore::RecipeStore(RecipeStorage *storage):
-    m_storage   (storage),
-    m_filter    (nullptr)
+    m_storage   (storage)
 {
 
 }
@@ -89,32 +88,44 @@ void RecipeStore::deleteRecipe(Recipe recipe)
 
 bool RecipeStore::hasFilter() const
 {
-    return m_filter != nullptr;
+    return m_filters.size() > 0;
 }
 
-void RecipeStore::setFilter(IngredientFilter *filter)
+bool RecipeStore::hasFilter(Filter *filter) const
 {
-    m_filter = filter;
-    if (m_filter)
-        connect(m_filter, SIGNAL(updated()), this, SLOT(on_filter_updated()));
-
-    updateFilter();
+    return std::find(m_filters.begin(), m_filters.end(), filter) != m_filters.end();
 }
 
-void RecipeStore::removeFilter()
+void RecipeStore::addFilter(Filter *filter)
 {
-    m_filter = nullptr;
+    if (hasFilter(filter))
+        return;
+    if (filter == nullptr)
+        return;
+
+    m_filters.push_back(filter);
+    connect(filter, SIGNAL(updated()), this, SLOT(on_filter_updated()));
+
+    updateFilters();
+}
+
+void RecipeStore::removeFilter(Filter *filter)
+{
+    if (!hasFilter(filter))
+        return;
+    auto it = std::find(m_filters.begin(), m_filters.end(), filter);
+    m_filters.erase(it);
     m_filteredRecipeIndexes.clear();
 
-    updateFilter();
+    updateFilters();
 }
 
 void RecipeStore::on_filter_updated()
 {
-    updateFilter();
+    updateFilters();
 }
 
-void RecipeStore::updateFilter()
+void RecipeStore::updateFilters()
 {
     m_filteredRecipeIndexes.clear();
 
@@ -122,10 +133,18 @@ void RecipeStore::updateFilter()
     {
         for (int i = 0; i < (int)m_recipes.size(); ++i)
         {
-            if (m_filter->isInFilter(m_recipes[i]))
+            if (isInAllFilters(m_recipes[i]))
                 m_filteredRecipeIndexes.push_back(i);
         }
     }
 
     emit changed();
+}
+
+bool RecipeStore::isInAllFilters(const Recipe &recipe) const
+{
+    for (auto &f : m_filters)
+        if (!f->isInFilter(recipe))
+            return false;
+    return true;
 }
