@@ -16,10 +16,14 @@ bool IngredientFilter::isInFilter(const Recipe &recipe) const
     return true;
 }
 
-void IngredientFilter::addIngredientFilter(std::string ingredientFilter)
+bool IngredientFilter::addIngredientFilter(std::string ingredientFilter)
 {
+    if (containsFilter(ingredientFilter))
+        return false;
+
     m_ingredientFilters.push_back(ingredientFilter);
     filterUpdated();
+    return true;
 }
 
 void IngredientFilter::removeIngredientFilter(std::string ingredientFilter)
@@ -67,4 +71,12 @@ bool IngredientFilter::match(std::string ingredientFilter, Ingredient ingredient
                    [](unsigned char c){ return std::tolower(c); });
 
     return ingName.find(filter) != std::string::npos;
+}
+
+bool IngredientFilter::containsFilter(std::string filter) const
+{
+    for (auto &ing : m_ingredientFilters)
+        if (ing == filter)
+            return true;
+    return false;
 }

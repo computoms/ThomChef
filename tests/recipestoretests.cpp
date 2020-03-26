@@ -79,6 +79,7 @@ void RecipeStoreTests::setFilter_partialFilter_SelectsCorrectRecipes()
     init();
 
     recipe1.addIngredient(Ingredient("Tomato", 1, UnitTypes().Number));
+    store.updateRecipe(recipe1);
 
     IngredientFilter filter;
     filter.addIngredientFilter("Toma");

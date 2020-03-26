@@ -120,12 +120,13 @@ void ThomChefWindow::on_store_changed()
 void ThomChefWindow::on_button_findRecipe_add_clicked()
 {
     try {
-        addIngredientFilter(ui->edit_ingredientFilter->text().toStdString());
-        ui->listIngredientFilters->addItem(ui->edit_ingredientFilter->text());
+        if (addIngredientFilter(ui->edit_ingredientFilter->text().toStdString()))
+            ui->listIngredientFilters->addItem(ui->edit_ingredientFilter->text());
+
         ui->edit_ingredientFilter->setText("");
-        if (!ui->button_ingredientfilter_remove->isEnabled())
+        if (!ui->button_ingredientfilter_remove->isEnabled() && !m_ingredientFilter.isEmpty())
             ui->button_ingredientfilter_remove->setEnabled(true);
-        if (!ui->button_ingredientfilter_clear->isEnabled())
+        if (!ui->button_ingredientfilter_clear->isEnabled() && !m_ingredientFilter.isEmpty())
             ui->button_ingredientfilter_clear->setEnabled(true);
     }
     catch (std::invalid_argument e)
@@ -292,11 +293,14 @@ time_t ThomChefWindow::getCurrentRecipeId() const
     return currentItem->getId();
 }
 
-void ThomChefWindow::addIngredientFilter(std::string filter)
+bool ThomChefWindow::addIngredientFilter(std::string filter)
 {
-    m_ingredientFilter.addIngredientFilter(filter);
+    if (!m_ingredientFilter.addIngredientFilter(filter))
+        return false;
+
     if (!m_store.hasFilter(&m_ingredientFilter))
         m_store.addFilter(&m_ingredientFilter);
+    return true;
 }
 
 void ThomChefWindow::removeIngredientFilter(std::string filter)

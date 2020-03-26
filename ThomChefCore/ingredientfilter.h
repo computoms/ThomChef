@@ -12,7 +12,7 @@ public:
     IngredientFilter();
 
     virtual bool isInFilter(const Recipe &recipe) const override;
-    void addIngredientFilter(std::string ingredientFilter);
+    bool addIngredientFilter(std::string ingredientFilter);
     void removeIngredientFilter(std::string ingredientFilter);
     bool isEmpty() const;
 
@@ -21,6 +21,7 @@ public:
 private:
     bool isInFilter(Ingredient ingredient) const;
     bool match(std::string ingredientFilter, Ingredient ingredient) const;
+    bool containsFilter(std::string filter) const;
 
 private:
     std::vector<std::string> m_ingredientFilters;

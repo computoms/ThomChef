@@ -60,7 +60,7 @@ private:
     void modifySelectedRecipe();
     void deleteSelectedRecipe();
     time_t getCurrentRecipeId() const;
-    void addIngredientFilter(std::string filter);
+    bool addIngredientFilter(std::string filter);
     void removeIngredientFilter(std::string filter);
 
 private:

@@ -63,3 +63,11 @@ void FilterTests::removeIngredientFilter_recipeWithDifferentIngredient_isNowInFi
 
     QCOMPARE(filter.isInFilter(m_recipe), false);
 }
+
+void FilterTests::addIngredientFilter_whenContainingSameIngredient_returnsFalse()
+{
+    IngredientFilter filter;
+
+    QCOMPARE(filter.addIngredientFilter("Tomato"), true);
+    QCOMPARE(filter.addIngredientFilter("Tomato"), false);
+}

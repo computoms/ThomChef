@@ -9,6 +9,7 @@ RecipeStore::RecipeStore(RecipeStorage *storage):
 void RecipeStore::initialize()
 {
     m_recipes = m_storage->read();
+    m_filters.clear();
 }
 
 int RecipeStore::getNumberOfRecipes() const

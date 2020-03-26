@@ -21,6 +21,7 @@ private slots:
     void isInFilter_recipeWithDifferingCaseIngredient_ReturnsTrue();
 
     void removeIngredientFilter_recipeWithDifferentIngredient_isNowInFilter();
+    void addIngredientFilter_whenContainingSameIngredient_returnsFalse();
 
 private:
     Recipe m_recipe;
