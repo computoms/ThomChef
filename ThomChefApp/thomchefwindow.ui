@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1074</width>
+    <width>1823</width>
     <height>599</height>
    </rect>
   </property>
@@ -15,6 +15,111 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_5">
+    <item row="0" column="1">
+     <widget class="QGroupBox" name="groupBox_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>400</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>Find Recipe</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_6">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Find Recipe By Ingredients&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QPushButton" name="button_ingredientfilter_remove">
+         <property name="text">
+          <string>Remove Selected Ingredient</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <layout class="QGridLayout" name="gridLayout_8">
+         <item row="3" column="1">
+          <widget class="QLineEdit" name="edit_ingredientFilter">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_ingredientfilter">
+           <property name="text">
+            <string>Ingredient: </string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="2">
+          <widget class="QPushButton" name="button_findRecipe_add">
+           <property name="text">
+            <string>Add</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QPushButton" name="button_filter_configure">
+           <property name="text">
+            <string>Configure Filter</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="2" column="0">
+        <widget class="QListWidget" name="listIngredientFilters">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QPushButton" name="button_ingredientfilter_clear">
+         <property name="text">
+          <string>Clear Filter</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
     <item row="0" column="0">
      <widget class="QGroupBox" name="groupBox">
       <property name="sizePolicy">
@@ -45,7 +150,10 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="0">
+         <item row="3" column="0">
+          <layout class="QGridLayout" name="gridLayout_3"/>
+         </item>
+         <item row="2" column="0">
           <widget class="QListWidget" name="listrecipes">
            <property name="minimumSize">
             <size>
@@ -61,16 +169,12 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="0">
-          <layout class="QGridLayout" name="gridLayout_3">
-           <item row="0" column="0">
-            <widget class="QPushButton" name="button_addrecipe">
-             <property name="text">
-              <string>Add Recipe</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+         <item row="1" column="0">
+          <widget class="QPushButton" name="button_addrecipe">
+           <property name="text">
+            <string>Add Recipe</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -173,107 +277,62 @@
       </layout>
      </widget>
     </item>
-    <item row="0" column="1">
-     <widget class="QGroupBox" name="groupBox_2">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>400</width>
-        <height>16777215</height>
-       </size>
-      </property>
+    <item row="0" column="2">
+     <widget class="QGroupBox" name="groupBox_3">
       <property name="title">
-       <string>Find Recipe</string>
+       <string>Generate Meals</string>
       </property>
-      <layout class="QGridLayout" name="gridLayout_6">
+      <layout class="QGridLayout" name="gridLayout_9">
        <item row="0" column="0">
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="label_generation_title">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>16777215</height>
-          </size>
-         </property>
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Find Recipe By Ingredients&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Generate Meals and Shopping List&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QPushButton" name="button_ingredientfilter_remove">
-         <property name="text">
-          <string>Remove Ingredient</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <layout class="QGridLayout" name="gridLayout_8">
-         <item row="3" column="1">
-          <widget class="QLineEdit" name="edit_ingredientFilter">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16777215</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="label_ingredientfilter">
-           <property name="text">
-            <string>Ingredient: </string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="2">
-          <widget class="QPushButton" name="button_findRecipe_add">
-           <property name="text">
-            <string>Add</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="2">
-          <widget class="QPushButton" name="button_filter_configure">
-           <property name="text">
-            <string>Configure Filter</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
        </item>
        <item row="2" column="0">
-        <widget class="QListWidget" name="listIngredientFilters">
+        <widget class="QListWidget" name="listGenerateRecipes">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+          <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>16777215</height>
-          </size>
-         </property>
         </widget>
        </item>
-       <item row="4" column="0">
-        <widget class="QPushButton" name="button_ingredientfilter_clear">
-         <property name="text">
-          <string>Clear Filter</string>
-         </property>
-        </widget>
+       <item row="1" column="0">
+        <layout class="QGridLayout" name="gridLayout_10">
+         <item row="0" column="2">
+          <widget class="QPushButton" name="button_generateRecipes">
+           <property name="text">
+            <string>Generate Random Set</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QPushButton" name="button_showShoppingList">
+           <property name="text">
+            <string>See Shopping List</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QSpinBox" name="edit_generate_numberOfMeals"/>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_generate_numberOfMeals">
+           <property name="text">
+            <string>Number of meals:</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
@@ -285,7 +344,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1074</width>
+     <width>1823</width>
      <height>22</height>
     </rect>
    </property>

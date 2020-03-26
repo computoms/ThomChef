@@ -8,6 +8,7 @@
 #include "ThomChefCore/Storage/configurationstoragefile.h"
 #include "ThomChefCore/Storage/recipestoragefile.h"
 #include "ThomChefCore/configuration.h"
+#include "ThomChefCore/randomrecipeselector.h"
 
 namespace Ui {
 class ThomChefWindow;
@@ -46,6 +47,10 @@ private slots:
 
     void on_button_ingredientfilter_clear_clicked();
 
+    void on_button_generateRecipes_clicked();
+
+    void on_button_showShoppingList_clicked();
+
 private:
     void updateRecipeList();
     void updateSelectedRecipe();
@@ -62,6 +67,7 @@ private:
     Configuration m_configuration;
     RecipeStore m_store;
     IngredientFilter m_filter;
+    RandomRecipeSelector m_recipeSelector;
     bool m_updating;
 };
 

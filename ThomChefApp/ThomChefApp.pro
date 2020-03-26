@@ -19,6 +19,7 @@ SOURCES += \
     filtersettingsview.cpp \
     main.cpp \
     recipelistwidgetitem.cpp \
+    shoppinglistview.cpp \
     thomchefwindow.cpp \
     addrecipe.cpp \
     viewutils.cpp
@@ -26,14 +27,22 @@ SOURCES += \
 HEADERS += \
     filtersettingsview.h \
     recipelistwidgetitem.h \
+    shoppinglistview.h \
     thomchefwindow.h \
     addrecipe.h \
     viewutils.h
 
 FORMS += \
     filtersettingsview.ui \
+    shoppinglistview.ui \
     thomchefwindow.ui \
     addrecipe.ui
+
+app_resources.path = $$OUT_PWD/ThomChefApp.app/Contents/MacOS/
+app_resources.files += ../Resources/*
+
+INSTALLS += app_resources
+OTHER_FILES += ../Resources/style.qss
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -23,6 +23,7 @@ SOURCES += \
     conversions.cpp \
     ingredient.cpp \
     ingredientfilter.cpp \
+    randomrecipeselector.cpp \
     recipe.cpp \
     Storage/recipestoragefile.cpp \
     recipestore.cpp \
@@ -37,6 +38,7 @@ HEADERS += \
     definitions.h \
     ingredient.h \
     ingredientfilter.h \
+    randomrecipeselector.h \
     recipe.h \
     Storage/recipestoragefile.h \
     recipestore.h \
