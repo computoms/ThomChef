@@ -33,6 +33,8 @@ void ConfigurationStorageFile::saveToXml(Configuration configuration, pugi::xml_
     std::vector<std::string> defaultIngredients = configuration.getDefaultIngredients();
     for (const auto &ing : defaultIngredients)
         defaultIngredientsNode.append_child("IngredientFilter").append_child(pugi::node_pcdata).set_value(ing.c_str());
+
+    configNode.append_child("User").append_child("EmailAddress").append_child(pugi::node_pcdata).set_value(configuration.getEmailAddress().c_str());
 }
 
 Configuration ConfigurationStorageFile::readFromXml(const pugi::xml_document &doc) const
@@ -44,7 +46,10 @@ Configuration ConfigurationStorageFile::readFromXml(const pugi::xml_document &do
     for (pugi::xml_node ing = defaultIngCollection.first_child(); ing; ing = ing.next_sibling("IngredientFilter"))
         defaultIngredients.push_back(ing.child_value());
 
+    pugi::xml_node userNode = configNode.child("User");
+
     Configuration configuration;
     configuration.setDefaultIngredients(defaultIngredients);
+    configuration.setEmailAddress(userNode.child("EmailAddress").child_value());
     return configuration;
 }

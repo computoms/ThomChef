@@ -42,6 +42,7 @@ void ThomChefWindow::initialize()
         ui->button_ingredientfilter_remove->setEnabled(false);
         ui->button_findRecipe_add->setEnabled(false);
         ui->button_showShoppingList->setEnabled(false);
+        ui->button_ingredientfilter_clear->setEnabled(false);
         ui->edit_generate_numberOfMeals->setValue(1);
         ui->edit_generate_numberOfMeals->setRange(1, m_store.getNumberOfRecipes());
     }
@@ -77,6 +78,9 @@ void ThomChefWindow::on_button_deleteRecipe_clicked()
 {
     try
     {
+        if (ui->listrecipes->currentItem() == nullptr)
+            return;
+
         deleteSelectedRecipe();
     }
     catch (std::invalid_argument e)
@@ -89,6 +93,9 @@ void ThomChefWindow::on_button_updateRecipe_clicked()
 {
     try
     {
+        if (ui->listrecipes->currentItem() == nullptr)
+            return;
+
         modifySelectedRecipe();
     }
     catch (std::invalid_argument e)
@@ -118,6 +125,8 @@ void ThomChefWindow::on_button_findRecipe_add_clicked()
         ui->edit_ingredientFilter->setText("");
         if (!ui->button_ingredientfilter_remove->isEnabled())
             ui->button_ingredientfilter_remove->setEnabled(true);
+        if (!ui->button_ingredientfilter_clear->isEnabled())
+            ui->button_ingredientfilter_clear->setEnabled(true);
     }
     catch (std::invalid_argument e)
     {
@@ -129,12 +138,24 @@ void ThomChefWindow::on_button_ingredientfilter_remove_clicked()
 {
     try
     {
+        if (ui->listIngredientFilters->currentItem() == nullptr)
+            return;
+
         removeIngredientFilter(ui->listIngredientFilters->currentItem()->text().toStdString());
         ui->listIngredientFilters->takeItem(ui->listIngredientFilters->currentRow());
+
         if (m_filter.isEmpty())
+        {
             ui->button_ingredientfilter_remove->setEnabled(false);
-        else if (!ui->button_ingredientfilter_remove->isEnabled())
-            ui->button_ingredientfilter_remove->setEnabled(true);
+            ui->button_ingredientfilter_clear->setEnabled(false);
+        }
+        else
+        {
+            if (!ui->button_ingredientfilter_remove->isEnabled())
+                ui->button_ingredientfilter_remove->setEnabled(true);
+            if (!ui->button_ingredientfilter_clear->isEnabled())
+                ui->button_ingredientfilter_clear->setEnabled(false);
+        }
     }
     catch (std::invalid_argument e)
     {
@@ -203,7 +224,10 @@ void ThomChefWindow::on_button_showShoppingList_clicked()
 {
     ShoppingListView view(this);
     view.setIngredients(m_recipeSelector.getListOfIngredients());
+    view.setDefaultEmailAddress(m_configuration.getEmailAddress());
     view.exec();
+    m_configuration.setEmailAddress(view.getEmailAddress());
+    m_configurationStorage.save(m_configuration);
 }
 
 void ThomChefWindow::updateRecipeList()

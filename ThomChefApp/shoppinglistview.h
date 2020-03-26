@@ -17,6 +17,15 @@ public:
     ~ShoppingListView();
 
     void setIngredients(std::vector<Ingredient> ingredients);
+    void setDefaultEmailAddress(std::string emailAddress);
+    std::string getEmailAddress() const;
+
+private slots:
+    void on_button_sendEmail_clicked();
+
+private:
+    void sendByEmail(std::string emailAddress);
+    void sendToReminders();
 
 private:
     Ui::ShoppingListView *ui;

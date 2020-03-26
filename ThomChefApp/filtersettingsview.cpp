@@ -19,6 +19,7 @@ void FilterSettingsView::init(const Configuration &config)
     for (const auto &ing : m_defaultIngredients)
         ui->listDefaultIngredients->addItem(ing.c_str());
     ui->button_addDefaultIngredient->setEnabled(false);
+    ui->button_deleteDefaultIngredient->setEnabled(false);
 }
 
 std::vector<std::string> FilterSettingsView::getDefaultIngredients() const
@@ -58,4 +59,10 @@ void FilterSettingsView::on_edit_defaultIngredient_textChanged(const QString &ar
 void FilterSettingsView::on_edit_defaultIngredient_returnPressed()
 {
     on_button_addDefaultIngredient_clicked();
+}
+
+void FilterSettingsView::on_listDefaultIngredients_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+{
+    if (!ui->button_deleteDefaultIngredient->isEnabled() && current != nullptr)
+        ui->button_deleteDefaultIngredient->setEnabled(true);
 }

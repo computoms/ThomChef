@@ -2,6 +2,7 @@
 #define FILTERSETTINGSVIEW_H
 
 #include <QDialog>
+#include <QListWidget>
 #include "ThomChefCore/configuration.h"
 
 namespace Ui {
@@ -27,6 +28,8 @@ private slots:
     void on_edit_defaultIngredient_textChanged(const QString &arg1);
 
     void on_edit_defaultIngredient_returnPressed();
+
+    void on_listDefaultIngredients_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
 
 private:
     Ui::FilterSettingsView *ui;

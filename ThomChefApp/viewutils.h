@@ -9,6 +9,7 @@ public:
     ViewUtils();
 
     static void showError(std::string message);
+    static void showInformation(std::string message);
 };
 
 #endif // VIEWUTILS_H

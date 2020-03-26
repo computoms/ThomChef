@@ -14,3 +14,13 @@ void Configuration::setDefaultIngredients(std::vector<std::string> defaultIngred
 {
     m_defaultIngredients = defaultIngredients;
 }
+
+std::string Configuration::getEmailAddress() const
+{
+    return m_emailAddress;
+}
+
+void Configuration::setEmailAddress(std::string emailAddress)
+{
+    m_emailAddress = emailAddress;
+}

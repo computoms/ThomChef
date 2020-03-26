@@ -12,3 +12,10 @@ void ViewUtils::showError(std::string message)
     msgBox.setText(QString(message.c_str()));
     msgBox.exec();
 }
+
+void ViewUtils::showInformation(std::string message)
+{
+    QMessageBox msgBox;
+    msgBox.setText(message.c_str());
+    msgBox.exec();
+}
