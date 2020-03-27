@@ -61,7 +61,16 @@ void ThomChefWindow::on_button_addrecipe_clicked()
     int result = addRecipeView.exec();
 
     if (result == QDialog::Accepted)
-        m_store.addRecipe(addRecipeView.getNewRecipe());
+    {
+        try
+        {
+            m_store.addRecipe(addRecipeView.getNewRecipe());
+        }
+        catch (std::invalid_argument e)
+        {
+            ViewUtils::showError(e.what());
+        }
+    }
 }
 
 void ThomChefWindow::on_listrecipes_itemSelectionChanged()
@@ -320,7 +329,16 @@ void ThomChefWindow::modifySelectedRecipe()
     int result = addRecipeView.exec();
 
     if (result == QDialog::Accepted)
-        m_store.updateRecipe(addRecipeView.getNewRecipe());
+    {
+        try
+        {
+            m_store.updateRecipe(addRecipeView.getNewRecipe());
+        }
+        catch (std::invalid_argument e)
+        {
+            ViewUtils::showError(e.what());
+        }
+    }
 }
 
 void ThomChefWindow::deleteSelectedRecipe()

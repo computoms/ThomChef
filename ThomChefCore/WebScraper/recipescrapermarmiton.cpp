@@ -35,6 +35,8 @@ std::vector<Ingredient> RecipeScraperMarmiton::findListOfIngredients() const
         std::string fullBlock = findRaw(start, "<li class=\"recipe-ingredients__list__item\">", "</li>");
         pugi::xml_document doc;
         result = doc.load_string(fullBlock.c_str());
+        if (!result)
+            throw std::invalid_argument("Could not parse webpage. Parse result was: " + std::to_string(result.status));
 
         std::string number = doc.child("li").child("div").child("span").child_value();
         name = doc.child("li").child("div").child("span").next_sibling("span").child_value();
@@ -75,7 +77,9 @@ int RecipeScraperMarmiton::findNumberOfPersons() const
     size_t start(0);
     std::string block = findRaw(start, "<div class=\"recipe-infos__quantity\">", "</div>");
     pugi::xml_document doc;
-    doc.load_string(block.c_str());
+    pugi::xml_parse_result result = doc.load_string(block.c_str());
+    if (!result)
+        throw std::invalid_argument("Could not parse webpage. Parse result was: " + std::to_string(result.status));
     return Conversions::to_int(doc.child("div").child("span").next_sibling("span").child_value());
 }
 
@@ -84,7 +88,9 @@ std::string RecipeScraperMarmiton::findDescription(std::string url) const
     size_t start(0);
     std::string block = findRaw(start, "<ol class=\"recipe-preparation__list\">", "</ol>");
     pugi::xml_document doc;
-    doc.load_string(block.c_str());
+    pugi::xml_parse_result result = doc.load_string(block.c_str());
+    if (!result)
+        throw std::invalid_argument("Could not parse webpage. Parse result was: " + std::to_string(result.status));
     std::string description = "Imported from " + url + "\n\n";
     int index = 1;
     for (pugi::xml_node n = doc.child("ol").child("li"); n; n = n.next_sibling("li"))
@@ -101,7 +107,9 @@ double RecipeScraperMarmiton::findPreparationTime() const
     size_t start(0);
     std::string block = findRaw(start, "<div class=\"recipe-infos__total-time\">", "</div>");
     pugi::xml_document doc;
-    doc.load_string(block.c_str());
+    pugi::xml_parse_result result = doc.load_string(block.c_str());
+    if (!result)
+        throw std::invalid_argument("Could not parse webpage. Parse result was: " + std::to_string(result.status));
     std::string time = doc.child("div").child("span").next_sibling("span").child_value();
     return parseTimeInMinutes(time);
 }
