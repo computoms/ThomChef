@@ -6,14 +6,21 @@ RecipeImporter::RecipeImporter()
 
 }
 
-Recipe RecipeImporter::importFromWeb(std::string url)
+Recipe RecipeImporter::importFromWeb(std::string url) const
 {
     std::shared_ptr<RecipeWebScraper> scraper = findWebScraper(url);
     return scraper->importRecipeFrom(url);
 }
 
-std::shared_ptr<RecipeWebScraper> RecipeImporter::findWebScraper(std::string url)
+std::vector<Recipe> RecipeImporter::importListFromWeb(std::string url) const
 {
-    // TODO parse url and find correct scraper object. For now, always Marmiton
+    std::shared_ptr<RecipeWebScraper> scraper = findWebScraper(url);
+    return scraper->importListOfRecipesFromIndexPage(url);
+}
+
+std::shared_ptr<RecipeWebScraper> RecipeImporter::findWebScraper(std::string url) const
+{
+    if (url.find("marmiton.org") == std::string::npos)
+        throw std::invalid_argument("Only marmiton.org website is supported.");
     return std::make_shared<RecipeScraperMarmiton>();
 }

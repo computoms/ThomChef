@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     filtersettingsview.cpp \
+    importfromwebview.cpp \
     main.cpp \
     recipelistwidgetitem.cpp \
     shoppinglistview.cpp \
@@ -26,6 +27,7 @@ SOURCES += \
 
 HEADERS += \
     filtersettingsview.h \
+    importfromwebview.h \
     recipelistwidgetitem.h \
     shoppinglistview.h \
     thomchefwindow.h \
@@ -34,6 +36,7 @@ HEADERS += \
 
 FORMS += \
     filtersettingsview.ui \
+    importfromwebview.ui \
     shoppinglistview.ui \
     thomchefwindow.ui \
     addrecipe.ui

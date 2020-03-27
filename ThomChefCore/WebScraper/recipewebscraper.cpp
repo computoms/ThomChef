@@ -19,6 +19,8 @@ std::string RecipeWebScraper::findRaw(size_t &startingPosition,
 std::string RecipeWebScraper::findWithoutTags(size_t &startingPosition, std::string opening, std::string closing) const
 {
     std::string output = findRaw(startingPosition, opening, closing);
+    if (output == "" || output.size() < opening.size() + closing.size() + 1)
+        return output;
     return output.substr(opening.size(), output.size() - opening.size() - closing.size());
 }
 

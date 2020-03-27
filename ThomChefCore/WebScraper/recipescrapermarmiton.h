@@ -8,6 +8,7 @@ public:
     RecipeScraperMarmiton();
 
     virtual Recipe importRecipeFrom(std::string url) override;
+    virtual std::vector<Recipe> importListOfRecipesFromIndexPage(std::string indexUrl) override;
 
 private:
     std::vector<Ingredient> findListOfIngredients() const;

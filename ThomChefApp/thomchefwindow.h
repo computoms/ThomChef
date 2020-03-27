@@ -58,6 +58,8 @@ private slots:
 
     void on_button_shoppingListRemove_clicked();
 
+    void on_button_importAllRecipesFromMarmiton_clicked();
+
 private:
     void updateRecipeList();
     void updateSelectedRecipe();

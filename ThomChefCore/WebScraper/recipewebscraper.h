@@ -9,6 +9,7 @@ class RecipeWebScraper : public QObject
 
 public:
     virtual Recipe importRecipeFrom(std::string url) = 0;
+    virtual std::vector<Recipe> importListOfRecipesFromIndexPage(std::string indexUrl) = 0;
 
 protected:
     std::string findRaw(size_t &startingPosition, std::string opening, std::string closing) const;

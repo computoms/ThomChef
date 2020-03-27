@@ -8,10 +8,11 @@ class RecipeImporter
 public:
     RecipeImporter();
 
-    Recipe importFromWeb(std::string url);
+    Recipe importFromWeb(std::string url) const;
+    std::vector<Recipe> importListFromWeb(std::string url) const;
 
 private:
-    std::shared_ptr<RecipeWebScraper> findWebScraper(std::string url);
+    std::shared_ptr<RecipeWebScraper> findWebScraper(std::string url) const;
 };
 
 #endif // WEBSCRAPER_H

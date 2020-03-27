@@ -5,6 +5,7 @@
 #include "recipelistwidgetitem.h"
 #include "filtersettingsview.h"
 #include "shoppinglistview.h"
+#include "importfromwebview.h"
 
 #include "ThomChefCore/Storage/recipestoragefile.h"
 #include "ThomChefCore/Storage/configurationstoragefile.h"
@@ -368,4 +369,36 @@ void ThomChefWindow::removeIngredientFilter(std::string filter)
     m_ingredientFilter.removeIngredientFilter(filter);
     if (m_ingredientFilter.isEmpty() && m_store.hasFilter(&m_ingredientFilter))
         m_store.removeFilter(&m_ingredientFilter);
+}
+
+void ThomChefWindow::on_button_importAllRecipesFromMarmiton_clicked()
+{
+    try
+    {
+        ImportFromWebView importView(this);
+        int result = importView.exec();
+        if (result != QDialog::Accepted)
+            return;
+
+        RecipeImporter importer;
+        if (importView.isImportAllMostSearched())
+        {
+            std::vector<Recipe> recipes = importer.importListFromWeb("https://www.marmiton.org/recettes/");
+            for (auto &recipe : recipes)
+                m_store.addRecipe(recipe);
+        }
+        else
+        {
+            std::string url = importView.getWebPageUrl();
+            m_store.addRecipe(importer.importFromWeb(url));
+        }
+    }
+    catch (std::invalid_argument e)
+    {
+        ViewUtils::showError(e.what());
+    }
+    catch (std::exception ex)
+    {
+        ViewUtils::showError(ex.what());
+    }
 }

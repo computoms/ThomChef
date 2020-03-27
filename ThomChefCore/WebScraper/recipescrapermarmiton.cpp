@@ -23,6 +23,25 @@ Recipe RecipeScraperMarmiton::importRecipeFrom(std::string url)
     return r;
 }
 
+std::vector<Recipe> RecipeScraperMarmiton::importListOfRecipesFromIndexPage(std::string indexUrl)
+{
+    extractHtml(indexUrl);
+    size_t start(0);
+    std::string link = "";
+    std::vector<std::string> urls;
+    do
+    {
+        link = findWithoutTags(start, "<a  class=\"recipe-card-link\" href=\"", "\">");
+        if (link != "")
+            urls.push_back(link);
+    } while (link != "");
+
+    std::vector<Recipe> recipes;
+    for (auto &url : urls)
+        recipes.push_back(importRecipeFrom(url));
+    return recipes;
+}
+
 std::vector<Ingredient> RecipeScraperMarmiton::findListOfIngredients() const
 {
     std::vector<Ingredient> ingredients;
