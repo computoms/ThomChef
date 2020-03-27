@@ -21,6 +21,7 @@ private:
     bool startsWith(std::string start, std::string input) const;
     double parseTimeInMinutes(std::string timeString) const;
     std::string removeChar(std::string input, char c) const;
+    std::string trim(std::string input) const;
 };
 
 #endif // RECIPESCRAPERMARMITON_H

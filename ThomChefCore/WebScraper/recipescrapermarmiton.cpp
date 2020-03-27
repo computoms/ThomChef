@@ -49,16 +49,16 @@ std::vector<Ingredient> RecipeScraperMarmiton::findListOfIngredients() const
 Ingredient RecipeScraperMarmiton::createIngredient(std::string ingredientName, std::string number) const
 {
     if (startsWith("g ", ingredientName))
-        return Ingredient(ingredientName.substr(2), Conversions::to_double(number), UnitTypes().Number);
+        return Ingredient(trim(ingredientName.substr(2)), Conversions::to_double(number), UnitTypes().Grammes);
     else if (startsWith("cl ", ingredientName))
-        return Ingredient(ingredientName.substr(3), Conversions::to_double(number) * 10, UnitTypes().Mililiters);
+        return Ingredient(trim(ingredientName.substr(3)), Conversions::to_double(number) * 10, UnitTypes().Mililiters);
     else if (startsWith("dl ", ingredientName))
-        return Ingredient(ingredientName.substr(3), Conversions::to_double(number) * 100, UnitTypes().Mililiters);
+        return Ingredient(trim(ingredientName.substr(3)), Conversions::to_double(number) * 100, UnitTypes().Mililiters);
     else if (startsWith("l ", ingredientName))
-        return Ingredient(ingredientName.substr(3), Conversions::to_double(number), UnitTypes().Liters);
+        return Ingredient(trim(ingredientName.substr(3)), Conversions::to_double(number), UnitTypes().Liters);
     else if (number == "")
-        return Ingredient(ingredientName, 1, UnitTypes().Number); // TODO "Number = Some, like some Thym or some Basilic"
-    return Ingredient(ingredientName, Conversions::to_double(number), UnitTypes().Number);
+        return Ingredient(trim(ingredientName), 1, UnitTypes().Number); // TODO "Number = Some, like some Thym or some Basilic"
+    return Ingredient(trim(ingredientName), Conversions::to_double(number), UnitTypes().Number);
 }
 
 bool RecipeScraperMarmiton::startsWith(std::string start, std::string input) const
@@ -137,5 +137,16 @@ double RecipeScraperMarmiton::parseTimeInMinutes(std::string timeString) const
 std::string RecipeScraperMarmiton::removeChar(std::string input, char c) const
 {
     input.erase(std::remove(input.begin(), input.end(), c), input.end());
+    return input;
+}
+
+std::string RecipeScraperMarmiton::trim(std::string input) const
+{
+    input.erase(input.begin(),
+                std::find_if(input.begin(), input.end(),
+                             [](int c) { return !std::isspace(c); }));
+    input.erase(std::find_if(input.rbegin(), input.rend(),
+                             [](int c) { return !std::isspace(c); }).base(),
+                input.end());
     return input;
 }
