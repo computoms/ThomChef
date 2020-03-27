@@ -9,6 +9,7 @@
 #include "ThomChefCore/Storage/recipestoragefile.h"
 #include "ThomChefCore/Storage/configurationstoragefile.h"
 #include <ios>
+#include "ThomChefCore/WebScraper/recipeimporter.h"
 
 ThomChefWindow::ThomChefWindow(QWidget *parent) :
     QMainWindow             (parent),

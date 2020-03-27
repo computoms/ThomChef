@@ -3,8 +3,6 @@
 #include <string>
 #include "recipestorage.h"
 
-#include "libs/pugixml-1.9/src/pugixml.hpp"
-
 /**
  * @brief The FileRecipeStorage class handles storage of the database data into
  * a flat xml file.

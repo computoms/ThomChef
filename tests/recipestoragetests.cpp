@@ -1,9 +1,7 @@
 #include <sstream>
 #include <fstream>
 #include "recipestoragetests.h"
-
-
-
+#include "libs/pugixml-1.9/src/pugixml.hpp"
 
 RecipeStorageTests::RecipeStorageTests():
     m_storage("test.xml"),

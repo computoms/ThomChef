@@ -1,6 +1,7 @@
 #include "Storage/recipestoragefile.h"
 #include "conversions.h"
 #include <sstream>
+#include "libs/pugixml-1.9/src/pugixml.hpp"
 
 using namespace pugi;
 

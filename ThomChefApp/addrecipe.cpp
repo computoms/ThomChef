@@ -6,6 +6,7 @@
 #include "viewutils.h"
 #include <QString>
 #include <iostream>
+#include "ThomChefCore/WebScraper/recipeimporter.h"
 
 AddRecipe::AddRecipe(QWidget *parent) :
     QDialog             (parent),
@@ -54,6 +55,12 @@ void AddRecipe::init()
 
 Recipe AddRecipe::getNewRecipe()
 {
+    if (!ui->edit_webaddress->text().isEmpty())
+    {
+        RecipeImporter importer;
+        return importer.importFromWeb(ui->edit_webaddress->text().toStdString());
+    }
+
     std::string name = ui->edit_name->text().toStdString();
     int numberOfPersons = ui->edit_numberOfPersons->value();
     std::string description = ui->edit_description->toPlainText().toStdString();
