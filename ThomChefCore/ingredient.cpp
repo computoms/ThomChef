@@ -28,7 +28,8 @@ std::string Ingredient::getFriendlyName() const
 {
     std::string friendlyName;
     friendlyName += Conversions::to_string(m_quantity);
-    friendlyName += " " + m_quantityType.friendlyName;
+    if (m_quantityType.code != UnitTypes().Number.code)
+        friendlyName += " " + m_quantityType.friendlyName;
     friendlyName += " " + m_name;
     return friendlyName;
 }
