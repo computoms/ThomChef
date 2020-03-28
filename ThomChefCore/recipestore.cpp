@@ -91,6 +91,8 @@ void RecipeStore::deleteRecipe(Recipe recipe)
             break;
         }
     }
+    if (m_recipes.size() == 0)
+        m_maxId = 0;
     m_storage->save(m_recipes, m_maxId);
     emit changed();
 }
