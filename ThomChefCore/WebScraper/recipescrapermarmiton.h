@@ -1,11 +1,12 @@
 #ifndef RECIPESCRAPERMARMITON_H
 #define RECIPESCRAPERMARMITON_H
 #include "WebScraper/recipewebscraper.h"
+#include "recipefactory.h"
 
 class RecipeScraperMarmiton : public RecipeWebScraper
 {
 public:
-    RecipeScraperMarmiton();
+    RecipeScraperMarmiton(RecipeFactory *factory);
 
     virtual Recipe importRecipeFrom(std::string url) override;
     virtual std::vector<Recipe> importListOfRecipesFromIndexPage(std::string indexUrl) override;
@@ -23,6 +24,9 @@ private:
     double parseTimeInMinutes(std::string timeString) const;
     std::string removeChar(std::string input, char c) const;
     std::string trim(std::string input) const;
+
+private:
+    RecipeFactory *m_factory;
 };
 
 #endif // RECIPESCRAPERMARMITON_H

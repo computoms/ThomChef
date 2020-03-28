@@ -23,7 +23,7 @@ void RecipeStorageTests::saveSimpleFileStorage()
     recipe.addIngredient(Ingredient("Egg", 2, UnitTypes().Number));
     recipes.push_back(recipe);
 
-    m_storage.save(recipes);
+    m_storage.save(recipes, 0);
 }
 
 std::string RecipeStorageTests::serializeSimpleRecipe()
@@ -218,6 +218,7 @@ void RecipeStorageTests::save_StoreWithOneRecipe_CreatesValidContent()
     saveSimpleFileStorage();
     std::ifstream f(m_defaultFilename.c_str());
     std::string line;
+    std::getline(f, line);
     std::getline(f, line);
     std::getline(f, line);
     std::getline(f, line);

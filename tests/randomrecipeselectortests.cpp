@@ -12,7 +12,7 @@ RandomRecipeSelectorTests::RandomRecipeSelectorTests():
 void RandomRecipeSelectorTests::getListOfIngredients_WithTwoIdenticalIngredients_ReturnsOnlyOneIngredient()
 {
     createSimpleSelector();
-    Recipe recipe("Test", 1, "", 0);
+    Recipe recipe(0, "Test", 1, "", 0);
     recipe.addIngredient(Ingredient("Eggs", 2, UnitTypes().Number));
     recipe.addIngredient(Ingredient("Eggs", 3, UnitTypes().Number));
     store.addRecipe(recipe);
@@ -28,7 +28,7 @@ void RandomRecipeSelectorTests::getListOfIngredients_WithTwoIdenticalIngredients
 void RandomRecipeSelectorTests::getListOfIngredients_WithTwoIngredientsWithDifferentUnits_ReturnsTwoIngredients()
 {
     createSimpleSelector();
-    Recipe recipe("Test", 1, "", 0);
+    Recipe recipe(0, "Test", 1, "", 0);
     recipe.addIngredient(Ingredient("Flour", 200, UnitTypes().Grammes));
     recipe.addIngredient(Ingredient("Flour", 1, UnitTypes().Cup));
     store.addRecipe(recipe);
@@ -44,7 +44,7 @@ void RandomRecipeSelectorTests::getListOfIngredients_WithTwoIngredientsWithDiffe
 void RandomRecipeSelectorTests::addRecipeWithOneIngredient_EmptyStore_ReturnsOneIngredient()
 {
     createSimpleSelector();
-    Recipe recipe("Test", 1, "", 0);
+    Recipe recipe(0, "Test", 1, "", 0);
     recipe.addIngredient(Ingredient("Flour", 200, UnitTypes().Grammes));
     store.addRecipe(recipe);
 
@@ -57,7 +57,7 @@ void RandomRecipeSelectorTests::addRecipeWithOneIngredient_EmptyStore_ReturnsOne
 void RandomRecipeSelectorTests::removeRecipeWithOneIngredient_StoreContainingOneRecipesWithSingleIngredients_ReturnsZeroIngredient()
 {
     createSimpleSelector();
-    Recipe recipe("Test", 1, "", 0);
+    Recipe recipe(0, "Test", 1, "", 0);
     recipe.addIngredient(Ingredient("Flour", 200, UnitTypes().Grammes));
     store.addRecipe(recipe);
 

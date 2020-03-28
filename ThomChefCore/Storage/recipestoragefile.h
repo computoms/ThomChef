@@ -16,8 +16,8 @@ public:
     Recipe readRecipe(std::string recipeSerialization) const;
     std::string serializeRecipe(Recipe recipe) const;
 
-    virtual std::vector<Recipe> read() const override;
-    virtual bool save(std::vector<Recipe> recipes) const override;
+    virtual std::vector<Recipe> read(time_t &maxId) const override;
+    virtual bool save(std::vector<Recipe> recipes, time_t maxId) const override;
 
 private:
     std::string m_filename;

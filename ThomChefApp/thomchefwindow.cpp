@@ -18,6 +18,7 @@ ThomChefWindow::ThomChefWindow(QWidget *parent) :
     m_configurationStorage  ("configuration.xml"),
     m_storage               ("recipes.xml"),
     m_store                 (&m_storage),
+    m_factory               (&m_store),
     m_recipeSelector        (&m_store),
     m_updating              (false)
 {
@@ -326,7 +327,7 @@ void ThomChefWindow::modifySelectedRecipe()
 {
     Recipe recipe = m_store.findRecipe(getCurrentRecipeId());
 
-    AddRecipe addRecipeView(this, recipe);
+    AddRecipe addRecipeView(this, &m_factory, recipe);
     int result = addRecipeView.exec();
 
     if (result == QDialog::Accepted)
@@ -380,7 +381,7 @@ void ThomChefWindow::on_button_importAllRecipesFromMarmiton_clicked()
         if (result != QDialog::Accepted)
             return;
 
-        RecipeImporter importer;
+        RecipeImporter importer(&m_factory);
         if (importView.isImportAllMostSearched())
         {
             std::vector<Recipe> recipes = importer.importListFromWeb("https://www.marmiton.org/recettes/");

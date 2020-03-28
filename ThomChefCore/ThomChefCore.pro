@@ -30,6 +30,7 @@ SOURCES += \
     randomrecipeselector.cpp \
     recipe.cpp \
     Storage/recipestoragefile.cpp \
+    recipefactory.cpp \
     recipenamefilter.cpp \
     recipestore.cpp \
     ../libs/pugixml-1.9/src/pugixml.cpp
@@ -50,6 +51,7 @@ HEADERS += \
     randomrecipeselector.h \
     recipe.h \
     Storage/recipestoragefile.h \
+    recipefactory.h \
     recipenamefilter.h \
     recipestore.h \
     thomchefcore.h \

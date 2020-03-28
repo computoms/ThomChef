@@ -1,5 +1,6 @@
 #include "recipestoretests.h"
 #include "recipe.h"
+#include "recipefactory.h"
 #include <iostream>
 
 
@@ -86,6 +87,15 @@ void RecipeStoreTests::setFilter_partialFilter_SelectsCorrectRecipes()
     store.addFilter(&filter);
 
     QCOMPARE(store.getNumberOfRecipes(), 1);
+}
+
+void RecipeStoreTests::RecipeFactory_createNewId_IncrementsMaxId()
+{
+    init();
+    RecipeFactory factory(&store);
+
+    QCOMPARE(recipe1.getId(), 1);
+    QCOMPARE(recipe2.getId(), 2);
 }
 
 void RecipeStoreTests::init()

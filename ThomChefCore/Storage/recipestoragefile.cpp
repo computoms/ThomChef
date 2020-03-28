@@ -67,12 +67,14 @@ std::string RecipeStorageFile::serializeRecipe(Recipe recipe) const
     return ss.str();
 }
 
-std::vector<Recipe> RecipeStorageFile::read() const
+std::vector<Recipe> RecipeStorageFile::read(time_t &maxId) const
 {
     pugi::xml_document doc;
     xml_parse_result result = doc.load_file(m_filename.c_str());
     if (!result)
         return std::vector<Recipe>();
+
+    maxId = Conversions::to_time_t(doc.child("RecipeStore").child("MaxId").child_value());
 
     std::vector<Recipe> recipes;
     for (xml_node recipeNode = doc.child("RecipeStore").child("Recipe");
@@ -86,10 +88,11 @@ std::vector<Recipe> RecipeStorageFile::read() const
     return recipes;
 }
 
-bool RecipeStorageFile::save(std::vector<Recipe> recipes) const
+bool RecipeStorageFile::save(std::vector<Recipe> recipes, time_t maxId) const
 {
     xml_document doc;
     xml_node recipeStoreNode = doc.append_child("RecipeStore");
+    recipeStoreNode.append_child("MaxId").append_child(pugi::node_pcdata).set_value(std::to_string(maxId).c_str());
     for (int i(0); i < (int) recipes.size(); ++i)
     {
         Recipe recipe = recipes[i];

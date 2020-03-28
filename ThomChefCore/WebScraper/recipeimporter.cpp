@@ -1,7 +1,8 @@
 #include "recipeimporter.h"
 #include "WebScraper/recipescrapermarmiton.h"
 
-RecipeImporter::RecipeImporter()
+RecipeImporter::RecipeImporter(RecipeFactory *factory):
+    m_factory   (factory)
 {
 
 }
@@ -22,5 +23,5 @@ std::shared_ptr<RecipeWebScraper> RecipeImporter::findWebScraper(std::string url
 {
     if (url.find("marmiton.org") == std::string::npos)
         throw std::invalid_argument("Only marmiton.org website is supported.");
-    return std::make_shared<RecipeScraperMarmiton>();
+    return std::make_shared<RecipeScraperMarmiton>(m_factory);
 }

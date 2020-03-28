@@ -5,19 +5,21 @@
 #include "ThomChefCore/recipe.h"
 #include "viewutils.h"
 
-AddRecipe::AddRecipe(QWidget *parent) :
+AddRecipe::AddRecipe(QWidget *parent, RecipeFactory *factory) :
     QDialog             (parent),
     ui                  (new Ui::AddRecipe),
-    m_selectedRecipe    ("", 1, "", 0),
+    m_factory           (factory),
+    m_selectedRecipe    (0, "", 1, "", 0),
     m_isModifyingRecipe (false)
 {
     ui->setupUi(this);
     init();
 }
 
-AddRecipe::AddRecipe(QWidget *parent, Recipe selectedRecipe):
+AddRecipe::AddRecipe(QWidget *parent, RecipeFactory *factory, Recipe selectedRecipe):
     QDialog             (parent),
     ui                  (new Ui::AddRecipe),
+    m_factory           (factory),
     m_selectedRecipe    (selectedRecipe),
     m_isModifyingRecipe (true)
 {
@@ -57,7 +59,7 @@ Recipe AddRecipe::getNewRecipe()
     std::string description = ui->edit_description->toPlainText().toStdString();
     double time = Conversions::to_double(ui->edit_time->text().toStdString());
 
-    Recipe recipe(name, numberOfPersons, description, time);
+    Recipe recipe = m_factory->createRecipe(name, numberOfPersons, description, time);
     for (auto &ing : m_currentIngredients)
         recipe.addIngredient(ing);
     return recipe;

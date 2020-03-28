@@ -2,16 +2,6 @@
 #include <ctime>
 #include <chrono>
 
-Recipe::Recipe(std::string name, int numberOfPersons,
-               std::string description, double preparationTimeInMinutes):
-    m_name              (name),
-    m_numberOfPersons   (numberOfPersons),
-    m_description       (description),
-    m_prepTimeInMinutes (preparationTimeInMinutes)
-{
-    m_id = generateGuid();
-}
-
 Recipe::Recipe(time_t id, std::string name, int numberOfPersons,
                std::string description, double prepTimeInMinutes):
     m_id                (id),
@@ -79,12 +69,4 @@ std::string Recipe::getFriendlyIngredients()
     }
 
     return ingredientsDescription;
-}
-
-time_t Recipe::generateGuid()
-{
-    auto now = std::chrono::system_clock::now();
-    time_t nowTt = std::chrono::system_clock::to_time_t(now);
-    time_t reference = 1577836800; // 01-01-2020
-    return nowTt - reference;
 }

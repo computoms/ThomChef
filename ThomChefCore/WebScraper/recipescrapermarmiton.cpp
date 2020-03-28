@@ -2,7 +2,8 @@
 #include "conversions.h"
 #include "libs/pugixml-1.9/src/pugixml.hpp"
 
-RecipeScraperMarmiton::RecipeScraperMarmiton()
+RecipeScraperMarmiton::RecipeScraperMarmiton(RecipeFactory *factory):
+    m_factory   (factory)
 {
 
 }
@@ -17,7 +18,7 @@ Recipe RecipeScraperMarmiton::importRecipeFrom(std::string url)
     int nbOfPersons = findNumberOfPersons();
     double timeInMinutes = findPreparationTime();
 
-    Recipe r(name, nbOfPersons, description, timeInMinutes);
+    Recipe r = m_factory->createRecipe(name, nbOfPersons, description, timeInMinutes);
     for (auto &ing : ingredients)
         r.addIngredient(ing);
     return r;

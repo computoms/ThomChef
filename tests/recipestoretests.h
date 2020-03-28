@@ -22,6 +22,8 @@ private slots:
     void setFilter_withFilterThatRestrictsStoreToOneRecipe_ReturnsOnlyOneRecipe();
     void setFilter_partialFilter_SelectsCorrectRecipes();
 
+    void RecipeFactory_createNewId_IncrementsMaxId();
+
 private:
     void init();
     TestingRecipeStorage storage;

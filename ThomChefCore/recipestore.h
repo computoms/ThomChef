@@ -20,6 +20,8 @@ public:
 
     void initialize();
 
+    time_t newId();
+
     int getNumberOfRecipes() const;
     Recipe getRecipe(int recipeIndex) const;
     Recipe findRecipeByName(std::string name) const;
@@ -45,6 +47,7 @@ private:
     bool isInAllFilters(const Recipe &recipe) const;
 
 private:
+    time_t m_maxId;
     std::vector<Recipe> m_recipes;
     RecipeStorage *m_storage;
     std::vector<Filter *> m_filters;

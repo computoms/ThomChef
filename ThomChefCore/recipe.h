@@ -9,7 +9,6 @@
 class Recipe
 {
 public:
-    Recipe(std::string name, int numberOfPersons, std::string description, double preparationTimeInMinutes);
     Recipe(time_t id, std::string name, int numberOfPersons, std::string description, double prepTimeInMinutes);
 
     time_t getId() const;
@@ -23,9 +22,6 @@ public:
 
     void addIngredient(Ingredient ingredient);
     std::string getFriendlyIngredients();
-
-private:
-    static time_t generateGuid();
 
 private:
     time_t m_id;

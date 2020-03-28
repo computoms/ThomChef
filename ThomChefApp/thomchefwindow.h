@@ -5,6 +5,7 @@
 #include <QListWidgetItem>
 
 #include "ThomChefCore/recipestore.h"
+#include "ThomChefCore/recipefactory.h"
 #include "ThomChefCore/Storage/configurationstoragefile.h"
 #include "ThomChefCore/Storage/recipestoragefile.h"
 #include "ThomChefCore/configuration.h"
@@ -75,6 +76,7 @@ private:
     RecipeStorageFile m_storage;
     Configuration m_configuration;
     RecipeStore m_store;
+    RecipeFactory m_factory;
     IngredientFilter m_ingredientFilter;
     RecipeNameFilter m_nameFilter;
     RandomRecipeSelector m_recipeSelector;

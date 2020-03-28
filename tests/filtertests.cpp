@@ -1,7 +1,7 @@
 #include "filtertests.h"
 
 FilterTests::FilterTests():
-    m_recipe    ("TestRecipe", 1, "", 0)
+    m_recipe    (0, "TestRecipe", 1, "", 0)
 {
 
 }
@@ -9,7 +9,7 @@ FilterTests::FilterTests():
 void FilterTests::initTestCase()
 {
     qDebug("Init called");
-    m_recipe = Recipe("TestRecipe", 1, "", 0);
+    m_recipe = Recipe(0, "TestRecipe", 1, "", 0);
     m_recipe.addIngredient(Ingredient("Tomato", 1, UnitTypes().Number));
 }
 

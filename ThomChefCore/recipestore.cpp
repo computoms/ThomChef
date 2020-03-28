@@ -1,6 +1,7 @@
 #include "recipestore.h"
 
 RecipeStore::RecipeStore(RecipeStorage *storage):
+    m_maxId     (0),
     m_storage   (storage)
 {
 
@@ -8,8 +9,13 @@ RecipeStore::RecipeStore(RecipeStorage *storage):
 
 void RecipeStore::initialize()
 {
-    m_recipes = m_storage->read();
+    m_recipes = m_storage->read(m_maxId);
     m_filters.clear();
+}
+
+time_t RecipeStore::newId()
+{
+    return ++m_maxId;
 }
 
 int RecipeStore::getNumberOfRecipes() const
@@ -53,8 +59,10 @@ Recipe RecipeStore::findRecipe(long id) const
 
 void RecipeStore::addRecipe(Recipe recipe)
 {
+    if (recipe.getId() > m_maxId)
+        m_maxId = recipe.getId();
     m_recipes.push_back(recipe);
-    m_storage->save(m_recipes);
+    m_storage->save(m_recipes, m_maxId);
     emit changed();
 }
 
@@ -65,7 +73,7 @@ bool RecipeStore::updateRecipe(Recipe recipe)
         if (m_recipes[i].getId() == recipe.getId())
         {
             m_recipes[i] = recipe;
-            m_storage->save(m_recipes);
+            m_storage->save(m_recipes, m_maxId);
             emit changed();
             return true;
         }
@@ -83,7 +91,7 @@ void RecipeStore::deleteRecipe(Recipe recipe)
             break;
         }
     }
-    m_storage->save(m_recipes);
+    m_storage->save(m_recipes, m_maxId);
     emit changed();
 }
 
