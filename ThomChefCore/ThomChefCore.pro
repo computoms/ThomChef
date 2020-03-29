@@ -33,7 +33,7 @@ SOURCES += \
     recipefactory.cpp \
     recipenamefilter.cpp \
     recipestore.cpp \
-    ../libs/pugixml-1.9/src/pugixml.cpp
+    libs/pugixml-1.9/src/pugixml.cpp
 
 HEADERS += \
     Storage/recipestorage.h \
@@ -55,13 +55,13 @@ HEADERS += \
     recipenamefilter.h \
     recipestore.h \
     thomchefcore.h \
-    ../libs/pugixml-1.9/src/pugixml.hpp \
-    ../libs/pugixml-1.9/src/pugiconfig.hpp
+    libs/pugixml-1.9/src/pugixml.hpp \
+    libs/pugixml-1.9/src/pugiconfig.hpp
 
 INCLUDEPATH += ../
 
 # Default rules for deployment.
 unix {
-    target.path = /usr/lib
+    target.path = /usr/local/lib
 }
 !isEmpty(target.path): INSTALLS += target

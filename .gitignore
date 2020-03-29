@@ -72,6 +72,6 @@ Thumbs.db
 *.exe
 
 build/
-libs/pugixml-1.9/docs/
-libs/pugixml-1.9/scripts/
+ThomChefCore/libs/pugixml-1.9/docs/
+ThomChefCore/libs/pugixml-1.9/scripts/
 

@@ -2,7 +2,7 @@
 #define CONFIGURATIONSTORAGE_H
 
 #include "ThomChefCore/configuration.h"
-#include "libs/pugixml-1.9/src/pugixml.hpp"
+#include "ThomChefCore/libs/pugixml-1.9/src/pugixml.hpp"
 
 /**
  * @brief The ConfigurationStorageFile class handles storage of program configuration data
