@@ -5,6 +5,10 @@
 
 #include "definitions.h"
 
+/**
+ * @brief The Ingredient class is the data structure that holds information
+ * about an ingredient of a cooking recipe.
+ */
 class Ingredient
 {
 public:

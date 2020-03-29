@@ -2,6 +2,10 @@
 #define RECIPENAMEFILTER_H
 #include "filter.h"
 
+/**
+ * @brief The RecipeNameFilter class filters the Recipe(s) by name, when
+ * added to the RecipeStore filters.
+ */
 class RecipeNameFilter : public Filter
 {
 public:

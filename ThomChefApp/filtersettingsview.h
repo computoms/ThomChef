@@ -9,6 +9,9 @@ namespace Ui {
 class FilterSettingsView;
 }
 
+/**
+ * @brief Implementation of the view that manages settings of the filters.
+ */
 class FilterSettingsView : public QDialog
 {
     Q_OBJECT

@@ -6,6 +6,9 @@
 
 #include "ingredient.h"
 
+/**
+ * @brief The Recipe class represents the data structure that holds information about a cooking recipe.
+ */
 class Recipe
 {
 public:

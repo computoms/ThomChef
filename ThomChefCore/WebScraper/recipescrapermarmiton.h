@@ -3,6 +3,10 @@
 #include "WebScraper/recipewebscraper.h"
 #include "recipefactory.h"
 
+/**
+ * @brief The RecipeScraperMarmiton class implements the importation of recipes
+ * from the www.marmiton.org website.
+ */
 class RecipeScraperMarmiton : public RecipeWebScraper
 {
 public:

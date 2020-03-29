@@ -4,6 +4,11 @@
 #include <QObject>
 #include "recipe.h"
 
+/**
+ * @brief The Filter class represents a Recipe's filter.
+ * It is an abstract class that defines the interface of a filter.
+ * Filter(s) can be added to the RecipeStore to filter the recipes.
+ */
 class Filter : public QObject
 {
     Q_OBJECT

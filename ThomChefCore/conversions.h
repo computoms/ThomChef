@@ -4,6 +4,10 @@
 
 #include "definitions.h"
 
+/**
+ * @brief The Conversions class is a helper class that
+ * defines common conversions between types.
+ */
 class Conversions
 {
 public:

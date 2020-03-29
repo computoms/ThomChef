@@ -3,6 +3,9 @@
 #include <vector>
 #include "ThomChefCore/recipe.h"
 
+/**
+ * @brief The RecipeStorage class is the interface of a storage for recipes.
+ */
 class RecipeStorage
 {
 public:

@@ -4,6 +4,9 @@
 #include <string>
 #include <vector>
 
+/**
+ * @brief The EnumValue struct is a helper structure that represents an enumeration value.
+ */
 struct EnumValue
 {
     EnumValue(int c, std::string s, std::string fName)
@@ -23,11 +26,18 @@ struct EnumValue
     std::string friendlyName;
 };
 
+/**
+ * @brief The UnitType struct specializes the enumeration type to be specific
+ * for ingredient quantity physical units.
+ */
 struct UnitType : public EnumValue
 {
     UnitType(int c, std::string s, std::string fName): EnumValue(c, s, fName) {}
 };
 
+/**
+ * @brief The UnitTypes class lists the physical unit types of ingredient quantities.
+ */
 class UnitTypes
 {
 public:

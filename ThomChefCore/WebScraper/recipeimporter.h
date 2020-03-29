@@ -3,6 +3,10 @@
 #include "../recipefactory.h"
 #include "recipewebscraper.h"
 
+/**
+ * @brief The RecipeImporter class manages the importation of recipes
+ * from different sources.
+ */
 class RecipeImporter
 {
 public:

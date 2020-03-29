@@ -4,7 +4,7 @@
 #include "recipestorage.h"
 
 /**
- * @brief The FileRecipeStorage class handles storage of the database data into
+ * @brief The FileRecipeStorage class handles storage of the database of recipes into
  * a flat xml file.
  */
 class RecipeStorageFile : public RecipeStorage

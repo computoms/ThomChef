@@ -3,6 +3,9 @@
 
 #include <string>
 
+/**
+ * @brief The ViewUtils class is a UI helper class.
+ */
 class ViewUtils
 {
 public:

@@ -2,6 +2,10 @@
 #define RANDOMRECIPESELECTOR_H
 #include "recipestore.h"
 
+/**
+ * @brief The RandomRecipeSelector class selects randomly some recipes from the RecipeStore and
+ * retreives the list of ingredients to get the shopping list from the generated recipes.
+ */
 class RandomRecipeSelector
 {
 public:

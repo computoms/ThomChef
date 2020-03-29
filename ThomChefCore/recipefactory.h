@@ -2,6 +2,10 @@
 #define RECIPEFACTORY_H
 #include "recipestore.h"
 
+/**
+ * @brief The RecipeFactory class manages the creation of Recipe instances.
+ * It manages the Recipe ids from the RecipeStore.
+ */
 class RecipeFactory
 {
 public:

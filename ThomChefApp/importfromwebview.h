@@ -7,6 +7,9 @@ namespace Ui {
 class ImportFromWebView;
 }
 
+/**
+ * @brief Implementation of the view that manages the importation of recipes from the web
+ */
 class ImportFromWebView : public QDialog
 {
     Q_OBJECT

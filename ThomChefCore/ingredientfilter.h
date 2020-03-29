@@ -5,6 +5,10 @@
 #include "filter.h"
 #include "recipe.h"
 
+/**
+ * @brief The IngredientFilter class filters Recipe(s) by ingredients, when
+ * added to the RecipeStore filters.
+ */
 class IngredientFilter : public Filter
 {
 

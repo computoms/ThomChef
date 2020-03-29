@@ -3,7 +3,10 @@
 
 #include <QListWidgetItem>
 
-
+/**
+ * @brief Subclass of QListWidgetItem that holds the recipe Id in addition to
+ * its name so that we can find the recipe in the data store using its Id.
+ */
 class RecipeListWidgetItem : public QListWidgetItem
 {
 public:

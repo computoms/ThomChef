@@ -9,7 +9,7 @@
 #include "ingredientfilter.h"
 
 /**
- * @brief The RecipeStore class represents the database interface to the recipes.
+ * @brief The RecipeStore class represents the data store interface to the recipes.
  */
 class RecipeStore : public QObject
 {

@@ -16,6 +16,9 @@ namespace Ui {
 class ThomChefWindow;
 }
 
+/**
+ * @brief Main window of the application.
+ */
 class ThomChefWindow : public QMainWindow
 {
     Q_OBJECT

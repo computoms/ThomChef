@@ -8,6 +8,9 @@ namespace Ui {
 class ShoppingListView;
 }
 
+/**
+ * @brief Implementation of the view that displays the shopping list.
+ */
 class ShoppingListView : public QDialog
 {
     Q_OBJECT

@@ -3,6 +3,10 @@
 #include <QObject>
 #include "../recipe.h"
 
+/**
+ * @brief The RecipeWebScraper class is the base class for importation of recipes
+ * from a website.
+ */
 class RecipeWebScraper : public QObject
 {
     Q_OBJECT

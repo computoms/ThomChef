@@ -9,6 +9,9 @@ namespace Ui {
 class AddRecipe;
 }
 
+/**
+ * @brief Implementation of the view for adding a new recipe.
+ */
 class AddRecipe : public QDialog
 {
     Q_OBJECT

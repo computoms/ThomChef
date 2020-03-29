@@ -4,6 +4,10 @@
 #include "ThomChefCore/configuration.h"
 #include "libs/pugixml-1.9/src/pugixml.hpp"
 
+/**
+ * @brief The ConfigurationStorageFile class handles storage of program configuration data
+ * into a flat xml file.
+ */
 class ConfigurationStorageFile
 {
 public:
