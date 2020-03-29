@@ -15,8 +15,8 @@
 ThomChefWindow::ThomChefWindow(QWidget *parent) :
     QMainWindow             (parent),
     ui                      (new Ui::ThomChefWindow),
-    m_configurationStorage  ("configuration.xml"),
-    m_storage               ("recipes.xml"),
+    m_configurationStorage  (QApplication::applicationDirPath().toStdString() + "/configuration.xml"),
+    m_storage               (QApplication::applicationDirPath().toStdString() + "/recipes.xml"),
     m_store                 (&m_storage),
     m_factory               (&m_store),
     m_recipeSelector        (&m_store),

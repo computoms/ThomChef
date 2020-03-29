@@ -45,7 +45,8 @@ app_resources.path = $$OUT_PWD/ThomChefApp.app/Contents/MacOS/
 app_resources.files += Resources/*
 
 INSTALLS += app_resources
-OTHER_FILES += Resources/style.qss
+OTHER_FILES += Resources/style.qss Resources/Icone.icns
+ICON = Resources/Icone.icns
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

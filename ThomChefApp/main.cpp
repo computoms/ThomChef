@@ -13,9 +13,9 @@ int main(int argc, char *argv[])
     //QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
     QApplication a(argc, argv);
-    qApp->setWindowIcon(QIcon("icone.icns"));
+    qApp->setWindowIcon(QIcon(QApplication::applicationDirPath() + "/icone.icns"));
 
-    QFile file("style.qss");
+    QFile file(QApplication::applicationDirPath() + "/style.qss");
     file.open(QFile::ReadOnly);
     QString styleSheet = QLatin1String(file.readAll());
     qApp->setStyleSheet(styleSheet);
@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     try
     {
         ThomChefWindow w;
-        w.setWindowIcon(QIcon("icon.icns"));
+        w.setWindowIcon(QIcon(QApplication::applicationDirPath() + "/icon.icns"));
         w.initialize();
         w.showMaximized();
 
