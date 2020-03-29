@@ -38,8 +38,7 @@ void ThomChefWindow::initialize()
     {
         m_store.initialize();
         updateRecipeList();
-        ConfigurationStorageFile configStorage("configuration.xml");
-        m_configuration = configStorage.read();
+        m_configuration = m_configurationStorage.read();
         m_ingredientFilter.setDefaultIngredients(m_configuration.getDefaultIngredients());
 
         ui->button_ingredientfilter_remove->setEnabled(false);
@@ -59,7 +58,7 @@ void ThomChefWindow::initialize()
 
 void ThomChefWindow::on_button_addrecipe_clicked()
 {
-    AddRecipe addRecipeView(this);
+    AddRecipe addRecipeView(this, &m_factory);
     int result = addRecipeView.exec();
 
     if (result == QDialog::Accepted)
