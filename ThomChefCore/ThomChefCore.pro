@@ -18,9 +18,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    WebScraper/recipeimporter.cpp \
-    WebScraper/recipewebscraper.cpp \
-    WebScraper/recipescrapermarmiton.cpp \
+    Import/recipeimporter.cpp \
+    Import/recipewebscraper.cpp \
+    Import/recipescrapermarmiton.cpp \
     configuration.cpp \
     Storage/configurationstoragefile.cpp \
     conversions.cpp \
@@ -38,9 +38,9 @@ SOURCES += \
 HEADERS += \
     Storage/recipestorage.h \
     ThomChefCore_global.h \
-    WebScraper/recipeimporter.h \
-    WebScraper/recipescrapermarmiton.h \
-    WebScraper/recipewebscraper.h \
+    Import/recipeimporter.h \
+    Import/recipescrapermarmiton.h \
+    Import/recipewebscraper.h \
     configuration.h \
     Storage/configurationstoragefile.h \
     conversions.h \

@@ -1,4 +1,4 @@
-#include "WebScraper/recipewebscraper.h"
+#include "Import/recipewebscraper.h"
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QEventLoop>

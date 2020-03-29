@@ -1,5 +1,5 @@
 #include "recipeimporter.h"
-#include "WebScraper/recipescrapermarmiton.h"
+#include "Import/recipescrapermarmiton.h"
 
 RecipeImporter::RecipeImporter(RecipeFactory *factory):
     m_factory   (factory)

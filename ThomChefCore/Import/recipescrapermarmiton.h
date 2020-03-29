@@ -1,6 +1,6 @@
 #ifndef RECIPESCRAPERMARMITON_H
 #define RECIPESCRAPERMARMITON_H
-#include "WebScraper/recipewebscraper.h"
+#include "Import/recipewebscraper.h"
 #include "recipefactory.h"
 
 /**
